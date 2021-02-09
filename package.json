@@ -1,0 +1,22 @@
+{
+  "name": "arcalive",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha test/test.js $(find ./ -name '*.js') --recursive -w",
+    "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.conf README.md"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miririt/arcalive.js.git"
+  },
+  "dependencies": {
+    "foodoc": "0.0.9",
+    "node-fetch": "^2.6.1",
+    "node-html-parser": "^2.1.0"
+  }
+}

@@ -1,0 +1,305 @@
+<!-- start:source.tmpl.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+		<title>board.js</title>
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="css/prism.min.css">
+		<link type="text/css" rel="stylesheet" href="css/template.min.css">
+		<script type="text/javascript">
+			window.TEMPLATE_OPTIONS = {"includeDate":true,"dateFormat":"Do MMM YYYY","systemName":"FooDoc","systemSummary":"A Bootstrap and Handlebars based template for JSDoc3.","systemLogo":"","systemColor":"","navMembers":[{"kind":"class","title":"Classes","summary":"All documented classes."},{"kind":"external","title":"Externals","summary":"All documented external members."},{"kind":"global","title":"Globals","summary":"All documented globals."},{"kind":"mixin","title":"Mixins","summary":"All documented mixins."},{"kind":"interface","title":"Interfaces","summary":"All documented interfaces."},{"kind":"module","title":"Modules","summary":"All documented modules."},{"kind":"namespace","title":"Namespaces","summary":"All documented namespaces."},{"kind":"tutorial","title":"Tutorials","summary":"All available tutorials."}],"footer":"","copyright":"FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.","linenums":true,"collapseSymbols":true,"inverseNav":true,"inlineNav":false,"outputSourceFiles":true,"sourceRootPath":null,"disablePackagePath":true,"outputSourcePath":false,"showTableOfContents":true,"showAccessFilter":true,"analytics":null,"methodHeadingReturns":true,"sort":"linenum, longname, version, since","search":true,"favicon":null,"stylesheets":[],"scripts":[],"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":false},"docdash":{"static":false,"sort":true}};
+			window.DOCLET_TOC_ENABLED = false;
+			window.DOCLET_AFILTER_ENABLED = false;
+		</script>
+</head>
+<body>
+	<!-- start:navbar.hbs -->
+	<header class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="index.html">
+					FooDoc
+				</a>
+				<!-- displayed on small devices -->
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse" id="topNavigation">
+				<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="global.html#Article">Article</a></li>
+											<li><a href="global.html#Board">Board</a></li>
+											<li><a href="global.html#Comment">Comment</a></li>
+											<li><a href="global.html#FetchQueue">FetchQueue</a></li>
+											<li><a href="global.html#RequestSession">RequestSession</a></li>
+									</ul>
+								</li>
+				</ul>
+					<!-- start:lunr-search-navbar.hbs -->
+					<form class="navbar-form navbar-right" role="search">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search" id="lunr-search-input">
+							<div class="input-group-btn">
+								<button class="btn btn-default" id="lunr-search-submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+					<!-- start:lunr-search-navbar.hbs -->		</div>
+		</div>
+	</header>
+	<!-- end:navbar.hbs -->		<div class="page-header">
+			<div class="container">
+				<span class="kind">source</span>
+				<h1><span class="name">board.js</span></h1>
+			</div>
+		</div>
+	<div class="container content">
+		<div class="row">
+			<div class="col-md-12 main-content">
+		<section class="source-section">
+			<article></article>
+			<pre class="prettyprint source language-javascript line-numbers"><code class="language-javascript">const url = require('url');
+const Article = require('./article');
+
+/**
+ * 새 게시판 객체 Board를 만든다.
+ * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
+ * 
+ * @param {RequestSession} session 게시판을 열람할 세션
+ * @param {Object} boardData 게시판 정보
+ * @param {URL} boardData.url 게시판 URL
+ */
+function Board(session, boardData) {
+  this._session = session;
+  this.url = boardData.url;
+
+  this._cachedArticles = {};
+}
+
+/**
+ * 해당 게시판에 있는 게시글의 객체 Article을 얻어온다.
+ * 실제 존재 여부와 관계 없이 무조건 반환한다.
+ * 
+ * @param {number} articleId 게시글 번호
+ * @returns {Article} 해당 번호의 게시글을 나타내는 Article 객체
+ */
+Board.prototype.getArticle = function(articleId) {
+  const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
+
+  return articleObject;
+}
+
+/**
+ * 해당 게시판에 있는 게시글의 객체 Article을 읽는다.
+ * 존재하지 않을 경우 실패한다.
+ * 
+ * @param {number} articleId 게시글 번호
+ * @param {Object} options 게시글 읽기 옵션
+ * @param {boolean} options.noCache true일 경우 저장된 정보를 무시하고 무조건 fetch함
+ * @param {boolean} options.withComments true일 경우 게시글에 작성된 모든 댓글을 추가로 fetch함
+ * @returns {Article} 해당 번호의 게시글을 나타내는 Article 객체
+ */
+Board.prototype.readArticle = function(articleId, options) {
+  const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
+
+  return articleObject.read(options);
+}
+
+/**
+ * 해당 게시판에 새 글을 작성한다.
+ * 
+ * @param {Object} article 게시글 내용
+ * @param {string} [article.category] 게시글 분류
+ * @param {string} [article.title] 게시글 제목
+ * @param {string} [article.content] 게시글 내용
+ * @returns {Promise&lt;Response>} 게시글 작성 fetch에 대한 Response
+ */
+Board.prototype.writeArticle = async function(article) {
+  if(this._session._anonymous) {
+    throw new Error('This is an anonymous session(anonymous session requires reCAPTCHA auth).');
+  }
+
+  const writePage = await this._session._fetch(`${this.url}/write`);
+
+  const tokens = {};
+
+  const inputElements = writePage.querySelectorAll('#article_write_form input');
+  for(const key in inputElements) {
+    if(inputElements[key].attributes.name == '_csrf') {
+      tokens.csrf = inputElements[key].attributes.value;
+    }
+    if(inputElements[key].attributes.name == 'token') {
+      tokens.token = inputElements[key].attributes.value;
+    }
+  }
+
+  const articleInfo = new url.URLSearchParams();
+  articleInfo.append('_csrf', tokens.csrf);
+  articleInfo.append('token', tokens.token);
+  articleInfo.append('contentType', 'html');
+  articleInfo.append('category', article.category);
+  articleInfo.append('title', article.title);
+  articleInfo.append('content', article.content);
+
+  if(article.anonymous) {
+    articleInfo.append('nickname', article.nickname);
+    articleInfo.append('password', article.password);
+  }
+
+  return await this._session._fetch(`${this.url}/write`, {
+    method: 'POST',
+    headers: { referer: `${this.url}/write` },
+    body: articleInfo
+  });
+}
+
+/**
+ * 해당 게시판에서 글을 삭제한다.
+ * 
+ * @param {number} articleId 게시글 번호
+ * @returns {Promise&lt;Response>} 게시글 삭제 fetch에 대한 Response
+ */
+Board.prototype.deleteArticle = function(articleId) {
+  const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
+  
+  return articleObject.delete();
+}
+
+/**
+ * 해당 게시판에서 글을 수정한다.
+ * 
+ * @param {number} articleId 게시글 번호
+ * @param {Object} article 수정될 내용(지정되지 않은 property는 현재의 값을 그대로 가지고 감)
+ * @param {string} [article.category] 게시글 분류
+ * @param {string} [article.title] 게시글 제목
+ * @param {string} [article.content] 게시글 내용
+ * @returns {Promise&lt;Response>} 게시글 수정 fetch에 대한 Response
+ */
+Board.prototype.editArticle = async function(articleId, article) {
+  const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
+
+  return articleObject.edit(article);
+}
+
+/**
+ * 해당 게시판에서 글을 검색한다.
+ * 
+ * @param {number} page 검색 결과 페이지 번호
+ * @param {Object} options 검색 옵션
+ * @param {boolean} options.withNotices true일 경우 상단의 공지글을 포함해 반환함
+ * @param {string} [options.queryTarget='all'|'title_conent'|title'|'content'|'nickname'|'comment'] 검색
+ * @param {string} [options.queryString] 검색 내용
+ * @param {string} [options.category] 검색할 분류
+ * @returns {Promise&lt;Article[]>} 해당 페이지에 있는 게시글 검색 결과를 나타내는 Article[]
+ */
+Board.prototype.queryPage = async function(page = 1, options = {}) {
+
+  let queryUrl = `${this.url}`;
+  queryUrl += `?p=${page}`;
+  if(options.queryTarget &amp;&amp; options.queryString) {
+    queryUrl += `&amp;target=${options.queryTarget}&amp;keyword=${options.queryString}`;
+  }
+  if(options.category) {
+    queryUrl += `&amp;category=${options.category}`;
+  }
+
+  const boardPage = await this._session._fetch(queryUrl);
+
+  const articles = boardPage.querySelectorAll('.article-list a.vrow');
+
+  let filteredArticles = articles.filter(article => article.classNames.indexOf('notice-unfilter') === -1);
+
+  if(!options.withNotices) {
+    filteredArticles = articles.filter(article => article.classNames.indexOf('notice') === -1);
+  }
+
+  return filteredArticles.map(articleElem => {
+    const articleData = {
+      articleId: 0,
+      isNotice: false,
+      category: null,
+      title: null,
+      time: 0,
+      views: 0,
+      commentCount: 0,
+      rateDiff: 0
+    };
+
+    const commentElement = articleElem.querySelector('.comment-count');
+
+    articleData.articleId = +articleElem.attributes.href.match(/(\d+)[?]p=(\d+)$/)[1];
+    articleData.isNotice = articleElem.classNames.indexOf('notice') !== -1;
+    articleData.category = articleElem.querySelector('.badge').innerText;
+    articleData.title = articleElem.querySelector('.title').innerText.replace(/\n/g, '');
+
+    articleData.time = new Date(articleElem.querySelector('.col-time time').attributes.datetime);
+    articleData.views = +articleElem.querySelector('.col-view').innerText;
+    articleData.commentCount = commentElement ? +commentElement.innerText.match(/\d+/)[0] : 0;
+    articleData.rateDiff = +articleElem.querySelector('.col-rate').innerText;
+
+    return new Article(this, articleData);
+  });
+}
+
+/**
+ * 해당 게시판의 페이지를 얻어온다.
+ * 내부적으로 queryPage를 호출한다.
+ * 
+ * @param {number} page 페이지 번호
+ * @param {Object} options 검색 옵션
+ * @param {boolean} options.withNotices true일 경우 상단의 공지글을 포함해 반환함
+ * @param {string} [options.category] 게시글 분류
+ * @returns {Promise&lt;Article[]>} 해당 게시글 분류의 해당 페이지에 있는 게시글을 나타내는 Article[]
+ */
+Board.prototype.readPage = function(page, options) {
+  return this.queryPage(page, options);
+}
+
+module.exports = Board;</code></pre>
+		</section>
+			</div>
+		</div>
+	</div>
+	<footer>
+				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 10th Feb 2021 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+	</footer>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/clipboard.min.js"></script>
+	<script src="js/prism.min.js"></script>
+	<script src="js/template.min.js"></script>
+		<!-- start:lunr-search-modal.hbs -->
+		<div class="modal fade" id="lunr-search-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Search results</h4>
+					</div>
+					<div class="modal-body" id="lunr-search-body">
+					</div>
+					<div class="modal-footer" id="lunr-search-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+		<!-- end:lunr-search-modal.hbs -->		<script src="js/lunr.min.js"></script>
+	
+</body>
+</html>
+<!-- end:source.tmpl.hbs -->

@@ -1,0 +1,363 @@
+<!-- start:source.tmpl.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+		<title>request-session.js</title>
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="css/prism.min.css">
+		<link type="text/css" rel="stylesheet" href="css/template.min.css">
+		<script type="text/javascript">
+			window.TEMPLATE_OPTIONS = {"includeDate":true,"dateFormat":"Do MMM YYYY","systemName":"FooDoc","systemSummary":"A Bootstrap and Handlebars based template for JSDoc3.","systemLogo":"","systemColor":"","navMembers":[{"kind":"class","title":"Classes","summary":"All documented classes."},{"kind":"external","title":"Externals","summary":"All documented external members."},{"kind":"global","title":"Globals","summary":"All documented globals."},{"kind":"mixin","title":"Mixins","summary":"All documented mixins."},{"kind":"interface","title":"Interfaces","summary":"All documented interfaces."},{"kind":"module","title":"Modules","summary":"All documented modules."},{"kind":"namespace","title":"Namespaces","summary":"All documented namespaces."},{"kind":"tutorial","title":"Tutorials","summary":"All available tutorials."}],"footer":"","copyright":"FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.","linenums":true,"collapseSymbols":true,"inverseNav":true,"inlineNav":false,"outputSourceFiles":true,"sourceRootPath":null,"disablePackagePath":true,"outputSourcePath":false,"showTableOfContents":true,"showAccessFilter":true,"analytics":null,"methodHeadingReturns":true,"sort":"linenum, longname, version, since","search":true,"favicon":null,"stylesheets":[],"scripts":[],"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":false},"docdash":{"static":false,"sort":true}};
+			window.DOCLET_TOC_ENABLED = false;
+			window.DOCLET_AFILTER_ENABLED = false;
+		</script>
+</head>
+<body>
+	<!-- start:navbar.hbs -->
+	<header class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="index.html">
+					FooDoc
+				</a>
+				<!-- displayed on small devices -->
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse" id="topNavigation">
+				<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="global.html#Article">Article</a></li>
+											<li><a href="global.html#Board">Board</a></li>
+											<li><a href="global.html#Comment">Comment</a></li>
+											<li><a href="global.html#FetchQueue">FetchQueue</a></li>
+											<li><a href="global.html#RequestSession">RequestSession</a></li>
+									</ul>
+								</li>
+				</ul>
+					<!-- start:lunr-search-navbar.hbs -->
+					<form class="navbar-form navbar-right" role="search">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search" id="lunr-search-input">
+							<div class="input-group-btn">
+								<button class="btn btn-default" id="lunr-search-submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+					<!-- start:lunr-search-navbar.hbs -->		</div>
+		</div>
+	</header>
+	<!-- end:navbar.hbs -->		<div class="page-header">
+			<div class="container">
+				<span class="kind">source</span>
+				<h1><span class="name">request-session.js</span></h1>
+			</div>
+		</div>
+	<div class="container content">
+		<div class="row">
+			<div class="col-md-12 main-content">
+		<section class="source-section">
+			<article></article>
+			<pre class="prettyprint source language-javascript line-numbers"><code class="language-javascript">const url = require('url');
+const htmlParser = require('node-html-parser');
+const fq = require('./fetch-queue');
+const Board = require('./board');
+const Article = require('./article');
+
+/**
+ * 새 요청 세션 RequestSession을 만든다.
+ * 
+ * @param {string} username 사용자 ID
+ * @param {string} password 사용자 PW
+ */
+function RequestSession(username, password) {
+  this._username = username;
+  this._password = password;
+
+  if(!username || !password) {
+    this._anonymous = true;
+  }
+
+  this._cookies = {};
+}
+
+/**
+ * 익명의 요청 세션을 얻는다.
+ * 
+ * @returns {RequestSession} 익명 세션
+ */
+RequestSession.anonymousSession = function() {
+  return new RequestSession();
+}
+
+/**
+ * 현재 세션이 익명 세션일 경우 익명 사용자의 닉네임과 비밀번호를 설정한다.
+ * 익명 세션이 아닐 경우 예외가 발생한다.
+ * 
+ * @returns {RequestSession} 익명 세션
+ */
+RequestSession.prototype.setAnonymous = function(nickname, password) {
+  if(this._anonymous) {
+    throw new Error('This is not an anonymous session');
+  }
+  this._username = nickname;
+  this._password = password;
+}
+
+/**
+ * 요청의 헤더에서 현재 세션의 쿠키 값을 설정한다.
+ * 
+ * @param {Response} res fetch 응답
+ * @returns {Response} res
+ */
+RequestSession.prototype._loadCookies = function(res) {
+  const setCookies = res.headers.get('Set-Cookie') || '';
+
+  this._cookies = this._cookies || {};
+  setCookies.split(/[;,]\s*/)
+  // filters 'Secure' or 'HttpOnly'
+  .filter(_ => _.indexOf('=') != -1)
+  // filters 'Expires', 'Max-Age', 'Domain', 'Path', 'SameSite'
+  .filter(_ => !_.match(/^(Expires|Max-Age|Domain|Path|SameSite)=/i))
+  // set cookie
+  .map(_ => {
+    const [key, val] = _.split('=');
+    this._cookies[key] = val;
+  });
+
+  return res;
+};
+
+/**
+ * 현재 세션의 쿠키 값을 문자열로 반환한다.
+ * 
+ * @returns {string} Request 헤더에 사용할 수 있는 쿠키 문자열
+ */
+RequestSession.prototype._makeCookieString = function() {
+  let cookieKeyVal = [];
+  this._cookies = this._cookies || {};
+  for(const key in this._cookies) {
+    cookieKeyVal.push(`${key}=${this._cookies[key]}`);
+  }
+
+  return cookieKeyVal.join(';');
+}
+
+/**
+ * 해당 페이지에서 CSRF 토큰을 얻어온다.
+ * 
+ * @param {string|URL} url CSRF 토큰을 얻어오고자 하는 URL
+ * @param {string|string[]} tokenName 얻어오고자 하는 토큰의 name
+ * @returns {string|Object} 얻어온 CSRF 토큰 값
+ */
+RequestSession.prototype._getCSRFToken = async function(url, tokenName = '_csrf') {
+  const page = await this._fetch(url);
+
+  const tokens = {};
+
+  const inputElements = page.querySelectorAll('input');
+  for(const key in inputElements) {
+    if('string' === typeof tokenName &amp;&amp; inputElements[key].attributes.name == tokenName) {
+      return inputElements[key].attributes.value;
+    } else if(tokenName.includes(inputElements[key].attributes.name)) {
+      tokens[inputElements[key].attributes.name] = inputElements[key].attributes.value;
+    }
+  }
+  return tokens;
+}
+
+/**
+ * 해당 세션의 로그인 상태를 확인한다.
+ * 로그아웃되었을 경우 다시 로그인한다.
+ */
+RequestSession.prototype._checkSession = async function() {
+  if(this._anonymous) return;
+
+  this._lastSessionChecked = this._lastSessionChecked || 0;
+  if(this._lastSessionChecked + 1000 * 60 * 10 &lt; new Date()) {
+    this._lastSessionChecked = new Date().getTime();
+    const shouldLogin = await this._fetch('https://arca.live', { parse: false })
+    .then(res => res.text())
+    .then(text => text.indexOf('/u/logout') == -1);
+
+    if(shouldLogin) {
+      await this._login();
+    }
+  }
+}
+
+/**
+ * 해당 세션의 로그인 정보로 로그인을 시도한다.
+ * 성공 결과와는 관계없이 반환한다.
+ */
+RequestSession.prototype._login = function() {
+  // fetch login page and load cookies
+
+  const accountInfo = new url.URLSearchParams();
+  accountInfo.append('goto', '/');
+  accountInfo.append('username', this._username);
+  accountInfo.append('password', this._password);
+
+  return this._fetch('https://arca.live/u/login', {
+    method: 'POST',
+    headers: { referer: 'https://arca.live/u/login?goto=/' },
+    body: accountInfo,
+    csrfRequired: true
+  });
+}
+
+/**
+ * 해당 세션에서 fetch 요청을 보낸다.
+ * 
+ * @param {string|URL} resource
+ * @param {Object} init
+ * @param {boolean} [init.parse=true] true일 경우 응답을 parse해서 반환함
+ * @param {boolean} [init.csrfRequired=false] true일 경우 CSRF 토큰을 같이 전송함
+ * @returns {Promise&lt;Response|Node>} 응답
+ */
+RequestSession.prototype._fetch = async function(resource, init = {}) {
+  await this._checkSession();
+
+  init.method = init.method || 'GET';
+  init.headers = init.headers || {};
+  init.headers.Cookie = this._makeCookieString();
+
+  const parse = (init.parse === undefined) ? true : init.parse;
+  const csrfRequired = init.csrfRequired || false;
+
+  delete init.parse;
+  delete init.csrfRequired;
+
+  if(csrfRequired) {
+    const csrfFrom = init.headers.referer || resource;
+    const csrfToken = await this._getCSRFToken(csrfFrom);
+    
+    init.body = init.body || new url.URLSearchParams();
+    init.body.append('_csrf', csrfToken);
+
+    init.headers.Cookie = this._makeCookieString();
+    init.headers.referer = csrfFrom;
+  }
+
+  let response = await fq.fetch(resource, init);
+
+  while(response.status == 526) {
+    response = await fq.fetch(resource, init);
+  }
+
+  if(response.status >= 400) {
+    throw new Error(`HTTP ${response.status}: ${resource}`);
+  }
+
+  this._loadCookies(response);
+
+  if(parse) {
+    return response.text().then(html => htmlParser.parse(html));
+  }
+
+  return response;
+}
+
+/**
+ * 해당 게시판을 얻어온다.
+ * 
+ * @param {string} boardName 게시판의 이름
+ * @return {Promise&lt;Board>} 해당 이름을 가진 게시판
+ */
+RequestSession.prototype.getBoard = async function(boardName) {
+  await this._checkSession();
+
+  const primaryBoardUrl = `https://arca.live/b/${boardName}`;
+
+  const response = await this._fetch(primaryBoardUrl, { parse: false });
+
+  return this.fromUrl(response.url);
+}
+
+/**
+ * URL에서 게시판 혹은 게시글을 얻어온다.
+ * 
+ * @param {string|URL} boardName 게시판 혹은 게시글의 URL
+ * @return {Board|Article} 해당 URL이 나타내는 게시판 또는 게시글
+ */
+RequestSession.prototype.fromUrl = function(articleOrBoardUrl) {
+  const targetUrl = new URL(articleOrBoardUrl);
+  
+  if(targetUrl.origin.indexOf('arca.live') === -1) {
+    throw new Error('This is not an arca.live url.');
+  }
+
+  if(!targetUrl.pathname.match(/^\/b\/([^/]+)/)) {
+    throw new Error('This is not an valid board or article url.');
+  }
+
+  const boardPath = targetUrl.pathname.match(/^\/b\/[^/]+/)[0];
+  const board = new Board(this, {
+    url: new URL(targetUrl.origin + boardPath)
+  });
+
+  if(targetUrl.pathname.match(/^\/b\/[^/]+\/(\d+)/)) {
+    // this is an article
+    const articleId = +targetUrl.pathname.match(/^\/b\/[^/]+\/(\d+)/)[1];
+    return new Article(board, { articleId: articleId });
+  } else {
+    // this is a board
+    return board;
+  }
+}
+
+/**
+ * 세션을 닫는다.
+ */
+RequestSession.prototype.closeSession = function() {
+  fq.stop();
+}
+
+module.exports = RequestSession;</code></pre>
+		</section>
+			</div>
+		</div>
+	</div>
+	<footer>
+				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 10th Feb 2021 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+	</footer>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/clipboard.min.js"></script>
+	<script src="js/prism.min.js"></script>
+	<script src="js/template.min.js"></script>
+		<!-- start:lunr-search-modal.hbs -->
+		<div class="modal fade" id="lunr-search-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Search results</h4>
+					</div>
+					<div class="modal-body" id="lunr-search-body">
+					</div>
+					<div class="modal-footer" id="lunr-search-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+		<!-- end:lunr-search-modal.hbs -->		<script src="js/lunr.min.js"></script>
+	
+</body>
+</html>
+<!-- end:source.tmpl.hbs -->
