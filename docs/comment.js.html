@@ -39,8 +39,10 @@
 									<a href="list_class.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 									<ul class="dropdown-menu">
 											<li><a href="Article.html">Article</a></li>
+											<li><a href="Article.ArticleData.html">Article.ArticleData</a></li>
 											<li><a href="Board.html">Board</a></li>
 											<li><a href="Comment.html">Comment</a></li>
+											<li><a href="Comment.CommentData.html">Comment.CommentData</a></li>
 											<li><a href="FetchQueue.html">FetchQueue</a></li>
 											<li><a href="RequestSession.html">RequestSession</a></li>
 									</ul>
@@ -80,7 +82,7 @@ const { ArgumentError } = require('./errors');
  * @constructor
  * 
  * @param {Article} article 해당 댓글이 속해있는 게시글 객체
- * @param {Object} commentData 댓글 정보
+ * @param {Comment.CommentData} commentData 댓글 정보
  * @param {number} [commentData.commentId] 댓글 번호(주어지지 않을 경우 url 혹은 apiUrl을 통해 생성함)
  * @param {URL} [commentData.apiUrl] 댓글 API 호출시 필요한 URL(주어지지 않을 경우 commentId 혹은 url을 통해 생성함)
  * @param {URL} [commentData.url] 댓글 URL(주어지지 않을 경우 commentId 혹은 apiUrl을 통해 생성함)
@@ -105,7 +107,60 @@ function Comment(article, commentData) {
     throw new ArgumentError('at least one of { commentId, apiUrl, url } must have specified');
   }
 
-  this._commentData = commentData;
+  if(commentData instanceof Comment.CommentData) {
+    this._commentData = commentData;
+  } else {
+    this._commentData = new Comment.CommentData();
+    for(const key in commentData) {
+      this._commentData[key] = commentData[key];
+    }
+  }
+
+  this._commentData._freezeThis();
+}
+
+/**
+ * 새 댓글 정보 객체 ArticleData를 만든다.
+ * @constructor
+ * 
+ * @param {Object} data 댓글 정보
+ * @param {number} [data.commentId] 댓글 번호
+ * @param {string} [data.author] 댓글 작성자
+ * @param {string} [data.content] 댓글 내용(HTML)
+ * @param {string} [data.textContent] 댓글 내용(텍스트)
+ * @param {Date} [data.time] 댓글 작성 시각
+ */
+Comment.CommentData = function(data = {
+  commentId: 0,
+  author: null,
+  content: null,
+  textContent: null,
+  time: null
+}) {
+  this.commentId = data.commentId;
+  this.author = data.author;
+  this.content = data.content;
+  this.textContent = data.textContent;
+  this.time = data.time;
+}
+
+/**
+ * CommentData를 고정한다.
+ * Comment 생성 후 값을 변경하지 않도록 호출해 줌.
+ * 
+ * @returns {Comment.CommentData} 해당 CommentData의 freeze된 사본
+ */
+Comment.CommentData.prototype._freezeThis = function() {
+  return Object.freeze(this);
+}
+
+/**
+ * 해당 댓글을 읽는다.
+ * 
+ * @returns {Comment.CommentData} 댓글 정보
+ */
+Comment.prototype.read = async function() {
+  return this._commentData;
 }
 
 /**

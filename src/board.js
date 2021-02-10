@@ -1,4 +1,5 @@
 const url = require('url');
+const { ArticleData } = require('./article');
 const Article = require('./article');
 
 /**
@@ -38,9 +39,9 @@ Board.prototype.getArticle = function(articleId) {
  * @param {Object} options 게시글 읽기 옵션
  * @param {boolean} options.noCache true일 경우 저장된 정보를 무시하고 무조건 fetch함
  * @param {boolean} options.withComments true일 경우 게시글에 작성된 모든 댓글을 추가로 fetch함
- * @returns {Article} 해당 번호의 게시글을 나타내는 Article 객체
+ * @returns {Promise<Article.ArticleData>} 해당 번호의 게시글을 나타내는 Article 객체
  */
-Board.prototype.readArticle = function(articleId, options) {
+Board.prototype.readArticle = async function(articleId, options) {
   const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
 
   return articleObject.read(options);
@@ -155,16 +156,9 @@ Board.prototype.queryPage = async function(page = 1, options = {}) {
   }
 
   return filteredArticles.map(articleElem => {
-    const articleData = {
-      articleId: 0,
-      isNotice: false,
-      category: null,
-      title: null,
-      time: 0,
-      views: 0,
-      commentCount: 0,
-      rateDiff: 0
-    };
+    const articleData = new Article.ArticleData({
+      isSummary: true
+    });
 
     const commentElement = articleElem.querySelector('.comment-count');
 

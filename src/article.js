@@ -8,7 +8,7 @@ const { ArgumentError, SessionError } = require('./errors');
  * @constructor
  * 
  * @param {Board} board 해당 게시글이 속해 있는 게시판 객체
- * @param {Object} articleData 게시글 정보
+ * @param {Object|Article.ArticleData} articleData 게시글 정보
  * @param {number} [articleData.articleId] 게시글 번호(주어지지 않을 경우 url를 통해 생성함)
  * @param {URL} [articleData.url] 게시글 URL(주어지지 않을 경우 articleId를 통해 생성함)
  */
@@ -31,7 +31,68 @@ function Article(board, articleData) {
   }
 
   this._loaded = false;
-  this._articleData = { ...articleData };
+  
+  if(articleData instanceof Article.ArticleData) {
+    this._articleData = articleData;
+  } else {
+    this._articleData = new Article.ArticleData();
+    for(const key in articleData) {
+      this._articleData[key] = articleData[key];
+    }
+  }
+}
+
+/**
+ * 새 게시글 정보 객체 ArticleData를 만든다.
+ * @constructor
+ * 
+ * @param {Object} data 게시글 정보
+ * @param {boolean} data.isSummary true일 경우 해당 정보는 read()를 통해 얻어온 정보, false일 경우 readPage()를 통해 얻어온 요약 정보
+ * @param {number} [data.articleId] 게시글 번호
+ * @param {string} [data.category] 게시글 분류
+ * @param {string} [data.title] 게시글 제목
+ * @param {string} [data.content] 게시글 내용
+ * @param {Date} [data.time] 게시글 작성 시각
+ * @param {number} [data.view] 게시글 조회수
+ * @param {Comment[]} [data.comments] 게시글 댓글 목록
+ * @param {number} [data.commentCount] 게시글 댓글수
+ * @param {number[]} [data.rate] 게시글 추천 수와 비추천 수
+ * @param {number} [data.rateDiff] 게시글 추천 수 - 비추천 수
+ */
+Article.ArticleData = function(data = {
+  isSummary: true,
+  articleId: 0,
+  category: null,
+  title: null,
+  content: null,
+  time: 0,
+  views: 0,
+  comments: [],
+  commentCount: 0,
+  rate: [0, 0],
+  rateDiff: 0
+}) {
+  this.isSummary = data.isSummary;
+  this.articleId = data.articleId;
+  this.category = data.category;
+  this.title = data.title;
+  this.content = data.content;
+  this.time = data.time;
+  this.views = data.views;
+  this.comments = data.comments;
+  this.commentCount = data.commentCount;
+  this.rate = data.rate;
+  this.rateDiff = data.rateDiff;
+}
+
+/**
+ * ArticleData를 고정한다.
+ * Article.read() 수행 후 값을 변경하지 않도록 호출해 줌.
+ * 
+ * @returns {Article.ArticleData} 해당 ArticleData의 freeze된 사본
+ */
+Article.ArticleData.prototype._freezeThis = function() {
+  return Object.freeze(this);
 }
 
 /**
@@ -41,7 +102,7 @@ function Article(board, articleData) {
  * @param {Object} options 게시글 읽기 옵션
  * @param {boolean} options.noCache true일 경우 저장된 정보를 무시하고 무조건 fetch함
  * @param {boolean} options.withComments true일 경우 게시글에 작성된 모든 댓글을 추가로 fetch함
- * @returns {Promise<Object>} 해당 게시글의 articleData 사본
+ * @returns {Promise<Article.ArticleData>} 해당 게시글의 articleData 사본
  */
 Article.prototype.read = async function(options = {
   noCache: false,
@@ -53,19 +114,10 @@ Article.prototype.read = async function(options = {
     const articleTitle = article.querySelector('.article-wrapper .title');
     const badge = articleTitle.querySelector('span.badge');
 
-    this._articleData = {
-      articleId: this.articleId,
-      category: null,
-      title: null,
-      content: null,
-      time: 0,
-      views: 0,
-      commentCount: 0,
-      rate: 0
-    };
-
     const articleInfo = article.querySelector('.article-info');
     const [ rateUp, rateDown, commentCount, views, time ] = articleInfo.querySelectorAll('.body');
+
+    this._articleData = new Article.ArticleData();
 
     if(badge !== null) {
       this._articleData.category = badge.innerText;
@@ -120,7 +172,7 @@ Article.prototype.read = async function(options = {
     }
   }
 
-  return {...this._articleData};
+  return this._articleData._freezeThis();
 }
 
 /**

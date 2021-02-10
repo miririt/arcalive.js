@@ -139,6 +139,7 @@
           "board#readarticl",
           "function",
           "option",
+          "promise.&lt;article.articledata&gt",
           "readarticl"
         ],
         "Board.html#writeArticle": [
@@ -191,7 +192,7 @@
           "fetch",
           "function",
           "option",
-          "promise.&lt;object&gt",
+          "promise.&lt;article.articledata&gt",
           "read"
         ],
         "Article.html#delete": [
@@ -257,6 +258,12 @@
           "comment",
           "limit",
           "rate"
+        ],
+        "Comment.html#read": [
+          "comment#read",
+          "comment.commentdata",
+          "function",
+          "read"
         ],
         "Comment.html#delete": [
           "comment#delet",
@@ -350,9 +357,38 @@
           "closesess",
           "function",
           "requestsession#closesess"
+        ],
+        "Comment.CommentData.html": [
+          "articledata",
+          "class",
+          "comment.commentdata",
+          "commentdata"
+        ],
+        "Comment.CommentData.html#_freezeThis": [
+          "_freezethi",
+          "comment",
+          "comment.commentdata",
+          "comment.commentdata#_freezethi",
+          "commentdata",
+          "commentdata#_freezethi",
+          "function"
+        ],
+        "Article.ArticleData.html": [
+          "article.articledata",
+          "articledata",
+          "class"
+        ],
+        "Article.ArticleData.html#_freezeThis": [
+          "_freezethi",
+          "article.articledata",
+          "article.articledata#_freezethi",
+          "article.read",
+          "articledata",
+          "articledata#_freezethi",
+          "function"
         ]
       },
-      "length": 43
+      "length": 48
     },
     "tokenStore": {
       "root": {
@@ -1075,6 +1111,10 @@
                             "ref": "Article.html#editComment",
                             "tf": 110
                           },
+                          "Comment.html#read": {
+                            "ref": "Comment.html#read",
+                            "tf": 110
+                          },
                           "Comment.html#delete": {
                             "ref": "Comment.html#delete",
                             "tf": 110
@@ -1125,6 +1165,14 @@
                           },
                           "RequestSession.html#closeSession": {
                             "ref": "RequestSession.html#closeSession",
+                            "tf": 110
+                          },
+                          "Comment.CommentData.html#_freezeThis": {
+                            "ref": "Comment.CommentData.html#_freezeThis",
+                            "tf": 110
+                          },
+                          "Article.ArticleData.html#_freezeThis": {
+                            "ref": "Article.ArticleData.html#_freezeThis",
                             "tf": 110
                           }
                         }
@@ -1277,6 +1325,10 @@
                   "Article.html#editComment": {
                     "ref": "Article.html#editComment",
                     "tf": 16.666666666666664
+                  },
+                  "Comment.html#read": {
+                    "ref": "Comment.html#read",
+                    "tf": 700
                   }
                 },
                 "m": {
@@ -2136,6 +2188,14 @@
                     "RequestSession.html": {
                       "ref": "RequestSession.html",
                       "tf": 110
+                    },
+                    "Comment.CommentData.html": {
+                      "ref": "Comment.CommentData.html",
+                      "tf": 110
+                    },
+                    "Article.ArticleData.html": {
+                      "ref": "Article.ArticleData.html",
+                      "tf": 110
                     }
                   }
                 }
@@ -2215,6 +2275,10 @@
                         "Comment.html#edit": {
                           "ref": "Comment.html#edit",
                           "tf": 25
+                        },
+                        "Comment.CommentData.html#_freezeThis": {
+                          "ref": "Comment.CommentData.html#_freezeThis",
+                          "tf": 25
                         }
                       },
                       "i": {
@@ -2238,6 +2302,23 @@
                       },
                       "#": {
                         "docs": {},
+                        "r": {
+                          "docs": {},
+                          "e": {
+                            "docs": {},
+                            "a": {
+                              "docs": {},
+                              "d": {
+                                "docs": {
+                                  "Comment.html#read": {
+                                    "ref": "Comment.html#read",
+                                    "tf": 1150
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
                         "d": {
                           "docs": {},
                           "e": {
@@ -2276,6 +2357,93 @@
                           }
                         }
                       },
+                      ".": {
+                        "docs": {},
+                        "c": {
+                          "docs": {},
+                          "o": {
+                            "docs": {},
+                            "m": {
+                              "docs": {},
+                              "m": {
+                                "docs": {},
+                                "e": {
+                                  "docs": {},
+                                  "n": {
+                                    "docs": {},
+                                    "t": {
+                                      "docs": {},
+                                      "d": {
+                                        "docs": {},
+                                        "a": {
+                                          "docs": {},
+                                          "t": {
+                                            "docs": {},
+                                            "a": {
+                                              "docs": {
+                                                "Comment.html#read": {
+                                                  "ref": "Comment.html#read",
+                                                  "tf": 50
+                                                },
+                                                "Comment.CommentData.html": {
+                                                  "ref": "Comment.CommentData.html",
+                                                  "tf": 1250
+                                                },
+                                                "Comment.CommentData.html#_freezeThis": {
+                                                  "ref": "Comment.CommentData.html#_freezeThis",
+                                                  "tf": 50
+                                                }
+                                              },
+                                              "#": {
+                                                "docs": {},
+                                                "_": {
+                                                  "docs": {},
+                                                  "f": {
+                                                    "docs": {},
+                                                    "r": {
+                                                      "docs": {},
+                                                      "e": {
+                                                        "docs": {},
+                                                        "e": {
+                                                          "docs": {},
+                                                          "z": {
+                                                            "docs": {},
+                                                            "e": {
+                                                              "docs": {},
+                                                              "t": {
+                                                                "docs": {},
+                                                                "h": {
+                                                                  "docs": {},
+                                                                  "i": {
+                                                                    "docs": {
+                                                                      "Comment.CommentData.html#_freezeThis": {
+                                                                        "ref": "Comment.CommentData.html#_freezeThis",
+                                                                        "tf": 1100
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
                       "d": {
                         "docs": {},
                         "a": {
@@ -2287,6 +2455,52 @@
                                 "Comment.html#edit": {
                                   "ref": "Comment.html#edit",
                                   "tf": 50
+                                },
+                                "Comment.CommentData.html": {
+                                  "ref": "Comment.CommentData.html",
+                                  "tf": 650
+                                },
+                                "Comment.CommentData.html#_freezeThis": {
+                                  "ref": "Comment.CommentData.html#_freezeThis",
+                                  "tf": 25
+                                }
+                              },
+                              "#": {
+                                "docs": {},
+                                "_": {
+                                  "docs": {},
+                                  "f": {
+                                    "docs": {},
+                                    "r": {
+                                      "docs": {},
+                                      "e": {
+                                        "docs": {},
+                                        "e": {
+                                          "docs": {},
+                                          "z": {
+                                            "docs": {},
+                                            "e": {
+                                              "docs": {},
+                                              "t": {
+                                                "docs": {},
+                                                "h": {
+                                                  "docs": {},
+                                                  "i": {
+                                                    "docs": {
+                                                      "Comment.CommentData.html#_freezeThis": {
+                                                        "ref": "Comment.CommentData.html#_freezeThis",
+                                                        "tf": 100
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
                                 }
                               }
                             }
@@ -2491,6 +2705,39 @@
                               "FetchQueue.html#._fetchStep": {
                                 "ref": "FetchQueue.html#._fetchStep",
                                 "tf": 700
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "r": {
+              "docs": {},
+              "e": {
+                "docs": {},
+                "e": {
+                  "docs": {},
+                  "z": {
+                    "docs": {},
+                    "e": {
+                      "docs": {},
+                      "t": {
+                        "docs": {},
+                        "h": {
+                          "docs": {},
+                          "i": {
+                            "docs": {
+                              "Comment.CommentData.html#_freezeThis": {
+                                "ref": "Comment.CommentData.html#_freezeThis",
+                                "tf": 650
+                              },
+                              "Article.ArticleData.html#_freezeThis": {
+                                "ref": "Article.ArticleData.html#_freezeThis",
+                                "tf": 650
                               }
                             }
                           }
@@ -3044,6 +3291,60 @@
                                             "docs": {},
                                             "e": {
                                               "docs": {},
+                                              ".": {
+                                                "docs": {},
+                                                "a": {
+                                                  "docs": {},
+                                                  "r": {
+                                                    "docs": {},
+                                                    "t": {
+                                                      "docs": {},
+                                                      "i": {
+                                                        "docs": {},
+                                                        "c": {
+                                                          "docs": {},
+                                                          "l": {
+                                                            "docs": {},
+                                                            "e": {
+                                                              "docs": {},
+                                                              "d": {
+                                                                "docs": {},
+                                                                "a": {
+                                                                  "docs": {},
+                                                                  "t": {
+                                                                    "docs": {},
+                                                                    "a": {
+                                                                      "docs": {},
+                                                                      "&": {
+                                                                        "docs": {},
+                                                                        "g": {
+                                                                          "docs": {},
+                                                                          "t": {
+                                                                            "docs": {
+                                                                              "Board.html#readArticle": {
+                                                                                "ref": "Board.html#readArticle",
+                                                                                "tf": 25
+                                                                              },
+                                                                              "Article.html#read": {
+                                                                                "ref": "Article.html#read",
+                                                                                "tf": 33.33333333333333
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
                                               "&": {
                                                 "docs": {},
                                                 "g": {
@@ -3129,38 +3430,6 @@
                                                           }
                                                         }
                                                       }
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                },
-                                "o": {
-                                  "docs": {},
-                                  "b": {
-                                    "docs": {},
-                                    "j": {
-                                      "docs": {},
-                                      "e": {
-                                        "docs": {},
-                                        "c": {
-                                          "docs": {},
-                                          "t": {
-                                            "docs": {},
-                                            "&": {
-                                              "docs": {},
-                                              "g": {
-                                                "docs": {},
-                                                "t": {
-                                                  "docs": {
-                                                    "Article.html#read": {
-                                                      "ref": "Article.html#read",
-                                                      "tf": 33.33333333333333
                                                     }
                                                   }
                                                 }
@@ -3325,7 +3594,7 @@
                       },
                       "Board.html#readArticle": {
                         "ref": "Board.html#readArticle",
-                        "tf": 75
+                        "tf": 50
                       },
                       "Board.html#writeArticle": {
                         "ref": "Board.html#writeArticle",
@@ -3575,6 +3844,156 @@
                                 "Article.html#editComment": {
                                   "ref": "Article.html#editComment",
                                   "tf": 16.666666666666664
+                                },
+                                "Comment.CommentData.html": {
+                                  "ref": "Comment.CommentData.html",
+                                  "tf": 50
+                                },
+                                "Article.ArticleData.html": {
+                                  "ref": "Article.ArticleData.html",
+                                  "tf": 700
+                                },
+                                "Article.ArticleData.html#_freezeThis": {
+                                  "ref": "Article.ArticleData.html#_freezeThis",
+                                  "tf": 25
+                                }
+                              },
+                              "#": {
+                                "docs": {},
+                                "_": {
+                                  "docs": {},
+                                  "f": {
+                                    "docs": {},
+                                    "r": {
+                                      "docs": {},
+                                      "e": {
+                                        "docs": {},
+                                        "e": {
+                                          "docs": {},
+                                          "z": {
+                                            "docs": {},
+                                            "e": {
+                                              "docs": {},
+                                              "t": {
+                                                "docs": {},
+                                                "h": {
+                                                  "docs": {},
+                                                  "i": {
+                                                    "docs": {
+                                                      "Article.ArticleData.html#_freezeThis": {
+                                                        "ref": "Article.ArticleData.html#_freezeThis",
+                                                        "tf": 100
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      ".": {
+                        "docs": {},
+                        "a": {
+                          "docs": {},
+                          "r": {
+                            "docs": {},
+                            "t": {
+                              "docs": {},
+                              "i": {
+                                "docs": {},
+                                "c": {
+                                  "docs": {},
+                                  "l": {
+                                    "docs": {},
+                                    "e": {
+                                      "docs": {},
+                                      "d": {
+                                        "docs": {},
+                                        "a": {
+                                          "docs": {},
+                                          "t": {
+                                            "docs": {},
+                                            "a": {
+                                              "docs": {
+                                                "Article.ArticleData.html": {
+                                                  "ref": "Article.ArticleData.html",
+                                                  "tf": 1250
+                                                },
+                                                "Article.ArticleData.html#_freezeThis": {
+                                                  "ref": "Article.ArticleData.html#_freezeThis",
+                                                  "tf": 50
+                                                }
+                                              },
+                                              "#": {
+                                                "docs": {},
+                                                "_": {
+                                                  "docs": {},
+                                                  "f": {
+                                                    "docs": {},
+                                                    "r": {
+                                                      "docs": {},
+                                                      "e": {
+                                                        "docs": {},
+                                                        "e": {
+                                                          "docs": {},
+                                                          "z": {
+                                                            "docs": {},
+                                                            "e": {
+                                                              "docs": {},
+                                                              "t": {
+                                                                "docs": {},
+                                                                "h": {
+                                                                  "docs": {},
+                                                                  "i": {
+                                                                    "docs": {
+                                                                      "Article.ArticleData.html#_freezeThis": {
+                                                                        "ref": "Article.ArticleData.html#_freezeThis",
+                                                                        "tf": 1100
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "r": {
+                          "docs": {},
+                          "e": {
+                            "docs": {},
+                            "a": {
+                              "docs": {},
+                              "d": {
+                                "docs": {
+                                  "Article.ArticleData.html#_freezeThis": {
+                                    "ref": "Article.ArticleData.html#_freezeThis",
+                                    "tf": 25
+                                  }
                                 }
                               }
                             }
@@ -3791,12 +4210,13 @@
           }
         }
       },
-      "length": 226
+      "length": 252
     },
     "corpusTokens": [
       "_checksess",
       "_fetch",
       "_fetchstep",
+      "_freezethi",
       "_getcsrftoken",
       "_loadcooki",
       "_login",
@@ -3812,7 +4232,11 @@
       "article#read",
       "article#restrictcountri",
       "article#writecom",
+      "article.articledata",
+      "article.articledata#_freezethi",
+      "article.read",
       "articledata",
+      "articledata#_freezethi",
       "articleid",
       "base",
       "blockus",
@@ -3832,7 +4256,11 @@
       "comment",
       "comment#delet",
       "comment#edit",
+      "comment#read",
+      "comment.commentdata",
+      "comment.commentdata#_freezethi",
       "commentdata",
+      "commentdata#_freezethi",
       "commentid",
       "countri",
       "csrf",
@@ -3876,9 +4304,9 @@
       "promise.&lt;(response|node)&gt",
       "promise.&lt;array.&lt;article&gt;&gt",
       "promise.&lt;article&gt",
+      "promise.&lt;article.articledata&gt",
       "promise.&lt;board&gt",
       "promise.&lt;comment&gt",
-      "promise.&lt;object&gt",
       "promise.&lt;response&gt",
       "querypag",
       "rate",
@@ -4060,7 +4488,7 @@
     "Board.html#readArticle": {
       "id": "Board.html#readArticle",
       "kind": "function",
-      "title": "readArticle( articleId, options ) → {Article}",
+      "title": "readArticle( articleId, options ) → {Promise.&lt;Article.ArticleData&gt;}",
       "longname": "Board#readArticle",
       "name": "readArticle",
       "tags": "Board#readArticle readArticle",
@@ -4131,7 +4559,7 @@
     "Article.html#read": {
       "id": "Article.html#read",
       "kind": "function",
-      "title": "read( options ) → {Promise.&lt;Object&gt;}",
+      "title": "read( options ) → {Promise.&lt;Article.ArticleData&gt;}",
       "longname": "Article#read",
       "name": "read",
       "tags": "Article#read read",
@@ -4218,6 +4646,16 @@
       "summary": "",
       "description": "새 댓글 객체 Comment를 만든다. 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).",
       "body": ""
+    },
+    "Comment.html#read": {
+      "id": "Comment.html#read",
+      "kind": "function",
+      "title": "read() → {Comment.CommentData}",
+      "longname": "Comment#read",
+      "name": "read",
+      "tags": "Comment#read read",
+      "summary": "",
+      "description": "해당 댓글을 읽는다."
     },
     "Comment.html#delete": {
       "id": "Comment.html#delete",
@@ -4359,6 +4797,48 @@
       "tags": "RequestSession#closeSession closeSession",
       "summary": "",
       "description": "세션을 닫는다."
+    },
+    "Comment.CommentData.html": {
+      "id": "Comment.CommentData.html",
+      "kind": "class",
+      "title": "Comment.CommentData",
+      "longname": "Comment.CommentData",
+      "name": "CommentData",
+      "tags": "Comment.CommentData CommentData",
+      "summary": "",
+      "description": "새 댓글 정보 객체 ArticleData를 만든다.",
+      "body": ""
+    },
+    "Comment.CommentData.html#_freezeThis": {
+      "id": "Comment.CommentData.html#_freezeThis",
+      "kind": "function",
+      "title": "_freezeThis() → {Comment.CommentData}",
+      "longname": "Comment.CommentData#_freezeThis",
+      "name": "_freezeThis",
+      "tags": "Comment.CommentData#_freezeThis CommentData#_freezeThis _freezeThis",
+      "summary": "",
+      "description": "CommentData를 고정한다. Comment 생성 후 값을 변경하지 않도록 호출해 줌."
+    },
+    "Article.ArticleData.html": {
+      "id": "Article.ArticleData.html",
+      "kind": "class",
+      "title": "Article.ArticleData",
+      "longname": "Article.ArticleData",
+      "name": "ArticleData",
+      "tags": "Article.ArticleData ArticleData",
+      "summary": "",
+      "description": "새 게시글 정보 객체 ArticleData를 만든다.",
+      "body": ""
+    },
+    "Article.ArticleData.html#_freezeThis": {
+      "id": "Article.ArticleData.html#_freezeThis",
+      "kind": "function",
+      "title": "_freezeThis() → {Article.ArticleData}",
+      "longname": "Article.ArticleData#_freezeThis",
+      "name": "_freezeThis",
+      "tags": "Article.ArticleData#_freezeThis ArticleData#_freezeThis _freezeThis",
+      "summary": "",
+      "description": "ArticleData를 고정한다. Article.read() 수행 후 값을 변경하지 않도록 호출해 줌."
     }
   }
 }

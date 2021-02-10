@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-		<title>Comment</title>
+		<title>Article.ArticleData</title>
 		<!--[if lt IE 9]>
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -64,7 +64,7 @@
 	<!-- end:navbar.hbs -->		<div class="page-header">
 			<div class="container">
 				<span class="kind">class</span>
-				<h1><span class="name">Comment</span></h1>
+				<h1><span class="ancestors"><a href="Article.html">Article</a>.</span><span class="name">ArticleData</span></h1>
 			</div>
 		</div>
 	<div class="container content">
@@ -73,17 +73,16 @@
 						<ol class="breadcrumb">
 							<li><a href="index.html">Home</a></li>
 							<li><a href="list_class.html">Classes</a></li>
-							<li class="active">Comment</li>
+							<li class="active"><a href="Article.html">Article</a>.ArticleData</li>
 						</ol>
 					<section>
 							<dl class="symbol primary">
 								<dt class="symbol-title class collapsible-symbol expanded">
-			<h2 class="class"><span class="signature-new">new&nbsp;</span><span class="name">Comment</span><span class="signature-params">( <span class="signature-param">article</span>, <span class="signature-param">commentData</span>&nbsp;)</span><span class="signature-type"></span></h2>
+			<h2 class="class"><span class="signature-new">new&nbsp;</span><span class="name">ArticleData</span><span class="signature-params">( <span class="signature-param">data</span>&nbsp;)</span><span class="signature-type"></span></h2>
 </dt>
 <dd class="symbol-details class  collapsible-symbol expanded" style="max-height: 9999px;">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>새 댓글 객체 Comment를 만든다.
-			생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).</p></div>
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>새 게시글 정보 객체 ArticleData를 만든다.</p></div>
 			</div>			<div class="callout callout-info">
 				<h5>Parameters</h5>
 				<table class="params table table-striped">
@@ -96,17 +95,10 @@
 					</thead>
 					<tbody>
 						<tr>
-								<td><code>article</code></td>
-							<td><span class="param-type"><a href="Article.html">Article</a></span></td>
+								<td><code>data</code></td>
+							<td><span class="param-type">Object</span></td>
 							<td class="last">
-									<p>해당 댓글이 속해있는 게시글 객체</p>
-							</td>
-						</tr>
-						<tr>
-								<td><code>commentData</code></td>
-							<td><span class="param-type"><a href="Comment.CommentData.html">Comment.CommentData</a></span></td>
-							<td class="last">
-									<p>댓글 정보</p>
+									<p>게시글 정보</p>
 										<table class="params table table-striped">
 											<thead>
 											<tr>
@@ -118,27 +110,91 @@
 											</thead>
 											<tbody>
 												<tr>
-														<td><code>commentId</code></td>
+														<td><code>isSummary</code></td>
+													<td><span class="param-type">boolean</span></td>
+														<td class="attributes"></td>
+													<td class="last">
+															<p>true일 경우 해당 정보는 read()를 통해 얻어온 정보, false일 경우 readPage()를 통해 얻어온 요약 정보</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>articleId</code></td>
 													<td><span class="param-type">number</span></td>
 														<td class="attributes">&lt;optional&gt;<br/></td>
 													<td class="last">
-															<p>댓글 번호(주어지지 않을 경우 url 혹은 apiUrl을 통해 생성함)</p>
+															<p>게시글 번호</p>
 													</td>
 												</tr>
 												<tr>
-														<td><code>apiUrl</code></td>
-													<td><span class="param-type">URL</span></td>
+														<td><code>category</code></td>
+													<td><span class="param-type">string</span></td>
 														<td class="attributes">&lt;optional&gt;<br/></td>
 													<td class="last">
-															<p>댓글 API 호출시 필요한 URL(주어지지 않을 경우 commentId 혹은 url을 통해 생성함)</p>
+															<p>게시글 분류</p>
 													</td>
 												</tr>
 												<tr>
-														<td><code>url</code></td>
-													<td><span class="param-type">URL</span></td>
+														<td><code>title</code></td>
+													<td><span class="param-type">string</span></td>
 														<td class="attributes">&lt;optional&gt;<br/></td>
 													<td class="last">
-															<p>댓글 URL(주어지지 않을 경우 commentId 혹은 apiUrl을 통해 생성함)</p>
+															<p>게시글 제목</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>content</code></td>
+													<td><span class="param-type">string</span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>게시글 내용</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>time</code></td>
+													<td><span class="param-type">Date</span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>게시글 작성 시각</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>view</code></td>
+													<td><span class="param-type">number</span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>게시글 조회수</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>comments</code></td>
+													<td><span class="param-type">Array.&lt;<a href="Comment.html">Comment</a>></span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>게시글 댓글 목록</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>commentCount</code></td>
+													<td><span class="param-type">number</span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>게시글 댓글수</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>rate</code></td>
+													<td><span class="param-type">Array.&lt;number></span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>게시글 추천 수와 비추천 수</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>rateDiff</code></td>
+													<td><span class="param-type">number</span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>게시글 추천 수 - 비추천 수</p>
 													</td>
 												</tr>
 											</tbody>
@@ -168,7 +224,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="comment.js.html">comment.js</a>, <a href="comment.js.html#line-15">line 15</a></p>
+									<p class="form-control-static"><a href="article.js.html">article.js</a>, <a href="article.js.html#line-62">line 62</a></p>
 								</div>
 							</div>
 			
@@ -180,31 +236,21 @@
 </dd>
 							</dl>
 							<article class="secondary">
-									<h3>Classes</h3>
-									<dl class="symbol">
-											<hr/>
-											<dt class="symbol-title class public">
-			<h4 id="CommentData" class="class public"><a href="Comment.CommentData.html"><span class="signature-new">new&nbsp;</span><span class="name">CommentData</span><span class="signature-params">( <span class="signature-param">data</span>&nbsp;)</span><span class="signature-type"></span></a></h4>
-		</dt>
-<dd class="symbol-details class public">
-	<div class="symbol-details-inner">
-	</div>
-</dd>
-									</dl>
 									<h3>Methods</h3>
 									<dl class="symbol">
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="read" class="function public"><span class="name">read</span><span class="signature-params">()</span><span class="signature-type"> &rarr;&nbsp;{<a href="Comment.CommentData.html">Comment.CommentData</a>}</span></h4>
+			<h4 id="_freezeThis" class="function public"><span class="name">_freezeThis</span><span class="signature-params">()</span><span class="signature-type"> &rarr;&nbsp;{<a href="Article.ArticleData.html">Article.ArticleData</a>}</span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>해당 댓글을 읽는다.</p></div>
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>ArticleData를 고정한다.
+			Article.read() 수행 후 값을 변경하지 않도록 호출해 줌.</p></div>
 			</div>			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
 							<div class="form-group">
-								<label class="col-sm-3 control-label returns-type"><span class="param-type"><a href="Comment.CommentData.html">Comment.CommentData</a></span></label>
+								<label class="col-sm-3 control-label returns-type"><span class="param-type"><a href="Article.ArticleData.html">Article.ArticleData</a></span></label>
 								<div class="col-sm-9">
-									<div class="form-control-static returns-description"><p>댓글 정보</p></div>
+									<div class="form-control-static returns-description"><p>해당 ArticleData의 freeze된 사본</p></div>
 								</div>
 							</div>
 					</form>
@@ -228,126 +274,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="comment.js.html">comment.js</a>, <a href="comment.js.html#line-87">line 87</a></p>
-								</div>
-							</div>
-			
-			
-			
-			
-					</form>
-			</div>	</div>
-</dd>
-											<hr/>
-											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="delete" class="function public"><span class="name">delete</span><span class="signature-params">()</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Response>}</span></h4>
-		</dt>
-<dd class="symbol-details function public  collapsible-symbol">
-	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>해당 댓글을 삭제한다.</p></div>
-			</div>			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
-							<div class="form-group">
-								<label class="col-sm-3 control-label returns-type"><span class="param-type">Promise.&lt;Response></span></label>
-								<div class="col-sm-9">
-									<div class="form-control-static returns-description"><p>댓글 작성 fetch에 대한 Response</p></div>
-								</div>
-							</div>
-					</form>
-			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-							<!-- source -->
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Source</label>
-								<div class="col-sm-9">
-									<p class="form-control-static"><a href="comment.js.html">comment.js</a>, <a href="comment.js.html#line-96">line 96</a></p>
-								</div>
-							</div>
-			
-			
-			
-			
-					</form>
-			</div>	</div>
-</dd>
-											<hr/>
-											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="edit" class="function public"><span class="name">edit</span><span class="signature-params">( <span class="signature-param">commentId</span>, <span class="signature-param">comment</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Response>}</span></h4>
-		</dt>
-<dd class="symbol-details function public  collapsible-symbol">
-	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>해당 게시글에 작성된 댓글을 수정한다.
-			수정하더라도 commentData는 수정되지 않는다.</p></div>
-			</div>			<div class="callout callout-info">
-				<h5>Parameters</h5>
-				<table class="params table table-striped">
-					<thead>
-					<tr>
-							<th>Name</th>
-						<th>Type</th>
-						<th class="last">Description</th>
-					</tr>
-					</thead>
-					<tbody>
-						<tr>
-								<td><code>commentId</code></td>
-							<td><span class="param-type">number</span></td>
-							<td class="last">
-									<p>댓글 번호</p>
-							</td>
-						</tr>
-						<tr>
-								<td><code>comment</code></td>
-							<td><span class="param-type">string</span></td>
-							<td class="last">
-									<p>댓글 내용(HTML)</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
-							<div class="form-group">
-								<label class="col-sm-3 control-label returns-type"><span class="param-type">Promise.&lt;Response></span></label>
-								<div class="col-sm-9">
-									<div class="form-control-static returns-description"><p>댓글 수정 fetch에 대한 Response</p></div>
-								</div>
-							</div>
-					</form>
-			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-							<!-- source -->
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Source</label>
-								<div class="col-sm-9">
-									<p class="form-control-static"><a href="comment.js.html">comment.js</a>, <a href="comment.js.html#line-119">line 119</a></p>
+									<p class="form-control-static"><a href="article.js.html">article.js</a>, <a href="article.js.html#line-94">line 94</a></p>
 								</div>
 							</div>
 			
