@@ -1,6 +1,6 @@
 {
   "name": "arcalive",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,11 +15,11 @@
     "url": "https://github.com/miririt/arcalive.js.git"
   },
   "dependencies": {
-    "foodoc": "0.0.9",
     "node-fetch": "^2.6.1",
     "node-html-parser": "^2.1.0"
   },
   "devDependencies": {
+    "foodoc": "0.0.9",
     "mocha": "^8.2.1"
   }
 }
