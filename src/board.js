@@ -4,6 +4,7 @@ const Article = require('./article');
 /**
  * 새 게시판 객체 Board를 만든다.
  * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
+ * @constructor
  * 
  * @param {RequestSession} session 게시판을 열람할 세션
  * @param {Object} boardData 게시판 정보

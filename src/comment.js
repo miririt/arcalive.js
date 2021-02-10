@@ -4,6 +4,7 @@ const { ArgumentError } = require('./errors');
 /**
  * 새 댓글 객체 Comment를 만든다.
  * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
+ * @constructor
  * 
  * @param {Article} article 해당 댓글이 속해있는 게시글 객체
  * @param {Object} commentData 댓글 정보

@@ -8,6 +8,7 @@ const { ArgumentError } = require('./errors');
 
 /**
  * 새 요청 세션 RequestSession을 만든다.
+ * @constructor
  * 
  * @param {string} username 사용자 ID
  * @param {string} password 사용자 PW

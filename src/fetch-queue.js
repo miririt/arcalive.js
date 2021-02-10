@@ -2,6 +2,8 @@ const fetch = require('node-fetch');
 
 /**
  * Fetch 큐 정적 클래스
+ * 호출할 경우 예외 발생
+ * @class
  */
 function FetchQueue() {
   throw new SyntaxError('This is a static class');

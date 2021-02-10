@@ -1,10 +1,9 @@
-<!-- start:source.tmpl.hbs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-		<title>fetch-queue.js</title>
+		<title>Classes</title>
 		<!--[if lt IE 9]>
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -14,7 +13,7 @@
 		<link type="text/css" rel="stylesheet" href="css/template.min.css">
 		<script type="text/javascript">
 			window.TEMPLATE_OPTIONS = {"includeDate":true,"dateFormat":"Do MMM YYYY","systemName":"FooDoc","systemSummary":"A Bootstrap and Handlebars based template for JSDoc3.","systemLogo":"","systemColor":"","navMembers":[{"kind":"class","title":"Classes","summary":"All documented classes."},{"kind":"external","title":"Externals","summary":"All documented external members."},{"kind":"global","title":"Globals","summary":"All documented globals."},{"kind":"mixin","title":"Mixins","summary":"All documented mixins."},{"kind":"interface","title":"Interfaces","summary":"All documented interfaces."},{"kind":"module","title":"Modules","summary":"All documented modules."},{"kind":"namespace","title":"Namespaces","summary":"All documented namespaces."},{"kind":"tutorial","title":"Tutorials","summary":"All available tutorials."}],"footer":"","copyright":"FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.","linenums":true,"collapseSymbols":true,"inverseNav":true,"inlineNav":false,"outputSourceFiles":true,"sourceRootPath":null,"disablePackagePath":true,"outputSourcePath":false,"showTableOfContents":true,"showAccessFilter":true,"analytics":null,"methodHeadingReturns":true,"sort":"linenum, longname, version, since","search":true,"favicon":null,"stylesheets":[],"scripts":[],"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":false},"docdash":{"static":false,"sort":true}};
-			window.DOCLET_TOC_ENABLED = false;
+			window.DOCLET_TOC_ENABLED = true;
 			window.DOCLET_AFILTER_ENABLED = false;
 		</script>
 </head>
@@ -62,147 +61,68 @@
 	</header>
 	<!-- end:navbar.hbs -->		<div class="page-header">
 			<div class="container">
-				<span class="kind">source</span>
-				<h1><span class="name">fetch-queue.js</span></h1>
-			</div>
+				<span class="kind">list</span>
+				<h1><span class="name">Classes</span></h1>
+				<div class="summary"><p>All documented classes.</p></div>			</div>
 		</div>
 	<div class="container content">
 		<div class="row">
-			<div class="col-md-12 main-content">
-		<section class="source-section">
-			<article></article>
-			<pre class="prettyprint source language-javascript line-numbers"><code class="language-javascript">const fetch = require('node-fetch');
-
-/**
- * Fetch 큐 정적 클래스
- * 호출할 경우 예외 발생
- * @class
- */
-function FetchQueue() {
-  throw new SyntaxError('This is a static class');
-}
-
-FetchQueue._queue = [];
-FetchQueue._head = 0;
-FetchQueue._clean = 64;
-FetchQueue._rateLimit = 400;
-FetchQueue._stopped = false;
-
-/**
- * 다음 Fetch 작업을 얻어온다.
- * 
- * @returns {Object} task 다음에 실행해야 하는 fetch 작업 정보
- */
-FetchQueue._next = function() {
-  if(this._head === this._queue.length) {
-    delete this._queue;
-    this._queue = [];
-    this._head = 0;
-  }
-  if(this._head > this._clean) {
-    this._queue = this._queue.slice(this._head);
-    this._head = 0;
-  }
-
-  if(this._queue.length === 0) return null;
-  else return this._queue[this._head++];
-}
-
-/**
- * 다음 Fetch 작업을 수행한다.
- */
-FetchQueue._fetchStep = function() {
-  const task = this._next();
-
-  if(task !== null) {
-    fetch(...task.args)
-      .then(function(res) {
-        task.resolver(res);
-      })
-      .catch(function(err) {
-        task.rejecter(err);
-      });
-  } else {
-    this.stop();
-  }
-
-  if(!this._stopped) {
-    setTimeout(this._fetchStep.bind(this), this._rateLimit);
-  }
-}
-
-/**
- * Rate Limit을 재설정한다.
- * 각 fetch는 여기에서 지정한 제한값만큼의 시간을 대기하고 보내진다.
- * 
- * @param {number} newLimit 새 제한(단위:ms)
- */
-FetchQueue.setRateLimit = function(newLimit) {
-  this._rateLimit = newLimit;
-}
-
-/**
- * Fetch를 일시정지한다.
- */
-FetchQueue.pause = function() {
-  this._stopped = true;
-}
-
-/**
- * Fetch가 정지되어 있었을 경우 다시 시작한다.
- */
-FetchQueue.resume = function() {
-  if(this._stopped) {
-    this._stopped = false;
-    this._fetchStep();
-  }
-}
-
-/**
- * Fetch를 정지한다.
- * 대기열의 모든 fetch는 전부 reject된다.
- */
-FetchQueue.stop = function() {
-  this.pause();
-
-  this._queue.forEach(task => {
-    task.rejecter(new Error('Fetch queue has been stopped'));
-  });
-
-  delete this._queue;
-  this._queue = [];
-  this._head = 0;
-}
-
-/**
- * 새 fetch를 큐에 넣는다.
- * 
- * @param {string|URL} resource
- * @param {Object} init
- * @returns {Promise&lt;Response>} 응답
- */
-FetchQueue.fetch = function(resource, init) {
-  let resolver, rejecter;
-  const fetchPromise = new Promise(function(resolve, reject) {
-    resolver = resolve;
-    rejecter = reject;
-  });
-
-  this._queue.push({
-    args: [resource, init],
-    resolver: resolver,
-    rejecter: rejecter
-  });
-
-  this.resume();
-  return fetchPromise;
-}
-
-FetchQueue._fetchStep();
-
-module.exports = FetchQueue;</code></pre>
-		</section>
+			<div class="col-md-9 main-content">
+						<ol class="breadcrumb">
+							<li><a href="index.html">Home</a></li>
+							<li class="active">Classes</li>
+						</ol>
+					<section>
+		<h2><span class="name">Classes</span></h2>
+		<article class="secondary">
+				<dl class="symbol">
+						
+						<dt class="symbol-title class public">
+			<h4 id="Article" class="class public"><a href="Article.html"><span class="signature-new">new&nbsp;</span><span class="name">Article</span><span class="signature-params">( <span class="signature-param">board</span>, <span class="signature-param">articleData</span>&nbsp;)</span><span class="signature-type"></span></a></h4>
+</dt>
+<dd class="symbol-details class public">
+	<div class="symbol-details-inner">
+	</div>
+</dd>
+						<hr/>
+						<dt class="symbol-title class public">
+			<h4 id="Board" class="class public"><a href="Board.html"><span class="signature-new">new&nbsp;</span><span class="name">Board</span><span class="signature-params">( <span class="signature-param">session</span>, <span class="signature-param">boardData</span>&nbsp;)</span><span class="signature-type"></span></a></h4>
+</dt>
+<dd class="symbol-details class public">
+	<div class="symbol-details-inner">
+	</div>
+</dd>
+						<hr/>
+						<dt class="symbol-title class public">
+			<h4 id="Comment" class="class public"><a href="Comment.html"><span class="signature-new">new&nbsp;</span><span class="name">Comment</span><span class="signature-params">( <span class="signature-param">article</span>, <span class="signature-param">commentData</span>&nbsp;)</span><span class="signature-type"></span></a></h4>
+</dt>
+<dd class="symbol-details class public">
+	<div class="symbol-details-inner">
+	</div>
+</dd>
+						<hr/>
+						<dt class="symbol-title class public">
+			<h4 id="FetchQueue" class="class public"><a href="FetchQueue.html"><span class="signature-new">new&nbsp;</span><span class="name">FetchQueue</span><span class="signature-params">()</span><span class="signature-type"></span></a></h4>
+</dt>
+<dd class="symbol-details class public">
+	<div class="symbol-details-inner">
+	</div>
+</dd>
+						<hr/>
+						<dt class="symbol-title class public">
+			<h4 id="RequestSession" class="class public"><a href="RequestSession.html"><span class="signature-new">new&nbsp;</span><span class="name">RequestSession</span><span class="signature-params">( <span class="signature-param">username</span>, <span class="signature-param">password</span>&nbsp;)</span><span class="signature-type"></span></a></h4>
+</dt>
+<dd class="symbol-details class public">
+	<div class="symbol-details-inner">
+	</div>
+</dd>
+				</dl>
+		</article>
+					</section>
 			</div>
+				<div class="col-md-3 side-content">
+					<nav class="toc hidden-print hidden-sm hidden-xs"></nav>
+				</div>
 		</div>
 	</div>
 	<footer>
@@ -234,4 +154,3 @@ module.exports = FetchQueue;</code></pre>
 	
 </body>
 </html>
-<!-- end:source.tmpl.hbs -->

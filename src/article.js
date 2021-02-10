@@ -5,6 +5,7 @@ const { ArgumentError, SessionError } = require('./errors');
 /**
  * 새 게시글 객체 Article을 만든다.
  * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
+ * @constructor
  * 
  * @param {Board} board 해당 게시글이 속해 있는 게시판 객체
  * @param {Object} articleData 게시글 정보
