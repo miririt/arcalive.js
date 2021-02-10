@@ -7,22 +7,26 @@ const Comment = require('./comment');
  * 
  * @param {Board} board 해당 게시글이 속해 있는 게시판 객체
  * @param {Object} articleData 게시글 정보
- * @param {number} articleData.articleId 게시글 번호
- * @param {URL} [articleData.url] 게시글 URL(주어지지 않을 경우 board와 articleId를 통해 생성함)
+ * @param {number} [articleData.articleId] 게시글 번호(주어지지 않을 경우 url를 통해 생성함)
+ * @param {URL} [articleData.url] 게시글 URL(주어지지 않을 경우 articleId를 통해 생성함)
  */
 function Article(board, articleData) {
   if(!board._session) {
     throw new Error('Invalid board session');
   }
-  if(!articleData.articleId) {
-    throw new Error('Invalid article id');
-  }
 
   this._session = board._session;
   this._board = board;
 
-  this.articleId = articleData.articleId;
-  this.url = articleData.url || new url.URL(`${board.url}/${articleData.articleId}`);
+  if(articleData.articleId) {
+    this.articleId = articleData.articleId;
+    this.url = new url.URL(`${board.url}/${articleData.articleId}`);
+  } else if(articleData.url) {
+    this.articleId = +articleData.url.pathname.match(/^\/b\/[^/]+\/(\d+)/)[1];
+    this.url = articleData.url;
+  } else {
+    throw new Error('at least one of { articleId, url } must have specified');
+  }
 
   this._loaded = false;
   this._articleData = { ...articleData };
@@ -247,7 +251,7 @@ Article.prototype.restrictCountry = async function(...countries) {
  * 작성하더라도 articleData에는 추가되지 않으며, 변경 사항을 확인하려면 noCache로 다시 read해와야 한다.
  * 
  * @param {string} comment 댓글 내용(HTML)
- * @returns {Promise<Response>} 댓글 작성 fetch에 대한 Response
+ * @returns {Promise<Comment>} 댓글 작성 fetch에 대한 Response
  */
 Article.prototype.writeComment = async function(comment) {
   if(this._session._anonymous) {
@@ -255,15 +259,19 @@ Article.prototype.writeComment = async function(comment) {
   }
 
   const body = new url.URLSearchParams();
-  accountInfo.append('contentType', 'text');
-  accountInfo.append('content', comment);
+  body.append('contentType', 'text');
+  body.append('content', comment);
   
-  return await this._session._fetch(`${this.url}/comment`, {
+  const response = await this._session._fetch(`${this.url}/comment`, {
     method: 'POST',
     headers: { referer: this.url },
     body: body,
     csrfRequired: true,
     parse: false
+  });
+
+  return new Comment(this, {
+    url: new URL(response.url)
   });
 }
 

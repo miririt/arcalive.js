@@ -33,11 +33,13 @@ describe('특수 도메인 테스트', function() {
 
   it('getBoard로 특수 도메인 테스트', async function() {
     const specialBoard = await session.getBoard('smpeople');
-    return await specialBoard.readPage(1);
+    const firstPage = await specialBoard.readPage(1);
+    return await firstPage[0].read();
   });
 
   it('fromUrl로 특수 도메인 테스트', async function() {
     const specialBoard = await session.fromUrl('https://sm.arca.live/b/smpeople');
-    return await specialBoard.readPage(1);
+    const firstPage = await specialBoard.readPage(1);
+    return await firstPage[0].read();
   });
-})
+});
