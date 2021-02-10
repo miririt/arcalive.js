@@ -4,7 +4,7 @@
   "package": "./package.json",
   "reporter": "spec",
   "slow": 75,
-  "timeout": 5000,
+  "timeout": 50000,
   "ui": "bdd",
   "spec": ["test/index.js"]
 }

@@ -17,6 +17,7 @@ FetchQueue._stopped = false;
 
 /**
  * 다음 Fetch 작업을 얻어온다.
+ * 큐에 완료된 작업이 쌓여있을 경우 정리한다.
  * 
  * @returns {Object} task 다음에 실행해야 하는 fetch 작업 정보
  */

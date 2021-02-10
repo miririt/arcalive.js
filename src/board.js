@@ -1,5 +1,4 @@
 const url = require('url');
-const { ArticleData } = require('./article');
 const Article = require('./article');
 
 /**
@@ -15,20 +14,55 @@ function Board(session, boardData) {
   this._session = session;
   this.url = boardData.url;
 
+  this._cacheSize = Board._cacheSize || 64;
   this._cachedArticles = {};
+  this._cachedOrder = [];
 }
 
 /**
- * 해당 게시판에 있는 게시글의 객체 Article을 얻어온다.
- * 실제 존재 여부와 관계 없이 무조건 반환한다.
+ * Board의 전역 캐시 사이즈를 설정한다.
+ * 이미 생성된 객체에는 효과가 없다.
+ * 
+ * @param {number} newSize 새 캐시 사이즈
+ */
+Board.setGlobalArticleCache = function(newSize) {
+  this._cacheSize = newSize;
+}
+
+/**
+ * Board 객체의 캐시 사이즈를 설정한다.
+ * 다른 객체에는 효과가 없다.
+ * 
+ * @param {number} articleId 게시글 번호
+ */
+Board.prototype.setArticleCache = function(newSize) {
+  this._cacheSize = newSize;
+}
+
+/**
+ * 해당 번호의 Article 객체를 얻어온다.
+ * 만일 캐시된 Article 객체가 지나치게 많을 경우 캐시를 정리한다.
  * 
  * @param {number} articleId 게시글 번호
  * @returns {Article} 해당 번호의 게시글을 나타내는 Article 객체
  */
 Board.prototype.getArticle = function(articleId) {
-  const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
+  if(Object.keys(this._cachedArticles).length > this._cacheSize) {
+    const lastUsed = this._cachedOrder.shift();
+    delete this._cachedArticles[lastUsed];
+  }
 
-  return articleObject;
+  const cachedIndex = this._cachedOrder.indexOf(articleId);
+  if(cachedIndex !== -1) {
+    this._cachedOrder.splice(cachedIndex, 1);
+  }
+  this._cachedOrder.push(articleId);
+
+  this._cachedArticles[articleId] = this._cachedArticles[articleId] || new Article(this, {
+    articleId: articleId
+  });
+
+  return this._cachedArticles[articleId];
 }
 
 /**
@@ -42,7 +76,7 @@ Board.prototype.getArticle = function(articleId) {
  * @returns {Promise<Article.ArticleData>} 해당 번호의 게시글을 나타내는 Article 객체
  */
 Board.prototype.readArticle = async function(articleId, options) {
-  const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
+  const articleObject = this.getArticle(articleId); 
 
   return articleObject.read(options);
 }
@@ -102,7 +136,7 @@ Board.prototype.writeArticle = async function(article) {
  * @returns {Promise<Response>} 게시글 삭제 fetch에 대한 Response
  */
 Board.prototype.deleteArticle = function(articleId) {
-  const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
+  const articleObject = this.getArticle(articleId); 
   
   return articleObject.delete();
 }
@@ -118,7 +152,7 @@ Board.prototype.deleteArticle = function(articleId) {
  * @returns {Promise<Response>} 게시글 수정 fetch에 대한 Response
  */
 Board.prototype.editArticle = async function(articleId, article) {
-  const articleObject = this._cachedArticles[articleId] || (this._cachedArticles[articleId] = new Article(this, { articleId: articleId }));
+  const articleObject = this.getArticle(articleId); 
 
   return articleObject.edit(article);
 }
