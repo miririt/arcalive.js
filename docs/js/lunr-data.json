@@ -40,14 +40,12 @@
     "documentStore": {
       "store": {
         "index.html": [
-          "base",
-          "bootstrap",
-          "foodoc",
-          "handlebar",
+          "api",
+          "arca.l",
+          "arcalive.j",
           "index",
-          "jsdoc3",
           "readm",
-          "templat"
+          "small"
         ],
         "global.html": [
           "document",
@@ -393,41 +391,52 @@
     "tokenStore": {
       "root": {
         "docs": {},
-        "b": {
+        "a": {
           "docs": {},
-          "a": {
+          "p": {
             "docs": {},
-            "s": {
-              "docs": {},
-              "e": {
-                "docs": {
-                  "index.html": {
-                    "ref": "index.html",
-                    "tf": 14
-                  }
+            "i": {
+              "docs": {
+                "index.html": {
+                  "ref": "index.html",
+                  "tf": 23.333333333333332
                 }
               }
             }
           },
-          "o": {
+          "r": {
             "docs": {},
-            "o": {
+            "c": {
               "docs": {},
-              "t": {
+              "a": {
                 "docs": {},
-                "s": {
+                ".": {
                   "docs": {},
-                  "t": {
+                  "l": {
+                    "docs": {
+                      "index.html": {
+                        "ref": "index.html",
+                        "tf": 23.333333333333332
+                      }
+                    }
+                  }
+                },
+                "l": {
+                  "docs": {},
+                  "i": {
                     "docs": {},
-                    "r": {
+                    "v": {
                       "docs": {},
-                      "a": {
+                      "e": {
                         "docs": {},
-                        "p": {
-                          "docs": {
-                            "index.html": {
-                              "ref": "index.html",
-                              "tf": 14
+                        ".": {
+                          "docs": {},
+                          "j": {
+                            "docs": {
+                              "index.html": {
+                                "ref": "index.html",
+                                "tf": 600
+                              }
                             }
                           }
                         }
@@ -437,482 +446,109 @@
                 }
               }
             },
-            "a": {
+            "t": {
               "docs": {},
-              "r": {
+              "i": {
                 "docs": {},
-                "d": {
-                  "docs": {
-                    "Board.html": {
-                      "ref": "Board.html",
-                      "tf": 1916.6666666666667
-                    }
-                  },
-                  "#": {
-                    "docs": {},
-                    "g": {
-                      "docs": {},
-                      "e": {
-                        "docs": {},
-                        "t": {
-                          "docs": {},
-                          "a": {
-                            "docs": {},
-                            "r": {
-                              "docs": {},
-                              "t": {
-                                "docs": {},
-                                "i": {
-                                  "docs": {},
-                                  "c": {
-                                    "docs": {},
-                                    "l": {
-                                      "docs": {
-                                        "Board.html#getArticle": {
-                                          "ref": "Board.html#getArticle",
-                                          "tf": 1150
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "r": {
-                      "docs": {},
-                      "e": {
-                        "docs": {},
-                        "a": {
-                          "docs": {},
-                          "d": {
-                            "docs": {},
-                            "a": {
-                              "docs": {},
-                              "r": {
-                                "docs": {},
-                                "t": {
-                                  "docs": {},
-                                  "i": {
-                                    "docs": {},
-                                    "c": {
-                                      "docs": {},
-                                      "l": {
-                                        "docs": {
-                                          "Board.html#readArticle": {
-                                            "ref": "Board.html#readArticle",
-                                            "tf": 1150
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            },
-                            "p": {
-                              "docs": {},
-                              "a": {
-                                "docs": {},
-                                "g": {
-                                  "docs": {
-                                    "Board.html#readPage": {
-                                      "ref": "Board.html#readPage",
-                                      "tf": 1150
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "w": {
-                      "docs": {},
-                      "r": {
-                        "docs": {},
-                        "i": {
-                          "docs": {},
-                          "t": {
-                            "docs": {},
-                            "e": {
-                              "docs": {},
-                              "a": {
-                                "docs": {},
-                                "r": {
-                                  "docs": {},
-                                  "t": {
-                                    "docs": {},
-                                    "i": {
-                                      "docs": {},
-                                      "c": {
-                                        "docs": {},
-                                        "l": {
-                                          "docs": {
-                                            "Board.html#writeArticle": {
-                                              "ref": "Board.html#writeArticle",
-                                              "tf": 1150
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "d": {
-                      "docs": {},
-                      "e": {
-                        "docs": {},
-                        "l": {
-                          "docs": {},
-                          "e": {
-                            "docs": {},
-                            "t": {
-                              "docs": {},
-                              "e": {
-                                "docs": {},
-                                "a": {
-                                  "docs": {},
-                                  "r": {
-                                    "docs": {},
-                                    "t": {
-                                      "docs": {},
-                                      "i": {
-                                        "docs": {},
-                                        "c": {
-                                          "docs": {},
-                                          "l": {
-                                            "docs": {
-                                              "Board.html#deleteArticle": {
-                                                "ref": "Board.html#deleteArticle",
-                                                "tf": 1150
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
+                "c": {
+                  "docs": {},
+                  "l": {
+                    "docs": {
+                      "Board.html#getArticle": {
+                        "ref": "Board.html#getArticle",
+                        "tf": 83.33333333333333
+                      },
+                      "Board.html#readArticle": {
+                        "ref": "Board.html#readArticle",
+                        "tf": 50
+                      },
+                      "Board.html#writeArticle": {
+                        "ref": "Board.html#writeArticle",
+                        "tf": 33.33333333333333
+                      },
+                      "Board.html#editArticle": {
+                        "ref": "Board.html#editArticle",
+                        "tf": 25
+                      },
+                      "Article.html": {
+                        "ref": "Article.html",
+                        "tf": 1916.6666666666667
+                      },
+                      "Article.html#edit": {
+                        "ref": "Article.html#edit",
+                        "tf": 33.33333333333333
                       }
                     },
                     "e": {
                       "docs": {},
-                      "d": {
+                      "i": {
                         "docs": {},
-                        "i": {
+                        "d": {
+                          "docs": {
+                            "Board.html#getArticle": {
+                              "ref": "Board.html#getArticle",
+                              "tf": 33.33333333333333
+                            },
+                            "Board.html#readArticle": {
+                              "ref": "Board.html#readArticle",
+                              "tf": 25
+                            },
+                            "Board.html#deleteArticle": {
+                              "ref": "Board.html#deleteArticle",
+                              "tf": 33.33333333333333
+                            },
+                            "Board.html#editArticle": {
+                              "ref": "Board.html#editArticle",
+                              "tf": 25
+                            }
+                          }
+                        }
+                      },
+                      "#": {
+                        "docs": {},
+                        "r": {
                           "docs": {},
-                          "t": {
+                          "e": {
                             "docs": {},
                             "a": {
                               "docs": {},
-                              "r": {
+                              "d": {
+                                "docs": {
+                                  "Article.html#read": {
+                                    "ref": "Article.html#read",
+                                    "tf": 1150
+                                  }
+                                }
+                              }
+                            },
+                            "s": {
+                              "docs": {},
+                              "t": {
                                 "docs": {},
-                                "t": {
+                                "r": {
                                   "docs": {},
                                   "i": {
                                     "docs": {},
                                     "c": {
                                       "docs": {},
-                                      "l": {
-                                        "docs": {
-                                          "Board.html#editArticle": {
-                                            "ref": "Board.html#editArticle",
-                                            "tf": 1150
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "q": {
-                      "docs": {},
-                      "u": {
-                        "docs": {},
-                        "e": {
-                          "docs": {},
-                          "r": {
-                            "docs": {},
-                            "y": {
-                              "docs": {},
-                              "p": {
-                                "docs": {},
-                                "a": {
-                                  "docs": {},
-                                  "g": {
-                                    "docs": {
-                                      "Board.html#queryPage": {
-                                        "ref": "Board.html#queryPage",
-                                        "tf": 1150
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "n": {
-                    "docs": {},
-                    "a": {
-                      "docs": {},
-                      "m": {
-                        "docs": {
-                          "RequestSession.html#getBoard": {
-                            "ref": "RequestSession.html#getBoard",
-                            "tf": 33.33333333333333
-                          },
-                          "RequestSession.html#fromUrl": {
-                            "ref": "RequestSession.html#fromUrl",
-                            "tf": 33.33333333333333
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "|": {
-                    "docs": {},
-                    "a": {
-                      "docs": {},
-                      "r": {
-                        "docs": {},
-                        "t": {
-                          "docs": {},
-                          "i": {
-                            "docs": {},
-                            "c": {
-                              "docs": {},
-                              "l": {
-                                "docs": {
-                                  "RequestSession.html#fromUrl": {
-                                    "ref": "RequestSession.html#fromUrl",
-                                    "tf": 33.33333333333333
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "l": {
-            "docs": {},
-            "o": {
-              "docs": {},
-              "c": {
-                "docs": {},
-                "k": {
-                  "docs": {},
-                  "u": {
-                    "docs": {},
-                    "s": {
-                      "docs": {
-                        "Article.html#blockUser": {
-                          "ref": "Article.html#blockUser",
-                          "tf": 683.3333333333334
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "f": {
-          "docs": {},
-          "o": {
-            "docs": {},
-            "o": {
-              "docs": {},
-              "d": {
-                "docs": {},
-                "o": {
-                  "docs": {},
-                  "c": {
-                    "docs": {
-                      "index.html": {
-                        "ref": "index.html",
-                        "tf": 600
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "e": {
-            "docs": {},
-            "t": {
-              "docs": {},
-              "c": {
-                "docs": {},
-                "h": {
-                  "docs": {
-                    "FetchQueue.html": {
-                      "ref": "FetchQueue.html",
-                      "tf": 50
-                    },
-                    "FetchQueue.html#._next": {
-                      "ref": "FetchQueue.html#._next",
-                      "tf": 50
-                    },
-                    "FetchQueue.html#._fetchStep": {
-                      "ref": "FetchQueue.html#._fetchStep",
-                      "tf": 50
-                    },
-                    "FetchQueue.html#.setRateLimit": {
-                      "ref": "FetchQueue.html#.setRateLimit",
-                      "tf": 16.666666666666664
-                    },
-                    "FetchQueue.html#.pause": {
-                      "ref": "FetchQueue.html#.pause",
-                      "tf": 50
-                    },
-                    "FetchQueue.html#.resume": {
-                      "ref": "FetchQueue.html#.resume",
-                      "tf": 50
-                    },
-                    "FetchQueue.html#.stop": {
-                      "ref": "FetchQueue.html#.stop",
-                      "tf": 33.33333333333333
-                    },
-                    "FetchQueue.html#.fetch": {
-                      "ref": "FetchQueue.html#.fetch",
-                      "tf": 720
-                    },
-                    "Article.html#read": {
-                      "ref": "Article.html#read",
-                      "tf": 50
-                    },
-                    "RequestSession.html#_fetch": {
-                      "ref": "RequestSession.html#_fetch",
-                      "tf": 50
-                    }
-                  },
-                  "q": {
-                    "docs": {},
-                    "u": {
-                      "docs": {},
-                      "e": {
-                        "docs": {},
-                        "u": {
-                          "docs": {
-                            "FetchQueue.html": {
-                              "ref": "FetchQueue.html",
-                              "tf": 1900
-                            }
-                          },
-                          "e": {
-                            "docs": {},
-                            ".": {
-                              "docs": {},
-                              "_": {
-                                "docs": {},
-                                "n": {
-                                  "docs": {},
-                                  "e": {
-                                    "docs": {},
-                                    "x": {
-                                      "docs": {},
                                       "t": {
-                                        "docs": {
-                                          "FetchQueue.html#._next": {
-                                            "ref": "FetchQueue.html#._next",
-                                            "tf": 1150
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                },
-                                "f": {
-                                  "docs": {},
-                                  "e": {
-                                    "docs": {},
-                                    "t": {
-                                      "docs": {},
-                                      "c": {
                                         "docs": {},
-                                        "h": {
+                                        "c": {
                                           "docs": {},
-                                          "s": {
+                                          "o": {
                                             "docs": {},
-                                            "t": {
+                                            "u": {
                                               "docs": {},
-                                              "e": {
+                                              "n": {
                                                 "docs": {},
-                                                "p": {
-                                                  "docs": {
-                                                    "FetchQueue.html#._fetchStep": {
-                                                      "ref": "FetchQueue.html#._fetchStep",
-                                                      "tf": 1150
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "s": {
-                                "docs": {},
-                                "e": {
-                                  "docs": {},
-                                  "t": {
-                                    "docs": {},
-                                    "r": {
-                                      "docs": {},
-                                      "a": {
-                                        "docs": {},
-                                        "t": {
-                                          "docs": {},
-                                          "e": {
-                                            "docs": {},
-                                            "l": {
-                                              "docs": {},
-                                              "i": {
-                                                "docs": {},
-                                                "m": {
+                                                "t": {
                                                   "docs": {},
-                                                  "i": {
+                                                  "r": {
                                                     "docs": {},
-                                                    "t": {
+                                                    "i": {
                                                       "docs": {
-                                                        "FetchQueue.html#.setRateLimit": {
-                                                          "ref": "FetchQueue.html#.setRateLimit",
+                                                        "Article.html#restrictCountry": {
+                                                          "ref": "Article.html#restrictCountry",
                                                           "tf": 1150
                                                         }
                                                       }
@@ -926,51 +562,123 @@
                                       }
                                     }
                                   }
-                                },
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "d": {
+                          "docs": {},
+                          "e": {
+                            "docs": {},
+                            "l": {
+                              "docs": {},
+                              "e": {
+                                "docs": {},
                                 "t": {
+                                  "docs": {
+                                    "Article.html#delete": {
+                                      "ref": "Article.html#delete",
+                                      "tf": 1150
+                                    }
+                                  },
+                                  "e": {
+                                    "docs": {},
+                                    "c": {
+                                      "docs": {},
+                                      "o": {
+                                        "docs": {},
+                                        "m": {
+                                          "docs": {
+                                            "Article.html#deleteComment": {
+                                              "ref": "Article.html#deleteComment",
+                                              "tf": 1150
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "e": {
+                          "docs": {},
+                          "d": {
+                            "docs": {},
+                            "i": {
+                              "docs": {},
+                              "t": {
+                                "docs": {
+                                  "Article.html#edit": {
+                                    "ref": "Article.html#edit",
+                                    "tf": 1150
+                                  }
+                                },
+                                "c": {
                                   "docs": {},
                                   "o": {
                                     "docs": {},
-                                    "p": {
+                                    "m": {
                                       "docs": {
-                                        "FetchQueue.html#.stop": {
-                                          "ref": "FetchQueue.html#.stop",
+                                        "Article.html#editComment": {
+                                          "ref": "Article.html#editComment",
                                           "tf": 1150
                                         }
                                       }
                                     }
                                   }
                                 }
-                              },
-                              "p": {
+                              }
+                            }
+                          }
+                        },
+                        "b": {
+                          "docs": {},
+                          "l": {
+                            "docs": {},
+                            "o": {
+                              "docs": {},
+                              "c": {
                                 "docs": {},
-                                "a": {
+                                "k": {
                                   "docs": {},
                                   "u": {
                                     "docs": {},
                                     "s": {
                                       "docs": {
-                                        "FetchQueue.html#.pause": {
-                                          "ref": "FetchQueue.html#.pause",
+                                        "Article.html#blockUser": {
+                                          "ref": "Article.html#blockUser",
                                           "tf": 1150
                                         }
                                       }
                                     }
                                   }
                                 }
-                              },
-                              "r": {
+                              }
+                            }
+                          }
+                        },
+                        "w": {
+                          "docs": {},
+                          "r": {
+                            "docs": {},
+                            "i": {
+                              "docs": {},
+                              "t": {
                                 "docs": {},
                                 "e": {
                                   "docs": {},
-                                  "s": {
+                                  "c": {
                                     "docs": {},
-                                    "u": {
+                                    "o": {
                                       "docs": {},
                                       "m": {
                                         "docs": {
-                                          "FetchQueue.html#.resume": {
-                                            "ref": "FetchQueue.html#.resume",
+                                          "Article.html#writeComment": {
+                                            "ref": "Article.html#writeComment",
                                             "tf": 1150
                                           }
                                         }
@@ -978,24 +686,179 @@
                                     }
                                   }
                                 }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "d": {
+                        "docs": {},
+                        "a": {
+                          "docs": {},
+                          "t": {
+                            "docs": {},
+                            "a": {
+                              "docs": {
+                                "Article.html#writeComment": {
+                                  "ref": "Article.html#writeComment",
+                                  "tf": 16.666666666666664
+                                },
+                                "Article.html#deleteComment": {
+                                  "ref": "Article.html#deleteComment",
+                                  "tf": 16.666666666666664
+                                },
+                                "Article.html#editComment": {
+                                  "ref": "Article.html#editComment",
+                                  "tf": 16.666666666666664
+                                },
+                                "Comment.CommentData.html": {
+                                  "ref": "Comment.CommentData.html",
+                                  "tf": 50
+                                },
+                                "Article.ArticleData.html": {
+                                  "ref": "Article.ArticleData.html",
+                                  "tf": 700
+                                },
+                                "Article.ArticleData.html#_freezeThis": {
+                                  "ref": "Article.ArticleData.html#_freezeThis",
+                                  "tf": 25
+                                }
                               },
-                              "f": {
+                              "#": {
                                 "docs": {},
-                                "e": {
+                                "_": {
                                   "docs": {},
-                                  "t": {
+                                  "f": {
                                     "docs": {},
-                                    "c": {
+                                    "r": {
                                       "docs": {},
-                                      "h": {
-                                        "docs": {
-                                          "FetchQueue.html#.fetch": {
-                                            "ref": "FetchQueue.html#.fetch",
-                                            "tf": 1150
+                                      "e": {
+                                        "docs": {},
+                                        "e": {
+                                          "docs": {},
+                                          "z": {
+                                            "docs": {},
+                                            "e": {
+                                              "docs": {},
+                                              "t": {
+                                                "docs": {},
+                                                "h": {
+                                                  "docs": {},
+                                                  "i": {
+                                                    "docs": {
+                                                      "Article.ArticleData.html#_freezeThis": {
+                                                        "ref": "Article.ArticleData.html#_freezeThis",
+                                                        "tf": 100
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
                                           }
                                         }
                                       }
                                     }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      ".": {
+                        "docs": {},
+                        "a": {
+                          "docs": {},
+                          "r": {
+                            "docs": {},
+                            "t": {
+                              "docs": {},
+                              "i": {
+                                "docs": {},
+                                "c": {
+                                  "docs": {},
+                                  "l": {
+                                    "docs": {},
+                                    "e": {
+                                      "docs": {},
+                                      "d": {
+                                        "docs": {},
+                                        "a": {
+                                          "docs": {},
+                                          "t": {
+                                            "docs": {},
+                                            "a": {
+                                              "docs": {
+                                                "Article.ArticleData.html": {
+                                                  "ref": "Article.ArticleData.html",
+                                                  "tf": 1250
+                                                },
+                                                "Article.ArticleData.html#_freezeThis": {
+                                                  "ref": "Article.ArticleData.html#_freezeThis",
+                                                  "tf": 50
+                                                }
+                                              },
+                                              "#": {
+                                                "docs": {},
+                                                "_": {
+                                                  "docs": {},
+                                                  "f": {
+                                                    "docs": {},
+                                                    "r": {
+                                                      "docs": {},
+                                                      "e": {
+                                                        "docs": {},
+                                                        "e": {
+                                                          "docs": {},
+                                                          "z": {
+                                                            "docs": {},
+                                                            "e": {
+                                                              "docs": {},
+                                                              "t": {
+                                                                "docs": {},
+                                                                "h": {
+                                                                  "docs": {},
+                                                                  "i": {
+                                                                    "docs": {
+                                                                      "Article.ArticleData.html#_freezeThis": {
+                                                                        "ref": "Article.ArticleData.html#_freezeThis",
+                                                                        "tf": 1100
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "r": {
+                          "docs": {},
+                          "e": {
+                            "docs": {},
+                            "a": {
+                              "docs": {},
+                              "d": {
+                                "docs": {
+                                  "Article.ArticleData.html#_freezeThis": {
+                                    "ref": "Article.ArticleData.html#_freezeThis",
+                                    "tf": 25
                                   }
                                 }
                               }
@@ -1009,225 +872,37 @@
               }
             }
           },
-          "u": {
-            "docs": {},
-            "n": {
-              "docs": {},
-              "c": {
-                "docs": {},
-                "t": {
-                  "docs": {},
-                  "i": {
-                    "docs": {},
-                    "o": {
-                      "docs": {},
-                      "n": {
-                        "docs": {
-                          "FetchQueue.html#._next": {
-                            "ref": "FetchQueue.html#._next",
-                            "tf": 110
-                          },
-                          "FetchQueue.html#._fetchStep": {
-                            "ref": "FetchQueue.html#._fetchStep",
-                            "tf": 110
-                          },
-                          "FetchQueue.html#.setRateLimit": {
-                            "ref": "FetchQueue.html#.setRateLimit",
-                            "tf": 110
-                          },
-                          "FetchQueue.html#.pause": {
-                            "ref": "FetchQueue.html#.pause",
-                            "tf": 110
-                          },
-                          "FetchQueue.html#.resume": {
-                            "ref": "FetchQueue.html#.resume",
-                            "tf": 110
-                          },
-                          "FetchQueue.html#.stop": {
-                            "ref": "FetchQueue.html#.stop",
-                            "tf": 110
-                          },
-                          "FetchQueue.html#.fetch": {
-                            "ref": "FetchQueue.html#.fetch",
-                            "tf": 110
-                          },
-                          "Board.html#getArticle": {
-                            "ref": "Board.html#getArticle",
-                            "tf": 110
-                          },
-                          "Board.html#readArticle": {
-                            "ref": "Board.html#readArticle",
-                            "tf": 110
-                          },
-                          "Board.html#writeArticle": {
-                            "ref": "Board.html#writeArticle",
-                            "tf": 110
-                          },
-                          "Board.html#deleteArticle": {
-                            "ref": "Board.html#deleteArticle",
-                            "tf": 110
-                          },
-                          "Board.html#editArticle": {
-                            "ref": "Board.html#editArticle",
-                            "tf": 110
-                          },
-                          "Board.html#queryPage": {
-                            "ref": "Board.html#queryPage",
-                            "tf": 110
-                          },
-                          "Board.html#readPage": {
-                            "ref": "Board.html#readPage",
-                            "tf": 110
-                          },
-                          "Article.html#read": {
-                            "ref": "Article.html#read",
-                            "tf": 110
-                          },
-                          "Article.html#delete": {
-                            "ref": "Article.html#delete",
-                            "tf": 110
-                          },
-                          "Article.html#edit": {
-                            "ref": "Article.html#edit",
-                            "tf": 110
-                          },
-                          "Article.html#blockUser": {
-                            "ref": "Article.html#blockUser",
-                            "tf": 110
-                          },
-                          "Article.html#restrictCountry": {
-                            "ref": "Article.html#restrictCountry",
-                            "tf": 110
-                          },
-                          "Article.html#writeComment": {
-                            "ref": "Article.html#writeComment",
-                            "tf": 110
-                          },
-                          "Article.html#deleteComment": {
-                            "ref": "Article.html#deleteComment",
-                            "tf": 110
-                          },
-                          "Article.html#editComment": {
-                            "ref": "Article.html#editComment",
-                            "tf": 110
-                          },
-                          "Comment.html#read": {
-                            "ref": "Comment.html#read",
-                            "tf": 110
-                          },
-                          "Comment.html#delete": {
-                            "ref": "Comment.html#delete",
-                            "tf": 110
-                          },
-                          "Comment.html#edit": {
-                            "ref": "Comment.html#edit",
-                            "tf": 110
-                          },
-                          "RequestSession.html#.anonymousSession": {
-                            "ref": "RequestSession.html#.anonymousSession",
-                            "tf": 110
-                          },
-                          "RequestSession.html#setAnonymous": {
-                            "ref": "RequestSession.html#setAnonymous",
-                            "tf": 110
-                          },
-                          "RequestSession.html#_loadCookies": {
-                            "ref": "RequestSession.html#_loadCookies",
-                            "tf": 110
-                          },
-                          "RequestSession.html#_makeCookieString": {
-                            "ref": "RequestSession.html#_makeCookieString",
-                            "tf": 110
-                          },
-                          "RequestSession.html#_getCSRFToken": {
-                            "ref": "RequestSession.html#_getCSRFToken",
-                            "tf": 110
-                          },
-                          "RequestSession.html#_checkSession": {
-                            "ref": "RequestSession.html#_checkSession",
-                            "tf": 110
-                          },
-                          "RequestSession.html#_login": {
-                            "ref": "RequestSession.html#_login",
-                            "tf": 110
-                          },
-                          "RequestSession.html#_fetch": {
-                            "ref": "RequestSession.html#_fetch",
-                            "tf": 110
-                          },
-                          "RequestSession.html#getBoard": {
-                            "ref": "RequestSession.html#getBoard",
-                            "tf": 110
-                          },
-                          "RequestSession.html#fromUrl": {
-                            "ref": "RequestSession.html#fromUrl",
-                            "tf": 110
-                          },
-                          "RequestSession.html#closeSession": {
-                            "ref": "RequestSession.html#closeSession",
-                            "tf": 110
-                          },
-                          "Comment.CommentData.html#_freezeThis": {
-                            "ref": "Comment.CommentData.html#_freezeThis",
-                            "tf": 110
-                          },
-                          "Article.ArticleData.html#_freezeThis": {
-                            "ref": "Article.ArticleData.html#_freezeThis",
-                            "tf": 110
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "r": {
+          "n": {
             "docs": {},
             "o": {
               "docs": {},
-              "m": {
+              "n": {
                 "docs": {},
-                "u": {
+                "y": {
                   "docs": {},
-                  "r": {
+                  "m": {
                     "docs": {},
-                    "l": {
-                      "docs": {
-                        "RequestSession.html#fromUrl": {
-                          "ref": "RequestSession.html#fromUrl",
-                          "tf": 683.3333333333334
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "h": {
-          "docs": {},
-          "a": {
-            "docs": {},
-            "n": {
-              "docs": {},
-              "d": {
-                "docs": {},
-                "l": {
-                  "docs": {},
-                  "e": {
-                    "docs": {},
-                    "b": {
+                    "o": {
                       "docs": {},
-                      "a": {
+                      "u": {
                         "docs": {},
-                        "r": {
-                          "docs": {
-                            "index.html": {
-                              "ref": "index.html",
-                              "tf": 14
+                        "s": {
+                          "docs": {},
+                          "s": {
+                            "docs": {},
+                            "e": {
+                              "docs": {},
+                              "s": {
+                                "docs": {},
+                                "s": {
+                                  "docs": {
+                                    "RequestSession.html#.anonymousSession": {
+                                      "ref": "RequestSession.html#.anonymousSession",
+                                      "tf": 683.3333333333334
+                                    }
+                                  }
+                                }
+                              }
                             }
                           }
                         }
@@ -1269,29 +944,6 @@
                     "ref": "RequestSession.html#_fetch",
                     "tf": 25
                   }
-                }
-              }
-            }
-          }
-        },
-        "j": {
-          "docs": {},
-          "s": {
-            "docs": {},
-            "d": {
-              "docs": {},
-              "o": {
-                "docs": {},
-                "c": {
-                  "3": {
-                    "docs": {
-                      "index.html": {
-                        "ref": "index.html",
-                        "tf": 14
-                      }
-                    }
-                  },
-                  "docs": {}
                 }
               }
             }
@@ -1920,23 +1572,78 @@
             }
           }
         },
-        "t": {
+        "s": {
           "docs": {},
-          "e": {
+          "m": {
             "docs": {},
-            "m": {
+            "a": {
               "docs": {},
-              "p": {
+              "l": {
                 "docs": {},
                 "l": {
+                  "docs": {
+                    "index.html": {
+                      "ref": "index.html",
+                      "tf": 23.333333333333332
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "e": {
+            "docs": {},
+            "t": {
+              "docs": {},
+              "r": {
+                "docs": {},
+                "a": {
                   "docs": {},
-                  "a": {
+                  "t": {
                     "docs": {},
-                    "t": {
-                      "docs": {
-                        "index.html": {
-                          "ref": "index.html",
-                          "tf": 14
+                    "e": {
+                      "docs": {},
+                      "l": {
+                        "docs": {},
+                        "i": {
+                          "docs": {},
+                          "m": {
+                            "docs": {},
+                            "i": {
+                              "docs": {},
+                              "t": {
+                                "docs": {
+                                  "FetchQueue.html#.setRateLimit": {
+                                    "ref": "FetchQueue.html#.setRateLimit",
+                                    "tf": 683.3333333333334
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "a": {
+                "docs": {},
+                "n": {
+                  "docs": {},
+                  "o": {
+                    "docs": {},
+                    "n": {
+                      "docs": {},
+                      "y": {
+                        "docs": {},
+                        "m": {
+                          "docs": {
+                            "RequestSession.html#setAnonymous": {
+                              "ref": "RequestSession.html#setAnonymous",
+                              "tf": 700
+                            }
+                          }
                         }
                       }
                     }
@@ -1945,23 +1652,54 @@
               }
             }
           },
-          "o": {
+          "t": {
             "docs": {},
-            "k": {
+            "o": {
               "docs": {},
-              "e": {
+              "p": {
+                "docs": {
+                  "FetchQueue.html#.stop": {
+                    "ref": "FetchQueue.html#.stop",
+                    "tf": 700
+                  }
+                }
+              }
+            },
+            "r": {
+              "docs": {},
+              "i": {
                 "docs": {},
                 "n": {
                   "docs": {},
-                  "n": {
-                    "docs": {},
-                    "a": {
+                  "g": {
+                    "docs": {
+                      "RequestSession.html#_makeCookieString": {
+                        "ref": "RequestSession.html#_makeCookieString",
+                        "tf": 50
+                      }
+                    },
+                    "|": {
                       "docs": {},
-                      "m": {
-                        "docs": {
-                          "RequestSession.html#_getCSRFToken": {
-                            "ref": "RequestSession.html#_getCSRFToken",
-                            "tf": 25
+                      "o": {
+                        "docs": {},
+                        "b": {
+                          "docs": {},
+                          "j": {
+                            "docs": {},
+                            "e": {
+                              "docs": {},
+                              "c": {
+                                "docs": {},
+                                "t": {
+                                  "docs": {
+                                    "RequestSession.html#_getCSRFToken": {
+                                      "ref": "RequestSession.html#_getCSRFToken",
+                                      "tf": 25
+                                    }
+                                  }
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -2660,6 +2398,446 @@
             }
           }
         },
+        "f": {
+          "docs": {},
+          "e": {
+            "docs": {},
+            "t": {
+              "docs": {},
+              "c": {
+                "docs": {},
+                "h": {
+                  "docs": {
+                    "FetchQueue.html": {
+                      "ref": "FetchQueue.html",
+                      "tf": 50
+                    },
+                    "FetchQueue.html#._next": {
+                      "ref": "FetchQueue.html#._next",
+                      "tf": 50
+                    },
+                    "FetchQueue.html#._fetchStep": {
+                      "ref": "FetchQueue.html#._fetchStep",
+                      "tf": 50
+                    },
+                    "FetchQueue.html#.setRateLimit": {
+                      "ref": "FetchQueue.html#.setRateLimit",
+                      "tf": 16.666666666666664
+                    },
+                    "FetchQueue.html#.pause": {
+                      "ref": "FetchQueue.html#.pause",
+                      "tf": 50
+                    },
+                    "FetchQueue.html#.resume": {
+                      "ref": "FetchQueue.html#.resume",
+                      "tf": 50
+                    },
+                    "FetchQueue.html#.stop": {
+                      "ref": "FetchQueue.html#.stop",
+                      "tf": 33.33333333333333
+                    },
+                    "FetchQueue.html#.fetch": {
+                      "ref": "FetchQueue.html#.fetch",
+                      "tf": 720
+                    },
+                    "Article.html#read": {
+                      "ref": "Article.html#read",
+                      "tf": 50
+                    },
+                    "RequestSession.html#_fetch": {
+                      "ref": "RequestSession.html#_fetch",
+                      "tf": 50
+                    }
+                  },
+                  "q": {
+                    "docs": {},
+                    "u": {
+                      "docs": {},
+                      "e": {
+                        "docs": {},
+                        "u": {
+                          "docs": {
+                            "FetchQueue.html": {
+                              "ref": "FetchQueue.html",
+                              "tf": 1900
+                            }
+                          },
+                          "e": {
+                            "docs": {},
+                            ".": {
+                              "docs": {},
+                              "_": {
+                                "docs": {},
+                                "n": {
+                                  "docs": {},
+                                  "e": {
+                                    "docs": {},
+                                    "x": {
+                                      "docs": {},
+                                      "t": {
+                                        "docs": {
+                                          "FetchQueue.html#._next": {
+                                            "ref": "FetchQueue.html#._next",
+                                            "tf": 1150
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "f": {
+                                  "docs": {},
+                                  "e": {
+                                    "docs": {},
+                                    "t": {
+                                      "docs": {},
+                                      "c": {
+                                        "docs": {},
+                                        "h": {
+                                          "docs": {},
+                                          "s": {
+                                            "docs": {},
+                                            "t": {
+                                              "docs": {},
+                                              "e": {
+                                                "docs": {},
+                                                "p": {
+                                                  "docs": {
+                                                    "FetchQueue.html#._fetchStep": {
+                                                      "ref": "FetchQueue.html#._fetchStep",
+                                                      "tf": 1150
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "s": {
+                                "docs": {},
+                                "e": {
+                                  "docs": {},
+                                  "t": {
+                                    "docs": {},
+                                    "r": {
+                                      "docs": {},
+                                      "a": {
+                                        "docs": {},
+                                        "t": {
+                                          "docs": {},
+                                          "e": {
+                                            "docs": {},
+                                            "l": {
+                                              "docs": {},
+                                              "i": {
+                                                "docs": {},
+                                                "m": {
+                                                  "docs": {},
+                                                  "i": {
+                                                    "docs": {},
+                                                    "t": {
+                                                      "docs": {
+                                                        "FetchQueue.html#.setRateLimit": {
+                                                          "ref": "FetchQueue.html#.setRateLimit",
+                                                          "tf": 1150
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "t": {
+                                  "docs": {},
+                                  "o": {
+                                    "docs": {},
+                                    "p": {
+                                      "docs": {
+                                        "FetchQueue.html#.stop": {
+                                          "ref": "FetchQueue.html#.stop",
+                                          "tf": 1150
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "p": {
+                                "docs": {},
+                                "a": {
+                                  "docs": {},
+                                  "u": {
+                                    "docs": {},
+                                    "s": {
+                                      "docs": {
+                                        "FetchQueue.html#.pause": {
+                                          "ref": "FetchQueue.html#.pause",
+                                          "tf": 1150
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "r": {
+                                "docs": {},
+                                "e": {
+                                  "docs": {},
+                                  "s": {
+                                    "docs": {},
+                                    "u": {
+                                      "docs": {},
+                                      "m": {
+                                        "docs": {
+                                          "FetchQueue.html#.resume": {
+                                            "ref": "FetchQueue.html#.resume",
+                                            "tf": 1150
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "f": {
+                                "docs": {},
+                                "e": {
+                                  "docs": {},
+                                  "t": {
+                                    "docs": {},
+                                    "c": {
+                                      "docs": {},
+                                      "h": {
+                                        "docs": {
+                                          "FetchQueue.html#.fetch": {
+                                            "ref": "FetchQueue.html#.fetch",
+                                            "tf": 1150
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "u": {
+            "docs": {},
+            "n": {
+              "docs": {},
+              "c": {
+                "docs": {},
+                "t": {
+                  "docs": {},
+                  "i": {
+                    "docs": {},
+                    "o": {
+                      "docs": {},
+                      "n": {
+                        "docs": {
+                          "FetchQueue.html#._next": {
+                            "ref": "FetchQueue.html#._next",
+                            "tf": 110
+                          },
+                          "FetchQueue.html#._fetchStep": {
+                            "ref": "FetchQueue.html#._fetchStep",
+                            "tf": 110
+                          },
+                          "FetchQueue.html#.setRateLimit": {
+                            "ref": "FetchQueue.html#.setRateLimit",
+                            "tf": 110
+                          },
+                          "FetchQueue.html#.pause": {
+                            "ref": "FetchQueue.html#.pause",
+                            "tf": 110
+                          },
+                          "FetchQueue.html#.resume": {
+                            "ref": "FetchQueue.html#.resume",
+                            "tf": 110
+                          },
+                          "FetchQueue.html#.stop": {
+                            "ref": "FetchQueue.html#.stop",
+                            "tf": 110
+                          },
+                          "FetchQueue.html#.fetch": {
+                            "ref": "FetchQueue.html#.fetch",
+                            "tf": 110
+                          },
+                          "Board.html#getArticle": {
+                            "ref": "Board.html#getArticle",
+                            "tf": 110
+                          },
+                          "Board.html#readArticle": {
+                            "ref": "Board.html#readArticle",
+                            "tf": 110
+                          },
+                          "Board.html#writeArticle": {
+                            "ref": "Board.html#writeArticle",
+                            "tf": 110
+                          },
+                          "Board.html#deleteArticle": {
+                            "ref": "Board.html#deleteArticle",
+                            "tf": 110
+                          },
+                          "Board.html#editArticle": {
+                            "ref": "Board.html#editArticle",
+                            "tf": 110
+                          },
+                          "Board.html#queryPage": {
+                            "ref": "Board.html#queryPage",
+                            "tf": 110
+                          },
+                          "Board.html#readPage": {
+                            "ref": "Board.html#readPage",
+                            "tf": 110
+                          },
+                          "Article.html#read": {
+                            "ref": "Article.html#read",
+                            "tf": 110
+                          },
+                          "Article.html#delete": {
+                            "ref": "Article.html#delete",
+                            "tf": 110
+                          },
+                          "Article.html#edit": {
+                            "ref": "Article.html#edit",
+                            "tf": 110
+                          },
+                          "Article.html#blockUser": {
+                            "ref": "Article.html#blockUser",
+                            "tf": 110
+                          },
+                          "Article.html#restrictCountry": {
+                            "ref": "Article.html#restrictCountry",
+                            "tf": 110
+                          },
+                          "Article.html#writeComment": {
+                            "ref": "Article.html#writeComment",
+                            "tf": 110
+                          },
+                          "Article.html#deleteComment": {
+                            "ref": "Article.html#deleteComment",
+                            "tf": 110
+                          },
+                          "Article.html#editComment": {
+                            "ref": "Article.html#editComment",
+                            "tf": 110
+                          },
+                          "Comment.html#read": {
+                            "ref": "Comment.html#read",
+                            "tf": 110
+                          },
+                          "Comment.html#delete": {
+                            "ref": "Comment.html#delete",
+                            "tf": 110
+                          },
+                          "Comment.html#edit": {
+                            "ref": "Comment.html#edit",
+                            "tf": 110
+                          },
+                          "RequestSession.html#.anonymousSession": {
+                            "ref": "RequestSession.html#.anonymousSession",
+                            "tf": 110
+                          },
+                          "RequestSession.html#setAnonymous": {
+                            "ref": "RequestSession.html#setAnonymous",
+                            "tf": 110
+                          },
+                          "RequestSession.html#_loadCookies": {
+                            "ref": "RequestSession.html#_loadCookies",
+                            "tf": 110
+                          },
+                          "RequestSession.html#_makeCookieString": {
+                            "ref": "RequestSession.html#_makeCookieString",
+                            "tf": 110
+                          },
+                          "RequestSession.html#_getCSRFToken": {
+                            "ref": "RequestSession.html#_getCSRFToken",
+                            "tf": 110
+                          },
+                          "RequestSession.html#_checkSession": {
+                            "ref": "RequestSession.html#_checkSession",
+                            "tf": 110
+                          },
+                          "RequestSession.html#_login": {
+                            "ref": "RequestSession.html#_login",
+                            "tf": 110
+                          },
+                          "RequestSession.html#_fetch": {
+                            "ref": "RequestSession.html#_fetch",
+                            "tf": 110
+                          },
+                          "RequestSession.html#getBoard": {
+                            "ref": "RequestSession.html#getBoard",
+                            "tf": 110
+                          },
+                          "RequestSession.html#fromUrl": {
+                            "ref": "RequestSession.html#fromUrl",
+                            "tf": 110
+                          },
+                          "RequestSession.html#closeSession": {
+                            "ref": "RequestSession.html#closeSession",
+                            "tf": 110
+                          },
+                          "Comment.CommentData.html#_freezeThis": {
+                            "ref": "Comment.CommentData.html#_freezeThis",
+                            "tf": 110
+                          },
+                          "Article.ArticleData.html#_freezeThis": {
+                            "ref": "Article.ArticleData.html#_freezeThis",
+                            "tf": 110
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "r": {
+            "docs": {},
+            "o": {
+              "docs": {},
+              "m": {
+                "docs": {},
+                "u": {
+                  "docs": {},
+                  "r": {
+                    "docs": {},
+                    "l": {
+                      "docs": {
+                        "RequestSession.html#fromUrl": {
+                          "ref": "RequestSession.html#fromUrl",
+                          "tf": 683.3333333333334
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "_": {
           "docs": {},
           "n": {
@@ -3017,127 +3195,6 @@
                       "Article.html#editComment": {
                         "ref": "Article.html#editComment",
                         "tf": 16.666666666666664
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "s": {
-          "docs": {},
-          "e": {
-            "docs": {},
-            "t": {
-              "docs": {},
-              "r": {
-                "docs": {},
-                "a": {
-                  "docs": {},
-                  "t": {
-                    "docs": {},
-                    "e": {
-                      "docs": {},
-                      "l": {
-                        "docs": {},
-                        "i": {
-                          "docs": {},
-                          "m": {
-                            "docs": {},
-                            "i": {
-                              "docs": {},
-                              "t": {
-                                "docs": {
-                                  "FetchQueue.html#.setRateLimit": {
-                                    "ref": "FetchQueue.html#.setRateLimit",
-                                    "tf": 683.3333333333334
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "a": {
-                "docs": {},
-                "n": {
-                  "docs": {},
-                  "o": {
-                    "docs": {},
-                    "n": {
-                      "docs": {},
-                      "y": {
-                        "docs": {},
-                        "m": {
-                          "docs": {
-                            "RequestSession.html#setAnonymous": {
-                              "ref": "RequestSession.html#setAnonymous",
-                              "tf": 700
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "t": {
-            "docs": {},
-            "o": {
-              "docs": {},
-              "p": {
-                "docs": {
-                  "FetchQueue.html#.stop": {
-                    "ref": "FetchQueue.html#.stop",
-                    "tf": 700
-                  }
-                }
-              }
-            },
-            "r": {
-              "docs": {},
-              "i": {
-                "docs": {},
-                "n": {
-                  "docs": {},
-                  "g": {
-                    "docs": {
-                      "RequestSession.html#_makeCookieString": {
-                        "ref": "RequestSession.html#_makeCookieString",
-                        "tf": 50
-                      }
-                    },
-                    "|": {
-                      "docs": {},
-                      "o": {
-                        "docs": {},
-                        "b": {
-                          "docs": {},
-                          "j": {
-                            "docs": {},
-                            "e": {
-                              "docs": {},
-                              "c": {
-                                "docs": {},
-                                "t": {
-                                  "docs": {
-                                    "RequestSession.html#_getCSRFToken": {
-                                      "ref": "RequestSession.html#_getCSRFToken",
-                                      "tf": 25
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
                       }
                     }
                   }
@@ -3576,122 +3633,44 @@
             }
           }
         },
-        "a": {
+        "b": {
           "docs": {},
-          "r": {
+          "o": {
             "docs": {},
-            "t": {
+            "a": {
               "docs": {},
-              "i": {
+              "r": {
                 "docs": {},
-                "c": {
-                  "docs": {},
-                  "l": {
-                    "docs": {
-                      "Board.html#getArticle": {
-                        "ref": "Board.html#getArticle",
-                        "tf": 83.33333333333333
-                      },
-                      "Board.html#readArticle": {
-                        "ref": "Board.html#readArticle",
-                        "tf": 50
-                      },
-                      "Board.html#writeArticle": {
-                        "ref": "Board.html#writeArticle",
-                        "tf": 33.33333333333333
-                      },
-                      "Board.html#editArticle": {
-                        "ref": "Board.html#editArticle",
-                        "tf": 25
-                      },
-                      "Article.html": {
-                        "ref": "Article.html",
-                        "tf": 1916.6666666666667
-                      },
-                      "Article.html#edit": {
-                        "ref": "Article.html#edit",
-                        "tf": 33.33333333333333
-                      }
-                    },
-                    "e": {
+                "d": {
+                  "docs": {
+                    "Board.html": {
+                      "ref": "Board.html",
+                      "tf": 1916.6666666666667
+                    }
+                  },
+                  "#": {
+                    "docs": {},
+                    "g": {
                       "docs": {},
-                      "i": {
+                      "e": {
                         "docs": {},
-                        "d": {
-                          "docs": {
-                            "Board.html#getArticle": {
-                              "ref": "Board.html#getArticle",
-                              "tf": 33.33333333333333
-                            },
-                            "Board.html#readArticle": {
-                              "ref": "Board.html#readArticle",
-                              "tf": 25
-                            },
-                            "Board.html#deleteArticle": {
-                              "ref": "Board.html#deleteArticle",
-                              "tf": 33.33333333333333
-                            },
-                            "Board.html#editArticle": {
-                              "ref": "Board.html#editArticle",
-                              "tf": 25
-                            }
-                          }
-                        }
-                      },
-                      "#": {
-                        "docs": {},
-                        "r": {
+                        "t": {
                           "docs": {},
-                          "e": {
+                          "a": {
                             "docs": {},
-                            "a": {
-                              "docs": {},
-                              "d": {
-                                "docs": {
-                                  "Article.html#read": {
-                                    "ref": "Article.html#read",
-                                    "tf": 1150
-                                  }
-                                }
-                              }
-                            },
-                            "s": {
+                            "r": {
                               "docs": {},
                               "t": {
                                 "docs": {},
-                                "r": {
+                                "i": {
                                   "docs": {},
-                                  "i": {
+                                  "c": {
                                     "docs": {},
-                                    "c": {
-                                      "docs": {},
-                                      "t": {
-                                        "docs": {},
-                                        "c": {
-                                          "docs": {},
-                                          "o": {
-                                            "docs": {},
-                                            "u": {
-                                              "docs": {},
-                                              "n": {
-                                                "docs": {},
-                                                "t": {
-                                                  "docs": {},
-                                                  "r": {
-                                                    "docs": {},
-                                                    "i": {
-                                                      "docs": {
-                                                        "Article.html#restrictCountry": {
-                                                          "ref": "Article.html#restrictCountry",
-                                                          "tf": 1150
-                                                        }
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
+                                    "l": {
+                                      "docs": {
+                                        "Board.html#getArticle": {
+                                          "ref": "Board.html#getArticle",
+                                          "tf": 1150
                                         }
                                       }
                                     }
@@ -3700,32 +3679,82 @@
                               }
                             }
                           }
-                        },
-                        "d": {
+                        }
+                      }
+                    },
+                    "r": {
+                      "docs": {},
+                      "e": {
+                        "docs": {},
+                        "a": {
                           "docs": {},
-                          "e": {
+                          "d": {
                             "docs": {},
-                            "l": {
+                            "a": {
                               "docs": {},
-                              "e": {
+                              "r": {
                                 "docs": {},
                                 "t": {
-                                  "docs": {
-                                    "Article.html#delete": {
-                                      "ref": "Article.html#delete",
-                                      "tf": 1150
-                                    }
-                                  },
-                                  "e": {
+                                  "docs": {},
+                                  "i": {
                                     "docs": {},
                                     "c": {
                                       "docs": {},
-                                      "o": {
+                                      "l": {
+                                        "docs": {
+                                          "Board.html#readArticle": {
+                                            "ref": "Board.html#readArticle",
+                                            "tf": 1150
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "p": {
+                              "docs": {},
+                              "a": {
+                                "docs": {},
+                                "g": {
+                                  "docs": {
+                                    "Board.html#readPage": {
+                                      "ref": "Board.html#readPage",
+                                      "tf": 1150
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "w": {
+                      "docs": {},
+                      "r": {
+                        "docs": {},
+                        "i": {
+                          "docs": {},
+                          "t": {
+                            "docs": {},
+                            "e": {
+                              "docs": {},
+                              "a": {
+                                "docs": {},
+                                "r": {
+                                  "docs": {},
+                                  "t": {
+                                    "docs": {},
+                                    "i": {
+                                      "docs": {},
+                                      "c": {
                                         "docs": {},
-                                        "m": {
+                                        "l": {
                                           "docs": {
-                                            "Article.html#deleteComment": {
-                                              "ref": "Article.html#deleteComment",
+                                            "Board.html#writeArticle": {
+                                              "ref": "Board.html#writeArticle",
                                               "tf": 1150
                                             }
                                           }
@@ -3737,82 +3766,72 @@
                               }
                             }
                           }
-                        },
-                        "e": {
+                        }
+                      }
+                    },
+                    "d": {
+                      "docs": {},
+                      "e": {
+                        "docs": {},
+                        "l": {
                           "docs": {},
-                          "d": {
+                          "e": {
                             "docs": {},
-                            "i": {
+                            "t": {
                               "docs": {},
-                              "t": {
-                                "docs": {
-                                  "Article.html#edit": {
-                                    "ref": "Article.html#edit",
-                                    "tf": 1150
-                                  }
-                                },
-                                "c": {
-                                  "docs": {},
-                                  "o": {
-                                    "docs": {},
-                                    "m": {
-                                      "docs": {
-                                        "Article.html#editComment": {
-                                          "ref": "Article.html#editComment",
-                                          "tf": 1150
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "b": {
-                          "docs": {},
-                          "l": {
-                            "docs": {},
-                            "o": {
-                              "docs": {},
-                              "c": {
+                              "e": {
                                 "docs": {},
-                                "k": {
+                                "a": {
                                   "docs": {},
-                                  "u": {
+                                  "r": {
                                     "docs": {},
-                                    "s": {
-                                      "docs": {
-                                        "Article.html#blockUser": {
-                                          "ref": "Article.html#blockUser",
-                                          "tf": 1150
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "w": {
-                          "docs": {},
-                          "r": {
-                            "docs": {},
-                            "i": {
-                              "docs": {},
-                              "t": {
-                                "docs": {},
-                                "e": {
-                                  "docs": {},
-                                  "c": {
-                                    "docs": {},
-                                    "o": {
+                                    "t": {
                                       "docs": {},
-                                      "m": {
+                                      "i": {
+                                        "docs": {},
+                                        "c": {
+                                          "docs": {},
+                                          "l": {
+                                            "docs": {
+                                              "Board.html#deleteArticle": {
+                                                "ref": "Board.html#deleteArticle",
+                                                "tf": 1150
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "e": {
+                      "docs": {},
+                      "d": {
+                        "docs": {},
+                        "i": {
+                          "docs": {},
+                          "t": {
+                            "docs": {},
+                            "a": {
+                              "docs": {},
+                              "r": {
+                                "docs": {},
+                                "t": {
+                                  "docs": {},
+                                  "i": {
+                                    "docs": {},
+                                    "c": {
+                                      "docs": {},
+                                      "l": {
                                         "docs": {
-                                          "Article.html#writeComment": {
-                                            "ref": "Article.html#writeComment",
+                                          "Board.html#editArticle": {
+                                            "ref": "Board.html#editArticle",
                                             "tf": 1150
                                           }
                                         }
@@ -3824,73 +3843,27 @@
                             }
                           }
                         }
-                      },
-                      "d": {
+                      }
+                    },
+                    "q": {
+                      "docs": {},
+                      "u": {
                         "docs": {},
-                        "a": {
+                        "e": {
                           "docs": {},
-                          "t": {
+                          "r": {
                             "docs": {},
-                            "a": {
-                              "docs": {
-                                "Article.html#writeComment": {
-                                  "ref": "Article.html#writeComment",
-                                  "tf": 16.666666666666664
-                                },
-                                "Article.html#deleteComment": {
-                                  "ref": "Article.html#deleteComment",
-                                  "tf": 16.666666666666664
-                                },
-                                "Article.html#editComment": {
-                                  "ref": "Article.html#editComment",
-                                  "tf": 16.666666666666664
-                                },
-                                "Comment.CommentData.html": {
-                                  "ref": "Comment.CommentData.html",
-                                  "tf": 50
-                                },
-                                "Article.ArticleData.html": {
-                                  "ref": "Article.ArticleData.html",
-                                  "tf": 700
-                                },
-                                "Article.ArticleData.html#_freezeThis": {
-                                  "ref": "Article.ArticleData.html#_freezeThis",
-                                  "tf": 25
-                                }
-                              },
-                              "#": {
+                            "y": {
+                              "docs": {},
+                              "p": {
                                 "docs": {},
-                                "_": {
+                                "a": {
                                   "docs": {},
-                                  "f": {
-                                    "docs": {},
-                                    "r": {
-                                      "docs": {},
-                                      "e": {
-                                        "docs": {},
-                                        "e": {
-                                          "docs": {},
-                                          "z": {
-                                            "docs": {},
-                                            "e": {
-                                              "docs": {},
-                                              "t": {
-                                                "docs": {},
-                                                "h": {
-                                                  "docs": {},
-                                                  "i": {
-                                                    "docs": {
-                                                      "Article.ArticleData.html#_freezeThis": {
-                                                        "ref": "Article.ArticleData.html#_freezeThis",
-                                                        "tf": 100
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
+                                  "g": {
+                                    "docs": {
+                                      "Board.html#queryPage": {
+                                        "ref": "Board.html#queryPage",
+                                        "tf": 1150
                                       }
                                     }
                                   }
@@ -3899,100 +3872,44 @@
                             }
                           }
                         }
-                      },
-                      ".": {
-                        "docs": {},
-                        "a": {
-                          "docs": {},
-                          "r": {
-                            "docs": {},
-                            "t": {
-                              "docs": {},
-                              "i": {
-                                "docs": {},
-                                "c": {
-                                  "docs": {},
-                                  "l": {
-                                    "docs": {},
-                                    "e": {
-                                      "docs": {},
-                                      "d": {
-                                        "docs": {},
-                                        "a": {
-                                          "docs": {},
-                                          "t": {
-                                            "docs": {},
-                                            "a": {
-                                              "docs": {
-                                                "Article.ArticleData.html": {
-                                                  "ref": "Article.ArticleData.html",
-                                                  "tf": 1250
-                                                },
-                                                "Article.ArticleData.html#_freezeThis": {
-                                                  "ref": "Article.ArticleData.html#_freezeThis",
-                                                  "tf": 50
-                                                }
-                                              },
-                                              "#": {
-                                                "docs": {},
-                                                "_": {
-                                                  "docs": {},
-                                                  "f": {
-                                                    "docs": {},
-                                                    "r": {
-                                                      "docs": {},
-                                                      "e": {
-                                                        "docs": {},
-                                                        "e": {
-                                                          "docs": {},
-                                                          "z": {
-                                                            "docs": {},
-                                                            "e": {
-                                                              "docs": {},
-                                                              "t": {
-                                                                "docs": {},
-                                                                "h": {
-                                                                  "docs": {},
-                                                                  "i": {
-                                                                    "docs": {
-                                                                      "Article.ArticleData.html#_freezeThis": {
-                                                                        "ref": "Article.ArticleData.html#_freezeThis",
-                                                                        "tf": 1100
-                                                                      }
-                                                                    }
-                                                                  }
-                                                                }
-                                                              }
-                                                            }
-                                                          }
-                                                        }
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
+                      }
+                    }
+                  },
+                  "n": {
+                    "docs": {},
+                    "a": {
+                      "docs": {},
+                      "m": {
+                        "docs": {
+                          "RequestSession.html#getBoard": {
+                            "ref": "RequestSession.html#getBoard",
+                            "tf": 33.33333333333333
+                          },
+                          "RequestSession.html#fromUrl": {
+                            "ref": "RequestSession.html#fromUrl",
+                            "tf": 33.33333333333333
                           }
-                        },
-                        "r": {
+                        }
+                      }
+                    }
+                  },
+                  "|": {
+                    "docs": {},
+                    "a": {
+                      "docs": {},
+                      "r": {
+                        "docs": {},
+                        "t": {
                           "docs": {},
-                          "e": {
+                          "i": {
                             "docs": {},
-                            "a": {
+                            "c": {
                               "docs": {},
-                              "d": {
+                              "l": {
                                 "docs": {
-                                  "Article.ArticleData.html#_freezeThis": {
-                                    "ref": "Article.ArticleData.html#_freezeThis",
-                                    "tf": 25
+                                  "RequestSession.html#fromUrl": {
+                                    "ref": "RequestSession.html#fromUrl",
+                                    "tf": 33.33333333333333
                                   }
                                 }
                               }
@@ -4006,39 +3923,21 @@
               }
             }
           },
-          "n": {
+          "l": {
             "docs": {},
             "o": {
               "docs": {},
-              "n": {
+              "c": {
                 "docs": {},
-                "y": {
+                "k": {
                   "docs": {},
-                  "m": {
+                  "u": {
                     "docs": {},
-                    "o": {
-                      "docs": {},
-                      "u": {
-                        "docs": {},
-                        "s": {
-                          "docs": {},
-                          "s": {
-                            "docs": {},
-                            "e": {
-                              "docs": {},
-                              "s": {
-                                "docs": {},
-                                "s": {
-                                  "docs": {
-                                    "RequestSession.html#.anonymousSession": {
-                                      "ref": "RequestSession.html#.anonymousSession",
-                                      "tf": 683.3333333333334
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
+                    "s": {
+                      "docs": {
+                        "Article.html#blockUser": {
+                          "ref": "Article.html#blockUser",
+                          "tf": 683.3333333333334
                         }
                       }
                     }
@@ -4191,6 +4090,35 @@
             }
           }
         },
+        "t": {
+          "docs": {},
+          "o": {
+            "docs": {},
+            "k": {
+              "docs": {},
+              "e": {
+                "docs": {},
+                "n": {
+                  "docs": {},
+                  "n": {
+                    "docs": {},
+                    "a": {
+                      "docs": {},
+                      "m": {
+                        "docs": {
+                          "RequestSession.html#_getCSRFToken": {
+                            "ref": "RequestSession.html#_getCSRFToken",
+                            "tf": 25
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "u": {
           "docs": {},
           "r": {
@@ -4210,7 +4138,7 @@
           }
         }
       },
-      "length": 252
+      "length": 250
     },
     "corpusTokens": [
       "_checksess",
@@ -4223,6 +4151,9 @@
       "_makecookiestr",
       "_next",
       "anonymoussess",
+      "api",
+      "arca.l",
+      "arcalive.j",
       "articl",
       "article#blockus",
       "article#delet",
@@ -4238,7 +4169,6 @@
       "articledata",
       "articledata#_freezethi",
       "articleid",
-      "base",
       "blockus",
       "board",
       "board#deletearticl",
@@ -4250,7 +4180,6 @@
       "board#writearticl",
       "boardnam",
       "board|articl",
-      "bootstrap",
       "class",
       "closesess",
       "comment",
@@ -4281,16 +4210,13 @@
       "fetchqueue.resum",
       "fetchqueue.setratelimit",
       "fetchqueue.stop",
-      "foodoc",
       "fromurl",
       "function",
       "getarticl",
       "getboard",
       "global",
-      "handlebar",
       "index",
       "init",
-      "jsdoc3",
       "limit",
       "list",
       "list:class",
@@ -4334,10 +4260,10 @@
       "resum",
       "setanonym",
       "setratelimit",
+      "small",
       "stop",
       "string",
       "string|object",
-      "templat",
       "tokennam",
       "url",
       "writearticl",
@@ -4353,11 +4279,11 @@
     "index.html": {
       "id": "index.html",
       "kind": "readme",
-      "title": "FooDoc",
+      "title": "arcalive.js",
       "longname": "index",
-      "name": "FooDoc",
+      "name": "arcalive.js",
       "tags": "index",
-      "summary": "A Bootstrap and Handlebars based template for JSDoc3.",
+      "summary": "A small arca.live API",
       "description": "",
       "body": ""
     },
