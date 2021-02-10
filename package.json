@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha test/test.js $(find ./ -name '*.js') --recursive -w",
+    "test": "node_modules/.bin/mocha test/index.js src/*.js -w",
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.conf README.md"
   },
   "keywords": [],
@@ -18,5 +18,8 @@
     "foodoc": "0.0.9",
     "node-fetch": "^2.6.1",
     "node-html-parser": "^2.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
   }
 }
