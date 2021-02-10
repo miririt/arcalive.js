@@ -1,4 +1,5 @@
 const url = require('url');
+const { ArgumentError } = require('./errors');
 
 /**
  * 새 댓글 객체 Comment를 만든다.
@@ -27,7 +28,7 @@ function Comment(article, commentData) {
     this.apiUrl = new URL(`${this._article.url}/${this.commentId}`);
     this.url = commentData.url;
   } else {
-    throw new Error('at least one of { commentId, apiUrl, url } must have specified');
+    throw new ArgumentError('at least one of { commentId, apiUrl, url } must have specified');
   }
 
   this._commentData = commentData;

@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
  * Fetch 큐 정적 클래스
  */
 function FetchQueue() {
-  throw new Error('This is a static class');
+  throw new SyntaxError('This is a static class');
 }
 
 FetchQueue._queue = [];

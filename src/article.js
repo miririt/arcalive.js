@@ -1,5 +1,6 @@
 const url = require('url');
 const Comment = require('./comment');
+const { ArgumentError, SessionError } = require('./errors');
 
 /**
  * 새 게시글 객체 Article을 만든다.
@@ -12,7 +13,7 @@ const Comment = require('./comment');
  */
 function Article(board, articleData) {
   if(!board._session) {
-    throw new Error('Invalid board session');
+    throw new SessionError('Invalid board session');
   }
 
   this._session = board._session;
@@ -25,7 +26,7 @@ function Article(board, articleData) {
     this.articleId = +articleData.url.pathname.match(/^\/b\/[^/]+\/(\d+)/)[1];
     this.url = articleData.url;
   } else {
-    throw new Error('at least one of { articleId, url } must have specified');
+    throw new ArgumentError('at least one of { articleId, url } must have specified');
   }
 
   this._loaded = false;
@@ -255,7 +256,7 @@ Article.prototype.restrictCountry = async function(...countries) {
  */
 Article.prototype.writeComment = async function(comment) {
   if(this._session._anonymous) {
-    throw new Error('This is an anonymous session(anonymous session requires reCAPTCHA auth).');
+    throw new SessionError('This is an anonymous session(anonymous session requires reCAPTCHA auth).');
   }
 
   const body = new url.URLSearchParams();

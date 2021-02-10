@@ -3,6 +3,8 @@ const htmlParser = require('node-html-parser');
 const fq = require('./fetch-queue');
 const Board = require('./board');
 const Article = require('./article');
+const { FetchError } = require('node-fetch');
+const { ArgumentError } = require('./errors');
 
 /**
  * 새 요청 세션 RequestSession을 만든다.
@@ -38,7 +40,7 @@ RequestSession.anonymousSession = function() {
  */
 RequestSession.prototype.setAnonymous = function(nickname, password) {
   if(this._anonymous) {
-    throw new Error('This is not an anonymous session');
+    throw new TypeError('This is not an anonymous session');
   }
   this._username = nickname;
   this._password = password;
@@ -186,7 +188,7 @@ RequestSession.prototype._fetch = async function(resource, init = {}) {
   }
 
   if(response.status >= 400) {
-    throw new Error(`HTTP ${response.status}: ${resource}`);
+    throw new FetchError(`HTTP ${response.status}: ${resource}`);
   }
 
   this._loadCookies(response);
@@ -224,11 +226,11 @@ RequestSession.prototype.fromUrl = function(articleOrBoardUrl) {
   const targetUrl = new URL(articleOrBoardUrl);
   
   if(targetUrl.origin.indexOf('arca.live') === -1) {
-    throw new Error('This is not an arca.live url.');
+    throw new ArgumentError('This is not an arca.live url.');
   }
 
   if(!targetUrl.pathname.match(/^\/b\/([^/]+)/)) {
-    throw new Error('This is not an valid board or article url.');
+    throw new ArgumentError('This is not an valid board or article url.');
   }
 
   const boardPath = targetUrl.pathname.match(/^\/b\/[^/]+/)[0];

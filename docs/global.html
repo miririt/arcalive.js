@@ -115,90 +115,6 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="Comment" class="function public"><span class="name">Comment</span><span class="signature-params">( <span class="signature-param">article</span>, <span class="signature-param">commentData</span>&nbsp;)</span><span class="signature-type"></span></h4>
-		</dt>
-<dd class="symbol-details function public  collapsible-symbol">
-	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>새 댓글 객체 Comment를 만든다.
-			생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).</p></div>
-			</div>			<div class="callout callout-info">
-				<h5>Parameters</h5>
-				<table class="params table table-striped">
-					<thead>
-					<tr>
-							<th>Name</th>
-						<th>Type</th>
-						<th class="last">Description</th>
-					</tr>
-					</thead>
-					<tbody>
-						<tr>
-								<td><code>article</code></td>
-							<td><span class="param-type"><a href="global.html#Article">Article</a></span></td>
-							<td class="last">
-									<p>해당 댓글이 속해있는 게시글 객체</p>
-							</td>
-						</tr>
-						<tr>
-								<td><code>commentData</code></td>
-							<td><span class="param-type">Object</span></td>
-							<td class="last">
-									<p>댓글 정보</p>
-										<table class="params table table-striped">
-											<thead>
-											<tr>
-													<th>Name</th>
-												<th>Type</th>
-												<th class="last">Description</th>
-											</tr>
-											</thead>
-											<tbody>
-												<tr>
-														<td><code>commentId</code></td>
-													<td><span class="param-type">number</span></td>
-													<td class="last">
-															<p>댓글 번호</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-							<!-- source -->
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Source</label>
-								<div class="col-sm-9">
-									<p class="form-control-static"><a href="comment.js.html">comment.js</a>, <a href="comment.js.html#line-11">line 11</a></p>
-								</div>
-							</div>
-			
-			
-			
-			
-					</form>
-			</div>	</div>
-</dd>
-											<hr/>
-											<dt class="symbol-title function public collapsible-symbol">
 			<h4 id="Board" class="function public"><span class="name">Board</span><span class="signature-params">( <span class="signature-param">session</span>, <span class="signature-param">boardData</span>&nbsp;)</span><span class="signature-type"></span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
@@ -325,9 +241,9 @@
 												<tr>
 														<td><code>articleId</code></td>
 													<td><span class="param-type">number</span></td>
-														<td class="attributes"></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
 													<td class="last">
-															<p>게시글 번호</p>
+															<p>게시글 번호(주어지지 않을 경우 url를 통해 생성함)</p>
 													</td>
 												</tr>
 												<tr>
@@ -335,7 +251,7 @@
 													<td><span class="param-type">URL</span></td>
 														<td class="attributes">&lt;optional&gt;<br/></td>
 													<td class="last">
-															<p>게시글 URL(주어지지 않을 경우 board와 articleId를 통해 생성함)</p>
+															<p>게시글 URL(주어지지 않을 경우 articleId를 통해 생성함)</p>
 													</td>
 												</tr>
 											</tbody>
@@ -365,7 +281,109 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="article.js.html">article.js</a>, <a href="article.js.html#line-13">line 13</a></p>
+									<p class="form-control-static"><a href="article.js.html">article.js</a>, <a href="article.js.html#line-14">line 14</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="Comment" class="function public"><span class="name">Comment</span><span class="signature-params">( <span class="signature-param">article</span>, <span class="signature-param">commentData</span>&nbsp;)</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>새 댓글 객체 Comment를 만든다.
+			생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).</p></div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>article</code></td>
+							<td><span class="param-type"><a href="global.html#Article">Article</a></span></td>
+							<td class="last">
+									<p>해당 댓글이 속해있는 게시글 객체</p>
+							</td>
+						</tr>
+						<tr>
+								<td><code>commentData</code></td>
+							<td><span class="param-type">Object</span></td>
+							<td class="last">
+									<p>댓글 정보</p>
+										<table class="params table table-striped">
+											<thead>
+											<tr>
+													<th>Name</th>
+												<th>Type</th>
+													<th>Attributes</th>
+												<th class="last">Description</th>
+											</tr>
+											</thead>
+											<tbody>
+												<tr>
+														<td><code>commentId</code></td>
+													<td><span class="param-type">number</span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>댓글 번호(주어지지 않을 경우 url 혹은 apiUrl을 통해 생성함)</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>apiUrl</code></td>
+													<td><span class="param-type">URL</span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>댓글 API 호출시 필요한 URL(주어지지 않을 경우 commentId 혹은 url을 통해 생성함)</p>
+													</td>
+												</tr>
+												<tr>
+														<td><code>url</code></td>
+													<td><span class="param-type">URL</span></td>
+														<td class="attributes">&lt;optional&gt;<br/></td>
+													<td class="last">
+															<p>댓글 URL(주어지지 않을 경우 commentId 혹은 apiUrl을 통해 생성함)</p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="comment.js.html">comment.js</a>, <a href="comment.js.html#line-14">line 14</a></p>
 								</div>
 							</div>
 			
@@ -430,7 +448,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="request-session.js.html">request-session.js</a>, <a href="request-session.js.html#line-13">line 13</a></p>
+									<p class="form-control-static"><a href="request-session.js.html">request-session.js</a>, <a href="request-session.js.html#line-15">line 15</a></p>
 								</div>
 							</div>
 			

@@ -125,11 +125,11 @@ Board.prototype.readArticle = function(articleId, options) {
  * @param {string} [article.category] 게시글 분류
  * @param {string} [article.title] 게시글 제목
  * @param {string} [article.content] 게시글 내용
- * @returns {Promise&lt;Response>} 게시글 작성 fetch에 대한 Response
+ * @returns {Promise&lt;Article>} 작성된 게시글 객체에 대한 Promise
  */
 Board.prototype.writeArticle = async function(article) {
   if(this._session._anonymous) {
-    throw new Error('This is an anonymous session(anonymous session requires reCAPTCHA auth).');
+    throw new TypeError('This is an anonymous session(anonymous session requires reCAPTCHA auth).');
   }
 
   const writePage = await this._session._fetch(`${this.url}/write`);
@@ -154,15 +154,15 @@ Board.prototype.writeArticle = async function(article) {
   articleInfo.append('title', article.title);
   articleInfo.append('content', article.content);
 
-  if(article.anonymous) {
-    articleInfo.append('nickname', article.nickname);
-    articleInfo.append('password', article.password);
-  }
-
-  return await this._session._fetch(`${this.url}/write`, {
+  const response = await this._session._fetch(`${this.url}/write`, {
     method: 'POST',
     headers: { referer: `${this.url}/write` },
-    body: articleInfo
+    body: articleInfo,
+    parse: false
+  });
+
+  return new Article(this, {
+    url: new URL(response.url)
   });
 }
 

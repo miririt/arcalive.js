@@ -16,7 +16,7 @@
 ### In Progress
 
 - [ ] 가능하다면 Article 및 Comment 작성을 다듬고싶음
-  - [ ] Board에서 writeArticle할때, Article에서 writeComment 할때 리스폰스가 아니라 Article 혹은 Comment가 반환되도록 만들기
+  - [x] Board에서 writeArticle할때, Article에서 writeComment 할때 리스폰스가 아니라 Article 혹은 Comment가 반환되도록 만들기
 
 ### Done ✓
 

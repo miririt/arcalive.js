@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-		<title>comment.js</title>
+		<title>errors.js</title>
 		<!--[if lt IE 9]>
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -63,7 +63,7 @@
 	<!-- end:navbar.hbs -->		<div class="page-header">
 			<div class="container">
 				<span class="kind">source</span>
-				<h1><span class="name">comment.js</span></h1>
+				<h1><span class="name">errors.js</span></h1>
 			</div>
 		</div>
 	<div class="container content">
@@ -71,89 +71,41 @@
 			<div class="col-md-12 main-content">
 		<section class="source-section">
 			<article></article>
-			<pre class="prettyprint source language-javascript line-numbers"><code class="language-javascript">const url = require('url');
-const { ArgumentError } = require('./errors');
+			<pre class="prettyprint source language-javascript line-numbers"><code class="language-javascript">function createErrorClass(customErrorName) {
+  /**
+   * Create SessionError instance
+   *
+   * @param   String      message      Error message for human
+   * @param   String      type         Error type for machine
+   * @param   String      systemError  For Node.js system error
+   * @return  SessionError
+   */
+  function CustomError(message, type, systemError) {
+    Error.call(this, message);
 
-/**
- * 새 댓글 객체 Comment를 만든다.
- * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
- * 
- * @param {Article} article 해당 댓글이 속해있는 게시글 객체
- * @param {Object} commentData 댓글 정보
- * @param {number} [commentData.commentId] 댓글 번호(주어지지 않을 경우 url 혹은 apiUrl을 통해 생성함)
- * @param {URL} [commentData.apiUrl] 댓글 API 호출시 필요한 URL(주어지지 않을 경우 commentId 혹은 url을 통해 생성함)
- * @param {URL} [commentData.url] 댓글 URL(주어지지 않을 경우 commentId 혹은 apiUrl을 통해 생성함)
- */
-function Comment(article, commentData) {
-  this._session = article._session;
-  this._article = article;
+    this.message = message;
+    this.type = type;
 
-  if(commentData.commentId) {
-    this.commentId = commentData.commentId;  
-    this.apiUrl = new URL(`${this._article.url}/${this.commentId}`);
-    this.url = new URL(`${this._article.url}#c_${this.commentId}`);
-  } else if(commentData.apiUrl) {
-    this.commentId = +commentData.apiUrl.pathname.match(/^\/b\/[^/]+\/\d+\/(\d+)/)[1];
-    this.apiUrl = commentData.apiUrl;
-    this.url = new URL(`${this._article.url}#c_${this.commentId}`);
-  } else if(commentData.url) {
-    this.commentId = +commentData.url.hash.match(/^#c_(\d+)/)[1];
-    this.apiUrl = new URL(`${this._article.url}/${this.commentId}`);
-    this.url = commentData.url;
-  } else {
-    throw new ArgumentError('at least one of { commentId, apiUrl, url } must have specified');
+    // when err.type is `system`, err.code contains system error code
+    if (systemError) {
+      this.code = this.errno = systemError.code;
+    }
+
+    // hide custom error implementation details from end-users
+    Error.captureStackTrace(this, this.constructor);
   }
 
-  this._commentData = commentData;
+  CustomError.prototype = Object.create(Error.prototype);
+  CustomError.prototype.constructor = CustomError;
+  CustomError.prototype.name = customErrorName;
+
+  return CustomError;
 }
 
-/**
- * 해당 댓글을 삭제한다.
- * 
- * @returns {Promise&lt;Response>} 댓글 작성 fetch에 대한 Response
- */
-Comment.prototype.delete = async function() {
-  const body = new url.URLSearchParams();
-
-  if(this._session._anonymous) {
-    body.append('password', this._session.password);
-  }
-
-  return await this._session._fetch(`${this.apiUrl}/delete`, {
-    method: 'POST',
-    body: body,
-    csrfRequired: true,
-    parse: false
-  });
-}
-
-/**
- * 해당 게시글에 작성된 댓글을 수정한다.
- * 수정하더라도 commentData는 수정되지 않는다.
- * 
- * @param {number} commentId 댓글 번호
- * @param {string} comment 댓글 내용(HTML)
- * @returns {Promise&lt;Response>} 댓글 수정 fetch에 대한 Response
- */
-Comment.prototype.edit = async function(content) {
-  if(this._session._anonymous) {
-    body.append('password', this._session.password);
-  }
-
-  const body = new url.URLSearchParams();
-
-  body.append('contentType', 'text');
-  body.append('content', content);
-
-  return await this._session._fetch(`${this.apiUrl}/edit`, {
-    method: 'POST',
-    headers: { referer: this.url },
-    body: body,
-    csrfRequired: true
-  });
-}
-
-module.exports = Comment;</code></pre>
+module.exports = {
+  'SessionError': createErrorClass('SessionError'),
+  'ArgumentError': createErrorClass('ArgumentError')
+};</code></pre>
 		</section>
 			</div>
 		</div>
