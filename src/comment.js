@@ -57,12 +57,14 @@ function Comment(article, commentData) {
  */
 Comment.CommentData = function(data = {
   commentId: 0,
+  deleted: false,
   author: null,
   content: null,
   textContent: null,
   time: null
 }) {
   this.commentId = data.commentId;
+  this.deleted = data.deleted;
   this.author = data.author;
   this.content = data.content;
   this.textContent = data.textContent;
@@ -94,6 +96,10 @@ Comment.prototype.read = async function() {
  * @returns {Promise<Response>} 댓글 작성 fetch에 대한 Response
  */
 Comment.prototype.delete = async function() {
+  if(this._commentData.deleted) {
+    throw new Error('This comment is already deleted');
+  }
+
   const body = new url.URLSearchParams();
 
   if(this._session._anonymous) {
@@ -117,6 +123,10 @@ Comment.prototype.delete = async function() {
  * @returns {Promise<Response>} 댓글 수정 fetch에 대한 Response
  */
 Comment.prototype.edit = async function(content) {
+  if(this._commentData.deleted) {
+    throw new Error('This comment is already deleted');
+  }
+
   if(this._session._anonymous) {
     body.append('password', this._session.password);
   }

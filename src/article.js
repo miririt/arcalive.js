@@ -162,6 +162,7 @@ Article.prototype.read = async function(options = {
 
           return new Comment(this, {
             commentId: +comment.id.match(/(\d+)$/)[1],
+            deleted: comment.querySelector('.deleted') ? true : false,
             author: userLink.attributes['data-filter'],
             content: content,
             textContent: textContent,
