@@ -221,9 +221,15 @@ Article.prototype.edit = async function(article = {
     }
   }
 
-  article.category = article.category || this._articleData.category;
-  article.title = article.title || this._articleData.title;
-  article.content = article.content || this._articleData.content;
+  if('undefined' === typeof article.category) {
+    article.category = this._articleData.category;
+  }
+  if('undefined' === typeof article.title) {
+    article.title = this._articleData.title;
+  }
+  if('undefined' === typeof article.content) {
+    article.content = this._articleData.content;
+  }
 
   const editPage = await this._session._fetch(`${this.url}/edit`);
 
