@@ -250,6 +250,7 @@ Article.prototype.edit = async function(article = {
   articleInfo.append('token', tokens.token);
   articleInfo.append('contentType', 'html');
   articleInfo.append('category', article.category);
+  articleInfo.append('agreePreventDelete', 'on');
   articleInfo.append('title', article.title);
   articleInfo.append('content', article.content);
 
