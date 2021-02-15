@@ -198,6 +198,7 @@ Board.prototype.queryPage = async function(page = 1, options = {}) {
     const commentElement = articleElem.querySelector('.comment-count');
 
     articleData.articleId = +articleElem.attributes.href.match(/(\d+)[?]p=(\d+)$/)[1];
+    articleData.articleAuthor = articleElem.querySelector('.user-info').firstChild.attributes['data-filter'];
     articleData.isNotice = articleElem.classNames.indexOf('notice') !== -1;
     articleData.category = articleElem.querySelector('.badge').innerText;
     articleData.title = articleElem.querySelector('.title').innerText.replace(/\n/g, '');

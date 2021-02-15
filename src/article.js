@@ -46,9 +46,24 @@ function Article(board, articleData) {
  * 새 게시글 정보 객체 ArticleData를 만든다.
  * @constructor
  * 
+ * @property {Object} data 게시글 정보
+ * @property {boolean} data.isSummary true일 경우 해당 정보는 read()를 통해 얻어온 정보, false일 경우 readPage()를 통해 얻어온 요약 정보
+ * @property {number} [data.articleId] 게시글 번호
+ * @property {string} [data.author] 게시글 작성자
+ * @property {string} [data.category] 게시글 분류
+ * @property {string} [data.title] 게시글 제목
+ * @property {string} [data.content] 게시글 내용
+ * @property {Date} [data.time] 게시글 작성 시각
+ * @property {number} [data.view] 게시글 조회수
+ * @property {Comment[]} [data.comments] 게시글 댓글 목록
+ * @property {number} [data.commentCount] 게시글 댓글수
+ * @property {number[]} [data.rate] 게시글 추천 수와 비추천 수
+ * @property {number} [data.rateDiff] 게시글 추천 수 - 비추천 수
+ * 
  * @param {Object} data 게시글 정보
  * @param {boolean} data.isSummary true일 경우 해당 정보는 read()를 통해 얻어온 정보, false일 경우 readPage()를 통해 얻어온 요약 정보
  * @param {number} [data.articleId] 게시글 번호
+ * @property {string} [data.author] 게시글 작성자
  * @param {string} [data.category] 게시글 분류
  * @param {string} [data.title] 게시글 제목
  * @param {string} [data.content] 게시글 내용
@@ -62,6 +77,7 @@ function Article(board, articleData) {
 Article.ArticleData = function(data = {
   isSummary: true,
   articleId: 0,
+  author: null,
   category: null,
   title: null,
   content: null,
@@ -74,6 +90,7 @@ Article.ArticleData = function(data = {
 }) {
   this.isSummary = data.isSummary;
   this.articleId = data.articleId;
+  this.author = data.author;
   this.category = data.category;
   this.title = data.title;
   this.content = data.content;
@@ -114,6 +131,7 @@ Article.prototype.read = async function(options = {
     const articleTitle = article.querySelector('.article-wrapper .title');
     const badge = articleTitle.querySelector('span.badge');
 
+    const memberInfo = article.querySelector('.member-info');
     const articleInfo = article.querySelector('.article-info');
     const [ rateUp, rateDown, commentCount, views, time ] = articleInfo.querySelectorAll('.body');
 
@@ -128,6 +146,8 @@ Article.prototype.read = async function(options = {
     }
 
     this._articleData.title = this._articleData.title.replace(/\n/g, '');
+
+    this._articleData.author = memberInfo.querySelector('.user-info').firstChild.attributes['data-filter'];
 
     this._articleData.time = new Date(time.querySelector('time').attributes.datetime);
     this._articleData.views = +views.innerText;
