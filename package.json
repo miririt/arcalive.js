@@ -15,6 +15,7 @@
     "url": "https://github.com/miririt/arcalive.js.git"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
     "node-fetch": "^2.6.1",
     "node-html-parser": "^2.1.0",
     "tough-cookie": "^4.0.0"

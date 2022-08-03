@@ -5,7 +5,7 @@
 ```javascript
 const Arca = require("arcalive");
 
-const session = await Arca.Session.login(username, password); // username과 password로 아이디와 비밀번호 전달
+const session = await Arca.Session.loginSession(username, password); // username과 password로 아이디와 비밀번호 전달
 ```
 
 ## 2. 원하는 게시판(채널) 열기

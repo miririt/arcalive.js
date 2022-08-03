@@ -1,9 +1,11 @@
+require("dotenv").config();
+
+const process = require("process");
 const Arca = require("..");
 
-describe("익명 세션 게시글 열람 테스트", function () {
-  const session = Arca.Session.anonymousSession();
-
+function test(sessionPromise) {
   it("getBoard로 게시글 열람 테스트", async function () {
+    const session = await sessionPromise;
     const board = await session.getBoard("notice");
     return await board.readArticle(6457546, {
       noCache: true,
@@ -12,6 +14,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("fromUrl로 채널을 통한 게시글 열람 테스트", async function () {
+    const session = await sessionPromise;
     const board = await session.boardFromUrl("https://arca.live/b/notice");
     return await board.readArticle(6457546, {
       noCache: true,
@@ -20,6 +23,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("Board 캐시 테스트", async function () {
+    const session = await sessionPromise;
     const board = await session.boardFromUrl("https://arca.live/b/notice");
 
     const timeout = new Promise((_, reject) => {
@@ -39,6 +43,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("Article 캐시 테스트", async function () {
+    const session = await sessionPromise;
     const board = await session.boardFromUrl("https://arca.live/b/notice");
 
     const timeout = new Promise((_, reject) => {
@@ -59,6 +64,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("fromUrl로 채널을 통한 댓글 열람 테스트", async function () {
+    const session = await sessionPromise;
     const board = await session.boardFromUrl("https://arca.live/b/notice");
     const article = await board.readArticle(6457546, {
       noCache: true,
@@ -69,6 +75,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("fromUrl로 직접 게시글 열람 테스트", async function () {
+    const session = await sessionPromise;
     const article = await session.articleFromUrl(
       "https://arca.live/b/notice/6457546"
     );
@@ -77,4 +84,18 @@ describe("익명 세션 게시글 열람 테스트", function () {
       withComments: false,
     });
   });
+}
+
+describe("익명 세션 게시글 열람 테스트", function () {
+  const session = Arca.Session.anonymousSession();
+  test(session);
+});
+
+describe("로그인 세션 게시글 열람 테스트", function () {
+  const session = Arca.Session.loginSession(
+    process.env.TEST_USERNAME,
+    process.env.TEST_PASSWORD
+  );
+
+  test(session);
 });
