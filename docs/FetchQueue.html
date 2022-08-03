@@ -35,15 +35,28 @@
 			<div class="navbar-collapse collapse" id="topNavigation">
 				<ul class="nav navbar-nav">
 								<li class="dropdown">
+									<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="global.html#AdditionalQueryOption">AdditionalQueryOption</a></li>
+											<li><a href="global.html#AdditionalRequestOption">AdditionalRequestOption</a></li>
+											<li><a href="global.html#ArticlePostOption">ArticlePostOption</a></li>
+											<li><a href="global.html#ArticleReadOption">ArticleReadOption</a></li>
+											<li><a href="global.html#BoardReadOption">BoardReadOption</a></li>
+											<li><a href="global.html#Comment">Comment</a></li>
+											<li><a href="global.html#FetchTask">FetchTask</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
 									<a href="list_class.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 									<ul class="dropdown-menu">
+											<li><a href="ArgumentError.html">ArgumentError</a></li>
 											<li><a href="Article.html">Article</a></li>
-											<li><a href="Article.ArticleData.html">Article.ArticleData</a></li>
+											<li><a href="Article-Article.ArticleData.html">Article~Article.ArticleData</a></li>
 											<li><a href="Board.html">Board</a></li>
-											<li><a href="Comment.html">Comment</a></li>
-											<li><a href="Comment.CommentData.html">Comment.CommentData</a></li>
+											<li><a href="Comment-Comment.CommentData.html">Comment~Comment.CommentData</a></li>
 											<li><a href="FetchQueue.html">FetchQueue</a></li>
-											<li><a href="RequestSession.html">RequestSession</a></li>
+											<li><a href="LoginSession.html">LoginSession</a></li>
+											<li><a href="SessionError.html">SessionError</a></li>
 									</ul>
 								</li>
 				</ul>
@@ -82,8 +95,7 @@
 </dt>
 <dd class="symbol-details class  collapsible-symbol expanded" style="max-height: 9999px;">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>Fetch 큐 정적 클래스
-			호출할 경우 예외 발생</p></div>
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description classdesc"><p>Rate Limit을 준수하는 fetch queue</p></div>
 			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
 			
 			
@@ -104,7 +116,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-8">line 8</a></p>
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-14">line 14</a></p>
 								</div>
 							</div>
 			
@@ -116,25 +128,23 @@
 </dd>
 							</dl>
 							<article class="secondary">
-									<h3>Methods</h3>
+									<h3>Members</h3>
 									<dl class="symbol">
 											<hr/>
-											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="._next" class="function public"><span class="signature-attribs">&lt;static> </span><span class="name">_next</span><span class="signature-params">()</span><span class="signature-type"> &rarr;&nbsp;{Object}</span></h4>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="_queue" class="member public"><span class="name">_queue</span><span class="signature-type"> :Array.&lt;<a href="global.html#FetchTask">FetchTask</a>></span></h4>
 		</dt>
-<dd class="symbol-details function public  collapsible-symbol">
+<dd class="symbol-details member public  collapsible-symbol">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>다음 Fetch 작업을 얻어온다.</p></div>
-			</div>			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+							<!-- type -->
 							<div class="form-group">
-								<label class="col-sm-3 control-label returns-type"><span class="param-type">Object</span></label>
+								<label class="col-sm-3 control-label">Type</label>
 								<div class="col-sm-9">
-									<div class="form-control-static returns-description"><p>task 다음에 실행해야 하는 fetch 작업 정보</p></div>
+									<div class="form-control-static type-names"><span class="param-type">Array.&lt;<a href="global.html#FetchTask">FetchTask</a>></span></div>
 								</div>
 							</div>
-					</form>
-			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
-			
 			
 			
 			
@@ -153,7 +163,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-23">line 23</a></p>
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-16">line 16</a></p>
 								</div>
 							</div>
 			
@@ -164,47 +174,10 @@
 			</div>	</div>
 </dd>
 											<hr/>
-											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="._fetchStep" class="function public"><span class="signature-attribs">&lt;static> </span><span class="name">_fetchStep</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="rateLimit" class="member public"><span class="name">rateLimit</span><span class="signature-type"></span></h4>
 		</dt>
-<dd class="symbol-details function public  collapsible-symbol">
-	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>다음 Fetch 작업을 수행한다.</p></div>
-			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-							<!-- source -->
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Source</label>
-								<div class="col-sm-9">
-									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-41">line 41</a></p>
-								</div>
-							</div>
-			
-			
-			
-			
-					</form>
-			</div>	</div>
-</dd>
-											<hr/>
-											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id=".setRateLimit" class="function public"><span class="signature-attribs">&lt;static> </span><span class="name">setRateLimit</span><span class="signature-params">( <span class="signature-param">newLimit</span>&nbsp;)</span><span class="signature-type"></span></h4>
-		</dt>
-<dd class="symbol-details function public  collapsible-symbol">
+<dd class="symbol-details member public  collapsible-symbol">
 	<div class="symbol-details-inner">
 			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>Rate Limit을 재설정한다.
 			각 fetch는 여기에서 지정한 제한값만큼의 시간을 대기하고 보내진다.</p></div>
@@ -249,7 +222,56 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-67">line 67</a></p>
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-80">line 80</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+									</dl>
+									<h3>Methods</h3>
+									<dl class="symbol">
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="_next" class="function public"><span class="name">_next</span><span class="signature-params">()</span><span class="signature-type"> &rarr;&nbsp;{<a href="global.html#FetchTask">FetchTask</a>}</span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>다음 Fetch 작업을 얻어온다.
+			큐에 완료된 작업이 쌓여있을 경우 정리한다.</p></div>
+			</div>			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+							<div class="form-group">
+								<label class="col-sm-3 control-label returns-type"><span class="param-type"><a href="global.html#FetchTask">FetchTask</a></span></label>
+								<div class="col-sm-9">
+									<div class="form-control-static returns-description"><p>task 다음에 실행해야 하는 fetch 작업 정보</p></div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-32">line 32</a></p>
 								</div>
 							</div>
 			
@@ -261,7 +283,110 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id=".pause" class="function public"><span class="signature-attribs">&lt;static> </span><span class="name">pause</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
+			<h4 id="_fetchStep" class="function public"><span class="name">_fetchStep</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>다음 Fetch 작업을 수행한다.</p></div>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-50">line 50</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="setRateLimit" class="function public"><span class="name">setRateLimit</span><span class="signature-params">( <span class="signature-param">newLimit</span>&nbsp;)</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>Rate Limit을 재설정한다.
+			각 fetch는 여기에서 지정한 제한값만큼의 시간을 대기하고 보내진다.</p></div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>newLimit</code></td>
+							<td><span class="param-type">number</span></td>
+							<td class="last">
+									<p>새 제한(단위:ms)</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- deprecated -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Deprecated</label>
+								<div class="col-sm-9">
+									<p class="form-control-static">use &quot;rateLimit&quot; property instead.</p>
+								</div>
+							</div>
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-93">line 93</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="pause" class="function public"><span class="name">pause</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
@@ -286,7 +411,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-74">line 74</a></p>
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-100">line 100</a></p>
 								</div>
 							</div>
 			
@@ -298,7 +423,7 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id=".resume" class="function public"><span class="signature-attribs">&lt;static> </span><span class="name">resume</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
+			<h4 id="resume" class="function public"><span class="name">resume</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
@@ -323,7 +448,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-81">line 81</a></p>
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-107">line 107</a></p>
 								</div>
 							</div>
 			
@@ -335,7 +460,7 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id=".stop" class="function public"><span class="signature-attribs">&lt;static> </span><span class="name">stop</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
+			<h4 id="stop" class="function public"><span class="name">stop</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
@@ -361,7 +486,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-92">line 92</a></p>
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-118">line 118</a></p>
 								</div>
 							</div>
 			
@@ -373,7 +498,7 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id=".fetch" class="function public"><span class="signature-attribs">&lt;static> </span><span class="name">fetch</span><span class="signature-params">( <span class="signature-param">resource</span>, <span class="signature-param">init</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Response>}</span></h4>
+			<h4 id="fetch" class="function public"><span class="name">fetch</span><span class="signature-params">( <span class="signature-param">resource</span>, <span class="signature-param">init</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Response>}</span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
@@ -397,7 +522,7 @@
 						</tr>
 						<tr>
 								<td><code>init</code></td>
-							<td><span class="param-type">Object</span></td>
+							<td><span class="param-type">fetch.RequestInit</span></td>
 							<td class="last">
 							</td>
 						</tr>
@@ -432,7 +557,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-111">line 111</a></p>
+									<p class="form-control-static"><a href="fetch-queue.js.html">fetch-queue.js</a>, <a href="fetch-queue.js.html#line-137">line 137</a></p>
 								</div>
 							</div>
 			
@@ -453,7 +578,7 @@
 	</div>
 	<footer>
 				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
-			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 10th Feb 2021 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 3rd Aug 2022 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
 	</footer>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

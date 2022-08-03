@@ -35,15 +35,28 @@
 			<div class="navbar-collapse collapse" id="topNavigation">
 				<ul class="nav navbar-nav">
 								<li class="dropdown">
+									<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="global.html#AdditionalQueryOption">AdditionalQueryOption</a></li>
+											<li><a href="global.html#AdditionalRequestOption">AdditionalRequestOption</a></li>
+											<li><a href="global.html#ArticlePostOption">ArticlePostOption</a></li>
+											<li><a href="global.html#ArticleReadOption">ArticleReadOption</a></li>
+											<li><a href="global.html#BoardReadOption">BoardReadOption</a></li>
+											<li><a href="global.html#Comment">Comment</a></li>
+											<li><a href="global.html#FetchTask">FetchTask</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
 									<a href="list_class.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 									<ul class="dropdown-menu">
+											<li><a href="ArgumentError.html">ArgumentError</a></li>
 											<li><a href="Article.html">Article</a></li>
-											<li><a href="Article.ArticleData.html">Article.ArticleData</a></li>
+											<li><a href="Article-Article.ArticleData.html">Article~Article.ArticleData</a></li>
 											<li><a href="Board.html">Board</a></li>
-											<li><a href="Comment.html">Comment</a></li>
-											<li><a href="Comment.CommentData.html">Comment.CommentData</a></li>
+											<li><a href="Comment-Comment.CommentData.html">Comment~Comment.CommentData</a></li>
 											<li><a href="FetchQueue.html">FetchQueue</a></li>
-											<li><a href="RequestSession.html">RequestSession</a></li>
+											<li><a href="LoginSession.html">LoginSession</a></li>
+											<li><a href="SessionError.html">SessionError</a></li>
 									</ul>
 								</li>
 				</ul>
@@ -83,7 +96,7 @@
 <dd class="symbol-details class  collapsible-symbol expanded" style="max-height: 9999px;">
 	<div class="symbol-details-inner">
 			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>새 게시판 객체 Board를 만든다.
-			생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).</p></div>
+			생성시에는 게시판의 존재 여부를 확인하지 않는다(Rate Limit때문).</p></div>
 			</div>			<div class="callout callout-info">
 				<h5>Parameters</h5>
 				<table class="params table table-striped">
@@ -104,7 +117,7 @@
 						</tr>
 						<tr>
 								<td><code>boardData</code></td>
-							<td><span class="param-type">Object</span></td>
+							<td><span class="param-type">object</span></td>
 							<td class="last">
 									<p>게시판 정보</p>
 										<table class="params table table-striped">
@@ -150,7 +163,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-14">line 14</a></p>
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-45">line 45</a></p>
 								</div>
 							</div>
 			
@@ -162,6 +175,529 @@
 </dd>
 							</dl>
 							<article class="secondary">
+									<h3>Members</h3>
+									<dl class="symbol">
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="_cacheSize" class="member public"><span class="name">_cacheSize</span><span class="signature-type"> :number</span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>새 인스턴스 생성 시 사용할 기본 캐시 사이즈</p></div>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+							<!-- type -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Type</label>
+								<div class="col-sm-9">
+									<div class="form-control-static type-names"><span class="param-type">number</span></div>
+								</div>
+							</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-24">line 24</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="_session" class="member public"><span class="name">_session</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-info">
+				<h5>Properties</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>요청</code></td>
+							<td><span class="param-type"><a href="RequestSession.html">RequestSession</a></span></td>
+							<td class="last">
+									<p>시 사용하는 세션</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-27">line 27</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="url" class="member public"><span class="name">url</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-info">
+				<h5>Properties</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>게시판</code></td>
+							<td><span class="param-type">URL</span></td>
+							<td class="last">
+									<p>URL</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-29">line 29</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="_cacheSize" class="member public"><span class="name">_cacheSize</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-info">
+				<h5>Properties</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>게시판</code></td>
+							<td><span class="param-type">number</span></td>
+							<td class="last">
+									<p>내 캐시할 게시글 개수</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-31">line 31</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="_cachedArticles" class="member public"><span class="name">_cachedArticles</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-info">
+				<h5>Properties</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>캐시된</code></td>
+							<td><span class="param-type">object.&lt;number, <a href="Article.html">Article</a>></span></td>
+							<td class="last">
+									<p>게시글들</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-33">line 33</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="_cachedOrder" class="member public"><span class="name">_cachedOrder</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-info">
+				<h5>Properties</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>캐시된</code></td>
+							<td><span class="param-type">Array.&lt;number></span></td>
+							<td class="last">
+									<p>게시글의 우선순위(LRU)</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-35">line 35</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id=".defaultCacheSize" class="member public"><span class="signature-attribs">&lt;static> </span><span class="name">defaultCacheSize</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>Board의 기본 캐시 사이즈</p></div>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-55">line 55</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="articleCacheSize" class="member public"><span class="name">articleCacheSize</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>Board 객체의 캐시 사이즈</p></div>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-62">line 62</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id=".defaultCacheSize" class="member public"><span class="signature-attribs">&lt;static> </span><span class="name">defaultCacheSize</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>Board의 기본 캐시 사이즈를 설정한다.
+			이미 생성된 객체에는 효과가 없다.</p></div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>newSize</code></td>
+							<td><span class="param-type">number</span></td>
+							<td class="last">
+									<p>새 캐시 사이즈</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-72">line 72</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title member public collapsible-symbol">
+			<h4 id="articleCacheSize" class="member public"><span class="name">articleCacheSize</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details member public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>Board 객체의 캐시 사이즈를 설정한다.</p></div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>newSize</code></td>
+							<td><span class="param-type">number</span></td>
+							<td class="last">
+									<p>새 캐시 사이즈</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-82">line 82</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+									</dl>
 									<h3>Methods</h3>
 									<dl class="symbol">
 											<hr/>
@@ -170,8 +706,8 @@
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
-			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>해당 게시판에 있는 게시글의 객체 Article을 얻어온다.
-			실제 존재 여부와 관계 없이 무조건 반환한다.</p></div>
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>해당 번호의 Article 객체를 얻어온다.
+			만일 캐시된 Article 객체가 지나치게 많을 경우 캐시를 정리한다.</p></div>
 			</div>			<div class="callout callout-info">
 				<h5>Parameters</h5>
 				<table class="params table table-striped">
@@ -221,7 +757,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-28">line 28</a></p>
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-94">line 94</a></p>
 								</div>
 							</div>
 			
@@ -233,7 +769,7 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="readArticle" class="function public"><span class="name">readArticle</span><span class="signature-params">( <span class="signature-param">articleId</span>, <span class="signature-param">options</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;<a href="Article.ArticleData.html">Article.ArticleData</a>>}</span></h4>
+			<h4 id="readArticle" class="function public"><span class="signature-attribs">&lt;async> </span><span class="name">readArticle</span><span class="signature-params">( <span class="signature-param">articleId</span>, <span class="signature-param">options</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;<a href="Article.ArticleData.html">Article.ArticleData</a>>}</span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
@@ -259,34 +795,9 @@
 						</tr>
 						<tr>
 								<td><code>options</code></td>
-							<td><span class="param-type">Object</span></td>
+							<td><span class="param-type">Article.ArticleReadOption</span></td>
 							<td class="last">
 									<p>게시글 읽기 옵션</p>
-										<table class="params table table-striped">
-											<thead>
-											<tr>
-													<th>Name</th>
-												<th>Type</th>
-												<th class="last">Description</th>
-											</tr>
-											</thead>
-											<tbody>
-												<tr>
-														<td><code>noCache</code></td>
-													<td><span class="param-type">boolean</span></td>
-													<td class="last">
-															<p>true일 경우 저장된 정보를 무시하고 무조건 fetch함</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>withComments</code></td>
-													<td><span class="param-type">boolean</span></td>
-													<td class="last">
-															<p>true일 경우 게시글에 작성된 모든 댓글을 추가로 fetch함</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
 							</td>
 						</tr>
 					</tbody>
@@ -320,7 +831,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-44">line 44</a></p>
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-123">line 123</a></p>
 								</div>
 							</div>
 			
@@ -332,7 +843,7 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="writeArticle" class="function public"><span class="name">writeArticle</span><span class="signature-params">( <span class="signature-param">article</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;<a href="Article.html">Article</a>>}</span></h4>
+			<h4 id="writeArticle" class="function public"><span class="signature-attribs">&lt;async> </span><span class="name">writeArticle</span><span class="signature-params">( <span class="signature-param">article</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;<a href="Article.html">Article</a>>}</span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
@@ -350,45 +861,9 @@
 					<tbody>
 						<tr>
 								<td><code>article</code></td>
-							<td><span class="param-type">Object</span></td>
+							<td><span class="param-type">Article.ArticlePostOption</span></td>
 							<td class="last">
 									<p>게시글 내용</p>
-										<table class="params table table-striped">
-											<thead>
-											<tr>
-													<th>Name</th>
-												<th>Type</th>
-													<th>Attributes</th>
-												<th class="last">Description</th>
-											</tr>
-											</thead>
-											<tbody>
-												<tr>
-														<td><code>category</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-													<td class="last">
-															<p>게시글 분류</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>title</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-													<td class="last">
-															<p>게시글 제목</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>content</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-													<td class="last">
-															<p>게시글 내용</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
 							</td>
 						</tr>
 					</tbody>
@@ -422,7 +897,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-59">line 59</a></p>
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-138">line 138</a></p>
 								</div>
 							</div>
 			
@@ -488,7 +963,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-104">line 104</a></p>
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-188">line 188</a></p>
 								</div>
 							</div>
 			
@@ -500,7 +975,7 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="editArticle" class="function public"><span class="name">editArticle</span><span class="signature-params">( <span class="signature-param">articleId</span>, <span class="signature-param">article</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Response>}</span></h4>
+			<h4 id="editArticle" class="function public"><span class="signature-attribs">&lt;async> </span><span class="name">editArticle</span><span class="signature-params">( <span class="signature-param">articleId</span>, <span class="signature-param">article</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Response>}</span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
@@ -525,45 +1000,9 @@
 						</tr>
 						<tr>
 								<td><code>article</code></td>
-							<td><span class="param-type">Object</span></td>
+							<td><span class="param-type">Article.ArticlePostOption</span></td>
 							<td class="last">
 									<p>수정될 내용(지정되지 않은 property는 현재의 값을 그대로 가지고 감)</p>
-										<table class="params table table-striped">
-											<thead>
-											<tr>
-													<th>Name</th>
-												<th>Type</th>
-													<th>Attributes</th>
-												<th class="last">Description</th>
-											</tr>
-											</thead>
-											<tbody>
-												<tr>
-														<td><code>category</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-													<td class="last">
-															<p>게시글 분류</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>title</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-													<td class="last">
-															<p>게시글 제목</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>content</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-													<td class="last">
-															<p>게시글 내용</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
 							</td>
 						</tr>
 					</tbody>
@@ -597,7 +1036,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-120">line 120</a></p>
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-201">line 201</a></p>
 								</div>
 							</div>
 			
@@ -609,7 +1048,7 @@
 </dd>
 											<hr/>
 											<dt class="symbol-title function public collapsible-symbol">
-			<h4 id="queryPage" class="function public"><span class="name">queryPage</span><span class="signature-params">( <span class="signature-param">page</span>, <span class="signature-param">options</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Array.&lt;<a href="Article.html">Article</a>>>}</span></h4>
+			<h4 id="queryPage" class="function public"><span class="signature-attribs">&lt;async> </span><span class="name">queryPage</span><span class="signature-params">( <span class="signature-param">page</span>, <span class="signature-param">options</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Array.&lt;<a href="Article.html">Article</a>>>}</span></h4>
 		</dt>
 <dd class="symbol-details function public  collapsible-symbol">
 	<div class="symbol-details-inner">
@@ -621,6 +1060,7 @@
 					<tr>
 							<th>Name</th>
 						<th>Type</th>
+							<th>Default</th>
 						<th class="last">Description</th>
 					</tr>
 					</thead>
@@ -628,64 +1068,17 @@
 						<tr>
 								<td><code>page</code></td>
 							<td><span class="param-type">number</span></td>
+								<td>1</td>
 							<td class="last">
 									<p>검색 결과 페이지 번호</p>
 							</td>
 						</tr>
 						<tr>
 								<td><code>options</code></td>
-							<td><span class="param-type">Object</span></td>
+							<td><span class="param-type">BoardQueryOption</span></td>
+								<td></td>
 							<td class="last">
 									<p>검색 옵션</p>
-										<table class="params table table-striped">
-											<thead>
-											<tr>
-													<th>Name</th>
-												<th>Type</th>
-													<th>Attributes</th>
-													<th>Default</th>
-												<th class="last">Description</th>
-											</tr>
-											</thead>
-											<tbody>
-												<tr>
-														<td><code>withNotices</code></td>
-													<td><span class="param-type">boolean</span></td>
-														<td class="attributes"></td>
-														<td></td>
-													<td class="last">
-															<p>true일 경우 상단의 공지글을 포함해 반환함</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>queryTarget</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-														<td>&#x27;all&#x27;|&#x27;title_conent&#x27;|title&#x27;|&#x27;content&#x27;|&#x27;nickname&#x27;|&#x27;comment&#x27;</td>
-													<td class="last">
-															<p>검색</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>queryString</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-														<td></td>
-													<td class="last">
-															<p>검색 내용</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>category</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-														<td></td>
-													<td class="last">
-															<p>검색할 분류</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
 							</td>
 						</tr>
 					</tbody>
@@ -719,7 +1112,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-137">line 137</a></p>
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-214">line 214</a></p>
 								</div>
 							</div>
 			
@@ -757,37 +1150,9 @@
 						</tr>
 						<tr>
 								<td><code>options</code></td>
-							<td><span class="param-type">Object</span></td>
+							<td><span class="param-type"><a href="global.html#BoardReadOption">BoardReadOption</a></span></td>
 							<td class="last">
 									<p>검색 옵션</p>
-										<table class="params table table-striped">
-											<thead>
-											<tr>
-													<th>Name</th>
-												<th>Type</th>
-													<th>Attributes</th>
-												<th class="last">Description</th>
-											</tr>
-											</thead>
-											<tbody>
-												<tr>
-														<td><code>withNotices</code></td>
-													<td><span class="param-type">boolean</span></td>
-														<td class="attributes"></td>
-													<td class="last">
-															<p>true일 경우 상단의 공지글을 포함해 반환함</p>
-													</td>
-												</tr>
-												<tr>
-														<td><code>category</code></td>
-													<td><span class="param-type">string</span></td>
-														<td class="attributes">&lt;optional&gt;<br/></td>
-													<td class="last">
-															<p>게시글 분류</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
 							</td>
 						</tr>
 					</tbody>
@@ -821,7 +1186,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Source</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-189">line 189</a></p>
+									<p class="form-control-static"><a href="board.js.html">board.js</a>, <a href="board.js.html#line-278">line 278</a></p>
 								</div>
 							</div>
 			
@@ -842,7 +1207,7 @@
 	</div>
 	<footer>
 				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
-			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 10th Feb 2021 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 3rd Aug 2022 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
 	</footer>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

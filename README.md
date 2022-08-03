@@ -1,3 +1,32 @@
+# Changes between v0.1.3 -> 0.2.0
+
+## 1. set~ 계열의 method들 대신 property getter / setter를 사용합니다
+
+Rather than:
+
+```javascript
+FetchQueue.setRateLimit(1000);
+Board.setGlobalArticleCache(64);
+boardInstance.setArticleCache(128);
+```
+
+Use:
+
+```javascript
+FetchQueue.rateLimit = 1000;
+Board.defaultCacheSize = 64;
+boardInstance.articleCacheSize = 128;
+```
+
+## 2. loginSession은 이제 Promise로 반환됩니다.
+
+단 anonymousSession은 그대로 즉시 반환됩니다.
+
+```javascript
+const anonymousSession = Arca.Session.anonymousSession();
+const loginSession = await Arca.Session.loginSession(username, password);
+```
+
 # Usage
 
 ## 1. 세션 만들기

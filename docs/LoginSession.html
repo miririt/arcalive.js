@@ -1,10 +1,9 @@
-<!-- start:source.tmpl.hbs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-		<title>fetch-queue.js</title>
+		<title>LoginSession</title>
 		<!--[if lt IE 9]>
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -14,7 +13,7 @@
 		<link type="text/css" rel="stylesheet" href="css/template.min.css">
 		<script type="text/javascript">
 			window.TEMPLATE_OPTIONS = {"includeDate":true,"dateFormat":"Do MMM YYYY","systemName":"arcalive.js","systemSummary":"A small arca.live API","systemLogo":"","systemColor":"","navMembers":[{"kind":"class","title":"Classes","summary":"All documented classes."},{"kind":"external","title":"Externals","summary":"All documented external members."},{"kind":"global","title":"Globals","summary":"All documented globals."},{"kind":"mixin","title":"Mixins","summary":"All documented mixins."},{"kind":"interface","title":"Interfaces","summary":"All documented interfaces."},{"kind":"module","title":"Modules","summary":"All documented modules."},{"kind":"namespace","title":"Namespaces","summary":"All documented namespaces."},{"kind":"tutorial","title":"Tutorials","summary":"All available tutorials."}],"footer":"","copyright":"FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.","linenums":true,"collapseSymbols":true,"inverseNav":true,"inlineNav":false,"outputSourceFiles":true,"sourceRootPath":null,"disablePackagePath":true,"outputSourcePath":false,"showTableOfContents":true,"showAccessFilter":true,"analytics":null,"methodHeadingReturns":true,"sort":"linenum, longname, version, since","search":true,"favicon":null,"stylesheets":[],"scripts":[],"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":false}};
-			window.DOCLET_TOC_ENABLED = false;
+			window.DOCLET_TOC_ENABLED = true;
 			window.DOCLET_AFILTER_ENABLED = false;
 		</script>
 </head>
@@ -77,175 +76,178 @@
 	</header>
 	<!-- end:navbar.hbs -->		<div class="page-header">
 			<div class="container">
-				<span class="kind">source</span>
-				<h1><span class="name">fetch-queue.js</span></h1>
+				<span class="kind">class</span>
+				<h1><span class="name">LoginSession</span></h1>
 			</div>
 		</div>
 	<div class="container content">
 		<div class="row">
-			<div class="col-md-12 main-content">
-		<section class="source-section">
-			<article></article>
-			<pre class="prettyprint source language-javascript line-numbers"><code class="language-javascript">const fetch = require("node-fetch");
-
-/**
- * @typedef FetchTask
- * @property {object} args
- * @property {string|URL} args.resource
- * @property {fetch.RequestInit} args.init
- * @property {function} resolver Fetch Promise 성공시 resolver
- * @property {function} rejecter Fetch Promise 실패시 resolver
- */
-/**
- * Rate Limit을 준수하는 fetch queue
- */
-class FetchQueue {
-  /** @type {FetchTask[]} */
-  _queue = [];
-  _head = 0;
-  _clean = 64;
-  _rateLimit = 400;
-  _stopped = false;
-
-  constructor() {
-    this._fetchStep();
-  }
-
-  /**
-   * 다음 Fetch 작업을 얻어온다.
-   * 큐에 완료된 작업이 쌓여있을 경우 정리한다.
-   *
-   * @returns {FetchTask} task 다음에 실행해야 하는 fetch 작업 정보
-   */
-  _next() {
-    if (this._head === this._queue.length) {
-      delete this._queue;
-      this._queue = [];
-      this._head = 0;
-    }
-    if (this._head > this._clean) {
-      this._queue = this._queue.slice(this._head);
-      this._head = 0;
-    }
-
-    if (this._queue.length === 0) return null;
-    else return this._queue[this._head++];
-  }
-
-  /**
-   * 다음 Fetch 작업을 수행한다.
-   */
-  _fetchStep() {
-    const task = this._next();
-
-    if (task !== null) {
-      fetch(...task.args)
-        .then(function (res) {
-          task.resolver(res);
-        })
-        .catch(function (err) {
-          task.rejecter(err);
-        });
-    } else {
-      this.stop();
-    }
-
-    if (!this._stopped) {
-      setTimeout(() => this._fetchStep(), this.rateLimit);
-    }
-  }
-
-  get rateLimit() {
-    return this._rateLimit;
-  }
-
-  /**
-   * Rate Limit을 재설정한다.
-   * 각 fetch는 여기에서 지정한 제한값만큼의 시간을 대기하고 보내진다.
-   *
-   * @param {number} newLimit 새 제한(단위:ms)
-   */
-  set rateLimit(newLimit) {
-    // 너무 터무니없는 값은 일단 거름
-    if (newLimit &lt; 100) return;
-    this._rateLimit = newLimit;
-  }
-
-  /**
-   * Rate Limit을 재설정한다.
-   * 각 fetch는 여기에서 지정한 제한값만큼의 시간을 대기하고 보내진다.
-   *
-   * @deprecated use "rateLimit" property instead.
-   * @param {number} newLimit 새 제한(단위:ms)
-   */
-  setRateLimit(newLimit) {
-    this._rateLimit = newLimit;
-  }
-
-  /**
-   * Fetch를 일시정지한다.
-   */
-  pause() {
-    this._stopped = true;
-  }
-
-  /**
-   * Fetch가 정지되어 있었을 경우 다시 시작한다.
-   */
-  resume() {
-    if (this._stopped) {
-      this._stopped = false;
-      this._fetchStep();
-    }
-  }
-
-  /**
-   * Fetch를 정지한다.
-   * 대기열의 모든 fetch는 전부 reject된다.
-   */
-  stop() {
-    this.pause();
-
-    this._queue.forEach((task) => {
-      task.rejecter(new Error("Fetch queue has been stopped"));
-    });
-
-    delete this._queue;
-    this._queue = [];
-    this._head = 0;
-  }
-
-  /**
-   * 새 fetch를 큐에 넣는다.
-   *
-   * @param {string|URL} resource
-   * @param {fetch.RequestInit} init
-   * @returns {Promise&lt;Response>} 응답
-   */
-  fetch(resource, init) {
-    let resolver, rejecter;
-    const fetchPromise = new Promise(function (resolve, reject) {
-      resolver = resolve;
-      rejecter = reject;
-    });
-
-    this._queue.push({
-      args: [resource, init],
-      resolver: resolver,
-      rejecter: rejecter,
-    });
-
-    this.resume();
-    return fetchPromise;
-  }
-}
-
-const fetchQueueInstance = new FetchQueue();
-
-module.exports = fetchQueueInstance;
-</code></pre>
-		</section>
+			<div class="col-md-9 main-content">
+						<ol class="breadcrumb">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="list_class.html">Classes</a></li>
+							<li class="active">LoginSession</li>
+						</ol>
+					<section>
+							<dl class="symbol primary">
+								<dt class="symbol-title class collapsible-symbol expanded">
+			<h2 class="class"><span class="signature-new">new&nbsp;</span><span class="name">LoginSession</span><span class="signature-params">( <span class="signature-param">username</span>, <span class="signature-param">password</span>&nbsp;)</span><span class="signature-type"></span></h2>
+</dt>
+<dd class="symbol-details class  collapsible-symbol expanded" style="max-height: 9999px;">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>로그인된 세션 LoginSession을 만든다.</p></div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>username</code></td>
+							<td><span class="param-type">string</span></td>
+							<td class="last">
+									<p>사용자 ID</p>
+							</td>
+						</tr>
+						<tr>
+								<td><code>password</code></td>
+							<td><span class="param-type">string</span></td>
+							<td class="last">
+									<p>사용자 PW</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="request-session.js.html">request-session.js</a>, <a href="request-session.js.html#line-247">line 247</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+							</dl>
+							<article class="secondary">
+									<h3>Methods</h3>
+									<dl class="symbol">
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="_login" class="function public"><span class="name">_login</span><span class="signature-params">()</span><span class="signature-type"> &rarr;&nbsp;{Promise.&lt;Response>}</span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>해당 세션의 로그인 정보로 로그인을 시도한다.</p></div>
+			</div>			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+							<div class="form-group">
+								<label class="col-sm-3 control-label returns-type"><span class="param-type">Promise.&lt;Response></span></label>
+								<div class="col-sm-9">
+									<div class="form-control-static returns-description"></div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="request-session.js.html">request-session.js</a>, <a href="request-session.js.html#line-258">line 258</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="_validateSession" class="function public"><span class="signature-attribs">&lt;async> </span><span class="name">_validateSession</span><span class="signature-params">()</span><span class="signature-type"></span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description"><p>해당 세션의 로그인 상태를 확인한다.
+			로그아웃되었을 경우 다시 로그인한다.</p></div>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="request-session.js.html">request-session.js</a>, <a href="request-session.js.html#line-278">line 278</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+									</dl>
+							</article>
+					</section>
+			</div>
+				<div class="col-md-3 side-content">
+					<nav class="toc hidden-print hidden-sm hidden-xs"></nav>
+				</div>
 		</div>
 	</div>
 	<footer>
@@ -277,4 +279,3 @@ module.exports = fetchQueueInstance;
 	
 </body>
 </html>
-<!-- end:source.tmpl.hbs -->

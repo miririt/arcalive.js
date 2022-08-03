@@ -50,12 +50,27 @@ class Board {
   }
 
   /**
-   * Board의 전역 캐시 사이즈를 설정한다.
+   * Board의 기본 캐시 사이즈
+   */
+  static get defaultCacheSize() {
+    return this._cacheSize;
+  }
+
+  /**
+   * Board 객체의 캐시 사이즈
+   */
+  get articleCacheSize() {
+    return this._cacheSize;
+  }
+
+  /**
+   * Board의 기본 캐시 사이즈를 설정한다.
    * 이미 생성된 객체에는 효과가 없다.
    *
    * @param {number} newSize 새 캐시 사이즈
    */
-  static setGlobalArticleCache(newSize) {
+  static set defaultCacheSize(newSize) {
+    if (newSize < 0) return;
     this._cacheSize = newSize;
   }
 
@@ -64,7 +79,8 @@ class Board {
    *
    * @param {number} newSize 새 캐시 사이즈
    */
-  setArticleCache(newSize) {
+  set articleCacheSize(newSize) {
+    if (newSize < 0) return;
     this._cacheSize = newSize;
   }
 
