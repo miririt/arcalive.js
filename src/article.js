@@ -171,6 +171,8 @@ class Article {
           );
         }
       }
+
+      this._loaded = true;
     }
 
     return this._articleData._freezeThis();
