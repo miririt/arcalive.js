@@ -5,6 +5,7 @@ const Board = require("./board");
 const Article = require("./article");
 const { FetchError } = require("node-fetch");
 const { ArgumentError } = require("./errors");
+const { CookieJar } = require("tough-cookie");
 
 /**
  * @typedef AdditionalRequestOption
@@ -14,7 +15,7 @@ const { ArgumentError } = require("./errors");
  * @typedef {RequestInit & AdditionalRequestOption} RequestOption
  */
 class RequestSession {
-  _cookies = {};
+  _cookieJar = new CookieJar();
   _anonymous = true;
 
   constructor() {}
@@ -46,20 +47,8 @@ class RequestSession {
    * @returns {Response} res
    */
   _loadCookies(res) {
-    const setCookies = res.headers.get("Set-Cookie") || "";
-
-    this._cookies = this._cookies || {};
-    setCookies
-      .split(/[;,]\s*/)
-      // filters 'Secure' or 'HttpOnly'
-      .filter((_) => _.indexOf("=") != -1)
-      // filters 'Expires', 'Max-Age', 'Domain', 'Path', 'SameSite'
-      .filter((_) => !_.match(/^(Expires|Max-Age|Domain|Path|SameSite)=/i))
-      // set cookie
-      .map((_) => {
-        const [key, val] = _.split("=");
-        this._cookies[key] = val;
-      });
+    const setCookies = res.headers.get("Set-Cookie");
+    if (setCookies) this._cookieJar.setCookieSync(setCookies, res.url);
 
     return res;
   }
@@ -67,16 +56,11 @@ class RequestSession {
   /**
    * 현재 세션의 쿠키 값을 문자열로 반환한다.
    *
+   * @param {string} url
    * @returns {string} Request 헤더에 사용할 수 있는 쿠키 문자열
    */
-  _makeCookieString() {
-    let cookieKeyVal = [];
-    this._cookies = this._cookies || {};
-    for (const key in this._cookies) {
-      cookieKeyVal.push(`${key}=${this._cookies[key]}`);
-    }
-
-    return cookieKeyVal.join(";");
+  _makeCookieString(url) {
+    return this._cookieJar.getCookieStringSync(url);
   }
 
   /**
@@ -125,7 +109,7 @@ class RequestSession {
 
     init.method = init.method || "GET";
     init.headers = init.headers || {};
-    init.headers.Cookie = this._makeCookieString();
+    init.headers.Cookie = this._makeCookieString(resource.toString());
 
     const parse = init.parse === undefined ? true : init.parse;
     const csrfRequired = init.csrfRequired || false;
@@ -140,7 +124,7 @@ class RequestSession {
       init.body = init.body || new url.URLSearchParams();
       init.body.append("_csrf", csrfToken);
 
-      init.headers.Cookie = this._makeCookieString();
+      init.headers.Cookie = this._makeCookieString(resource.toString());
       init.headers.referer = csrfFrom;
     }
 
