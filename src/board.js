@@ -5,27 +5,48 @@ const Article = require("./article");
  * @typedef {import('./request-session')} RequestSession
  */
 
+/**
+ * @typedef BoardReadOption
+ *
+ * @property {boolean} withNotices true일 경우 상단의 공지글을 포함해 반환함
+ * @property {string} [category] 게시글 분류
+ */
+/**
+ * @typedef AdditionalQueryOption
+ *
+ * @property {string} [queryTarget='all'|'title_conent'|title'|'content'|'nickname'|'comment'] 검색
+ * @property {string} [queryString] 검색 내용
+ *
+ * @typedef {BoardReadOption & AdditionalQueryOption} BoardQueryOption
+ */
 class Board {
-  /** @type {RequestSession} */
-  _session = null;
-  /** @type {number} */
+  /** @type {number} 새 인스턴스 생성 시 사용할 기본 캐시 사이즈 */
   static _cacheSize = 64;
+
+  /** @property {RequestSession} 요청 시 사용하는 세션 */
+  _session = null;
+  /** @property {URL} 게시판 URL */
+  url = null;
+  /** @property {number} 게시판 내 캐시할 게시글 개수 */
+  _cacheSize = 64;
+  /** @property {object<number,Article>} 캐시된 게시글들 */
+  _cachedArticles = {};
+  /** @property {number[]} 캐시된 게시글의 우선순위(LRU) */
+  _cachedOrder = [];
 
   /**
    * 새 게시판 객체 Board를 만든다.
-   * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
+   * 생성시에는 게시판의 존재 여부를 확인하지 않는다(Rate Limit때문).
    *
    * @param {RequestSession} session 게시판을 열람할 세션
-   * @param {Object} boardData 게시판 정보
+   * @param {object} boardData 게시판 정보
    * @param {URL} boardData.url 게시판 URL
    */
-  constructor(session, boardData) {
+  constructor(session, { url = null } = {}) {
     this._session = session;
-    this.url = boardData.url;
+    this.url = url;
 
     this._cacheSize = Board._cacheSize || 64;
-    this._cachedArticles = {};
-    this._cachedOrder = [];
   }
 
   /**
@@ -40,7 +61,6 @@ class Board {
 
   /**
    * Board 객체의 캐시 사이즈를 설정한다.
-   * 다른 객체에는 효과가 없다.
    *
    * @param {number} newSize 새 캐시 사이즈
    */
@@ -81,12 +101,13 @@ class Board {
    * 존재하지 않을 경우 실패한다.
    *
    * @param {number} articleId 게시글 번호
-   * @param {Object} options 게시글 읽기 옵션
-   * @param {boolean} options.noCache true일 경우 저장된 정보를 무시하고 무조건 fetch함
-   * @param {boolean} options.withComments true일 경우 게시글에 작성된 모든 댓글을 추가로 fetch함
+   * @param {Article.ArticleReadOption} options 게시글 읽기 옵션
    * @returns {Promise<Article.ArticleData>} 해당 번호의 게시글을 나타내는 Article 객체
    */
-  async readArticle(articleId, options) {
+  async readArticle(
+    articleId,
+    options = { noCache: false, withComments: true }
+  ) {
     const articleObject = this.getArticle(articleId);
 
     return articleObject.read(options);
@@ -95,10 +116,7 @@ class Board {
   /**
    * 해당 게시판에 새 글을 작성한다.
    *
-   * @param {Object} article 게시글 내용
-   * @param {string} [article.category] 게시글 분류
-   * @param {string} [article.title] 게시글 제목
-   * @param {string} [article.content] 게시글 내용
+   * @param {Article.ArticlePostOption} article 게시글 내용
    * @returns {Promise<Article>} 작성된 게시글 객체에 대한 Promise
    */
   async writeArticle(article) {
@@ -161,10 +179,7 @@ class Board {
    * 해당 게시판에서 글을 수정한다.
    *
    * @param {number} articleId 게시글 번호
-   * @param {Object} article 수정될 내용(지정되지 않은 property는 현재의 값을 그대로 가지고 감)
-   * @param {string} [article.category] 게시글 분류
-   * @param {string} [article.title] 게시글 제목
-   * @param {string} [article.content] 게시글 내용
+   * @param {Article.ArticlePostOption} article 수정될 내용(지정되지 않은 property는 현재의 값을 그대로 가지고 감)
    * @returns {Promise<Response>} 게시글 수정 fetch에 대한 Response
    */
   async editArticle(articleId, article) {
@@ -177,11 +192,7 @@ class Board {
    * 해당 게시판에서 글을 검색한다.
    *
    * @param {number} page 검색 결과 페이지 번호
-   * @param {Object} options 검색 옵션
-   * @param {boolean} options.withNotices true일 경우 상단의 공지글을 포함해 반환함
-   * @param {string} [options.queryTarget='all'|'title_conent'|title'|'content'|'nickname'|'comment'] 검색
-   * @param {string} [options.queryString] 검색 내용
-   * @param {string} [options.category] 검색할 분류
+   * @param {BoardQueryOption} options 검색 옵션
    * @returns {Promise<Article[]>} 해당 페이지에 있는 게시글 검색 결과를 나타내는 Article[]
    */
   async queryPage(page = 1, options = {}) {
@@ -245,9 +256,7 @@ class Board {
    * 내부적으로 queryPage를 호출한다.
    *
    * @param {number} page 페이지 번호
-   * @param {Object} options 검색 옵션
-   * @param {boolean} options.withNotices true일 경우 상단의 공지글을 포함해 반환함
-   * @param {string} [options.category] 게시글 분류
+   * @param {BoardReadOption} options 검색 옵션
    * @returns {Promise<Article[]>} 해당 게시글 분류의 해당 페이지에 있는 게시글을 나타내는 Article[]
    */
   readPage(page, options) {

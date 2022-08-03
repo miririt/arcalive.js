@@ -6,6 +6,19 @@ const { ArgumentError, SessionError } = require("./errors");
  * @typedef {import('./request-session')} RequestSession
  */
 
+/**
+ * @typedef ArticleReadOption
+ *
+ * @property {boolean} [noCache=false] 캐시된 데이터를 사용할 지 설정
+ * @property {boolean} [withComments=true] 댓글을 같이 읽을 지 설정
+ */
+/**
+ * @typedef ArticlePostOption
+ *
+ * @property {string} [category] 게시글 분류
+ * @property {string} [title] 게시글 제목
+ * @property {string} [content] 게시글 내용
+ */
 class Article {
   /** @type {RequestSession} */
   _session = null;
@@ -60,17 +73,10 @@ class Article {
    * 해당 게시글을 fetch한다.
    * 만일 이미 읽어온 게시글일 경우, fetch 없이 정보를 그대로 반환한다.
    *
-   * @param {Object} options 게시글 읽기 옵션
-   * @param {boolean} options.noCache true일 경우 저장된 정보를 무시하고 무조건 fetch함
-   * @param {boolean} options.withComments true일 경우 게시글에 작성된 모든 댓글을 추가로 fetch함
+   * @param {ArticleReadOption} options 게시글 읽기 옵션
    * @returns {Promise<Article.ArticleData>} 해당 게시글의 articleData 사본
    */
-  async read(
-    options = {
-      noCache: false,
-      withComments: true,
-    }
-  ) {
+  async read(options = { noCache: false, withComments: true }) {
     if (options.noCache || !this._loaded || !this._articleData) {
       const article = await this._session._fetch(
         `${this._board.url}/${this.articleId}`
@@ -204,10 +210,7 @@ class Article {
   /**
    * 해당 게시글을 수정한다.
    *
-   * @param {Object} article 수정될 내용(지정되지 않은 property는 현재의 값을 그대로 가지고 감)
-   * @param {string} [article.category] 게시글 분류
-   * @param {string} [article.title] 게시글 제목
-   * @param {string} [article.content] 게시글 내용
+   * @param {ArticlePostOption} article 수정될 내용(지정되지 않은 property는 현재의 값을 그대로 가지고 감)
    * @returns {Promise<Response>} 수정 fetch에 대한 Response
    */
   async edit(

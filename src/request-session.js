@@ -6,6 +6,13 @@ const Article = require("./article");
 const { FetchError } = require("node-fetch");
 const { ArgumentError } = require("./errors");
 
+/**
+ * @typedef AdditionalRequestOption
+ *
+ * @property {boolean} [parse=true] true일 경우 응답을 parse해서 반환함
+ * @property {boolean} [csrfRequired=false] true일 경우 CSRF 토큰을 같이 전송함
+ * @typedef {RequestInit & AdditionalRequestOption} RequestOption
+ */
 class RequestSession {
   _cookies = {};
   _anonymous = true;
@@ -126,9 +133,7 @@ class RequestSession {
    * 해당 세션에서 fetch 요청을 보낸다.
    *
    * @param {string|URL} resource
-   * @param {object} init
-   * @param {boolean} [init.parse=true] true일 경우 응답을 parse해서 반환함
-   * @param {boolean} [init.csrfRequired=false] true일 경우 CSRF 토큰을 같이 전송함
+   * @param {RequestOption} init
    * @returns {Promise<Response|Node>} 응답
    */
   async _fetch(resource, init = {}) {
