@@ -25,10 +25,13 @@ class RequestSession {
    *
    * @param {string} username
    * @param {string} password
-   * @returns {LoginSession}
+   * @returns {Promise<LoginSession>}
    */
-  static login(username, password) {
-    return new LoginSession(username, password);
+  static async loginSession(username, password) {
+    const loginSession = new LoginSession(username, password);
+    await loginSession._login();
+
+    return loginSession;
   }
 
   /**
@@ -249,7 +252,6 @@ class LoginSession extends RequestSession {
 
   /**
    * 해당 세션의 로그인 정보로 로그인을 시도한다.
-   * 성공 결과와는 관계없이 반환한다.
    *
    * @returns {Promise<Response>}
    */
