@@ -174,14 +174,15 @@ Article.prototype.read = async function(options = {
           const content = comment.querySelector('div').innerHTML;
           let textContent;
 
-          if(message.querySelector('.emoticon-wrapper')) {
-            textContent = message.querySelector('.emoticon-wrapper').attributes.src || '';
+          const emoticonWrapper = message.querySelector('.emoticon-wrapper')
+          if(emoticonWrapper) {
+            textContent = emoticonWrapper.attributes.src || emoticonWrapper.childNodes?.find(e => e.rawAttrs)?.attributes?.src || '';
           } else if(message.querySelector('.text')) {
             textContent = message.querySelector('.text pre').textContent || '';
           }
 
           return new Comment(this, {
-            commentId: +comment.id.match(/(\d+)$/)[1],
+            commentId: comment.id ? +comment.id.match(/(\d+)$/)[1] : +comment.childNodes?.find(e => e.id)?.id?.match(/(\d+)$/)?.[1],
             deleted: comment.querySelector('.deleted') ? true : false,
             author: userLink.attributes['data-filter'],
             content: content,
