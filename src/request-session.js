@@ -108,26 +108,10 @@ class RequestSession {
   }
 
   /**
-   * 해당 세션의 로그인 상태를 확인한다.
-   * 로그아웃되었을 경우 다시 로그인한다.
+   * 해당 세션이 유효한지 확인하고 갱신함
+   * @abstract
    */
-  async _checkSession() {
-    if (this._anonymous) return;
-
-    this._lastSessionChecked = this._lastSessionChecked || 0;
-    if (this._lastSessionChecked + 1000 * 60 * 10 < new Date()) {
-      this._lastSessionChecked = new Date().getTime();
-      const shouldLogin = await this._fetch("https://arca.live", {
-        parse: false,
-      })
-        .then((res) => res.text())
-        .then((text) => text.indexOf("/u/logout") == -1);
-
-      if (shouldLogin) {
-        await this._login();
-      }
-    }
-  }
+  _validateSession() {}
 
   /**
    * 해당 세션에서 fetch 요청을 보낸다.
@@ -136,8 +120,8 @@ class RequestSession {
    * @param {RequestOption} init
    * @returns {Promise<Response|Node>} 응답
    */
-  async _fetch(resource, init = {}) {
-    await this._checkSession();
+  async _fetch(resource, init = { parse: true, csrfRequired: false }) {
+    await this._validateSession();
 
     init.method = init.method || "GET";
     init.headers = init.headers || {};
@@ -186,7 +170,7 @@ class RequestSession {
    * @return {Promise<Board>} 해당 이름을 가진 게시판
    */
   async getBoard(boardName) {
-    await this._checkSession();
+    await this._validateSession();
 
     const primaryBoardUrl = `https://arca.live/b/${boardName}`;
 
@@ -272,12 +256,39 @@ class LoginSession extends RequestSession {
       csrfRequired: true,
     });
   }
+
+  /**
+   * 해당 세션의 로그인 상태를 확인한다.
+   * 로그아웃되었을 경우 다시 로그인한다.
+   */
+  async _validateSession() {
+    this._lastSessionChecked = this._lastSessionChecked || 0;
+    if (this._lastSessionChecked + 1000 * 60 * 10 < new Date()) {
+      this._lastSessionChecked = new Date().getTime();
+      const shouldLogin = await this._fetch("https://arca.live", {
+        parse: false,
+      })
+        .then((res) => res.text())
+        .then((text) => text.indexOf("/u/logout") == -1);
+
+      if (shouldLogin) {
+        await this._login();
+      }
+    }
+  }
 }
 
 class AnonymouosSession extends RequestSession {
   _anonymous = true;
   constructor() {
     super();
+  }
+
+  /**
+   * 익명 세션은 확인 및 갱신할 필요가 없음
+   */
+  async _validateSession() {
+    return;
   }
 
   /**
