@@ -12,7 +12,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("fromUrl로 채널을 통한 게시글 열람 테스트", async function () {
-    const board = await session.fromUrl("https://arca.live/b/notice");
+    const board = await session.boardFromUrl("https://arca.live/b/notice");
     return await board.readArticle(6457546, {
       noCache: true,
       withComments: false,
@@ -20,7 +20,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("Board 캐시 테스트", async function () {
-    const board = await session.fromUrl("https://arca.live/b/notice");
+    const board = await session.boardFromUrl("https://arca.live/b/notice");
 
     const timeout = new Promise((_, reject) => {
       setTimeout(() => reject(new Error("Timeout! Cache failed.")), 30000);
@@ -39,7 +39,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("Article 캐시 테스트", async function () {
-    const board = await session.fromUrl("https://arca.live/b/notice");
+    const board = await session.boardFromUrl("https://arca.live/b/notice");
 
     const timeout = new Promise((_, reject) => {
       setTimeout(() => reject(new Error("Timeout! Cache failed.")), 30000);
@@ -59,7 +59,7 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("fromUrl로 채널을 통한 댓글 열람 테스트", async function () {
-    const board = await session.fromUrl("https://arca.live/b/notice");
+    const board = await session.boardFromUrl("https://arca.live/b/notice");
     const article = await board.readArticle(6457546, {
       noCache: true,
       withComments: true,
@@ -69,10 +69,12 @@ describe("익명 세션 게시글 열람 테스트", function () {
   });
 
   it("fromUrl로 직접 게시글 열람 테스트", async function () {
-    const article = await session.fromUrl("https://arca.live/b/notice/6457546");
+    const article = await session.articleFromUrl(
+      "https://arca.live/b/notice/6457546"
+    );
     return await article.read({
       noCache: true,
-      withComments: true,
+      withComments: false,
     });
   });
 });

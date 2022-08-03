@@ -196,6 +196,34 @@ class RequestSession {
   }
 
   /**
+   * URL에서 게시판을 얻어온다.
+   * 게시판이 아닌 경우 예외를 발생.
+   *
+   * @param {string|URL} url
+   * @return {Board}
+   */
+  boardFromUrl(url) {
+    const board = this.fromUrl(url);
+    if (!board instanceof Board)
+      throw new ArgumentError("This is not a board URL.");
+    return board;
+  }
+
+  /**
+   * URL에서 게시글을 얻어온다.
+   * 게시글이 아닌 경우 예외를 발생.
+   *
+   * @param {string|URL} url
+   * @return {Article}
+   */
+  articleFromUrl(url) {
+    const article = this.fromUrl(url);
+    if (!article instanceof Article)
+      throw new ArgumentError("This is not an article URL.");
+    return article;
+  }
+
+  /**
    * 세션을 닫는다.
    */
   closeSession() {
