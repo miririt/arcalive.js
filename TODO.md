@@ -18,8 +18,3 @@
 - [x] Typescript migration
 
   - [ ] 기존 주석과 새로 지정된 type 간에 차이가 있으면 보고 해결할것
-
-- [x] ESM으로 전환
-
-  - [x] CJS와 ESM 동시 지원
-  - [ ] ESM으로 전환시 dependency 중 최신버전이 ESM only인 것들 확인해서 업데이트(node-fetch)

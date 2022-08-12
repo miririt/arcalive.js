@@ -1,7 +1,8 @@
 import type { RequestInit } from "node-fetch";
 
 import { Response } from "node-fetch";
-import { parse, HTMLElement } from "node-html-parser";
+import type { HTMLElement } from "node-html-parser";
+import { parse } from "node-html-parser";
 
 type FetchTask = {
   args: [string | URL, RequestInit];

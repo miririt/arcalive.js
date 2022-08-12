@@ -4,14 +4,18 @@
 
 Typescript 적용 완료
 
-## 2. ESM / CJS 동시 지원
+## 2. ESM
+
+Rather than:
 
 ```javascript
-import * as Arca from "arcalive";
 const Arca = require("arcalive");
 ```
 
-단, 경과에 따라 ESM만 지원할 수도 있음
+Use:
+
+````javascript
+import * as Arca from "arcalive";
 
 # Changes between v0.1.3 -> 0.2.0
 
@@ -23,7 +27,7 @@ Rather than:
 FetchQueue.setRateLimit(1000);
 Board.setGlobalArticleCache(64);
 boardInstance.setArticleCache(128);
-```
+````
 
 Use:
 

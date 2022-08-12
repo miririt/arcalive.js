@@ -1,5 +1,5 @@
 import process from "process";
-import * as Arca from "arcalive";
+import * as Arca from "../dist/index.js";
 import dotenv from "dotenv";
 
 import { ReadTest, WriteTest } from "./session/index.js";

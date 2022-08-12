@@ -1,4 +1,4 @@
-import { default as fetch } from "node-fetch";
+import fetch from "node-fetch";
 import { RequestInit, Response } from "node-fetch";
 import { FetchResource, FetchTask } from "./data.js";
 
