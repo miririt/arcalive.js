@@ -6,5 +6,6 @@
   "slow": 75,
   "timeout": 50000,
   "ui": "bdd",
-  "spec": ["test/index.js"]
+  "spec": ["test/*.js"],
+  "node-option": ["experimental-specifier-resolution=node"]
 }
