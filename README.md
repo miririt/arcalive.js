@@ -1,4 +1,4 @@
-# Changes between v0.2.0 -> 0.3.0
+# Changes between v0.2.0 -> 0.3
 
 ## 1. Typescript로 전환
 
@@ -16,6 +16,7 @@ Use:
 
 ````javascript
 import * as Arca from "arcalive";
+```
 
 # Changes between v0.1.3 -> 0.2.0
 
