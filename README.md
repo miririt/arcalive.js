@@ -1,3 +1,18 @@
+# Changes between v0.2.0 -> 0.3.0
+
+## 1. Typescript로 전환
+
+Typescript 적용 완료
+
+## 2. ESM / CJS 동시 지원
+
+```javascript
+import * as Arca from "arcalive";
+const Arca = require("arcalive");
+```
+
+단, 경과에 따라 ESM만 지원할 수도 있음
+
 # Changes between v0.1.3 -> 0.2.0
 
 ## 1. set~ 계열의 method들 대신 property getter / setter를 사용합니다

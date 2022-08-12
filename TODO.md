@@ -5,22 +5,21 @@
 ### Todo
 
 - [ ] User 구현
+
   - [ ] 게시글 및 댓글 작성자는 User로 넘기게 할 것
   - [ ] 사용자 설정 구현
 
 - [ ] Emoticon 구현
-  - [ ] Comment 생성 및 로드 시 이모티콘은 Emoticon으로 넘기게 할 것
 
-- [ ] 변경된 사양에 따라 README.md 수정 및 설명 제작
+  - [ ] Comment 생성 및 로드 시 이모티콘은 Emoticon으로 넘기게 할 것
 
 ### In Progress
 
-- [ ] 가능하다면 Article 및 Comment 작성을 다듬고싶음
-  - [x] Board에서 writeArticle할때, Article에서 writeComment 할때 리스폰스가 아니라 Article 혹은 Comment가 반환되도록 만들기
+- [x] Typescript migration
 
-### Done ✓
+  - [ ] 기존 주석과 새로 지정된 type 간에 차이가 있으면 보고 해결할것
 
-- [x] Mocha 테스트 설정
-- [x] 클래스 간에 어느정도 독립적으로 만들어놓음(이게 최선인지는 모르겠음)
-- [x] JSDoc 주석 달아놓음
-- [x] 사실 거의 된게 없음
+- [x] ESM으로 전환
+
+  - [x] CJS와 ESM 동시 지원
+  - [ ] ESM으로 전환시 dependency 중 최신버전이 ESM only인 것들 확인해서 업데이트(node-fetch)
