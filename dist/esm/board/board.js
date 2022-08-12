@@ -1,4 +1,4 @@
-import { Article, } from "../article";
+import { Article, } from "../article/index.js";
 class Board {
     /** @type {number} 새 인스턴스 생성 시 사용할 기본 캐시 사이즈 */
     static _cacheSize = 64;

@@ -1,9 +1,9 @@
 import { Headers } from "node-fetch";
-import fq from "./fetch-queue";
-import { Board } from "../board/board";
-import { Article } from "../article";
-import { ArgumentError, RequestError } from "../errors";
-import { RequestResponse } from "./data";
+import fq from "./fetch-queue.js";
+import { Board } from "../board/board.js";
+import { Article } from "../article/index.js";
+import { ArgumentError, RequestError } from "../errors/index.js";
+import { RequestResponse } from "./data.js";
 class RequestSession {
     _cookieJar = new Map();
     _anonymous = true;

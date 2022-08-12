@@ -1,5 +1,6 @@
-import fetch, { RequestInit, Response } from "node-fetch";
-import { FetchResource, FetchTask } from "./data";
+import { default as fetch } from "node-fetch";
+import { RequestInit, Response } from "node-fetch";
+import { FetchResource, FetchTask } from "./data.js";
 
 /**
  * Rate Limit을 준수하는 fetch queue
@@ -43,10 +44,10 @@ class FetchQueue {
 
     if (task !== null) {
       fetch(task.args[0].toString(), task.args[1])
-        .then((res) => {
+        .then((res: Response) => {
           task.resolver(res);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           task.rejecter(err);
         });
     } else {

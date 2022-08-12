@@ -1,9 +1,9 @@
 import { Response } from "node-fetch";
-import type { RequestOption } from "./options";
-import type { FetchResource } from "./data";
-import { Board } from "../board/board";
-import { Article } from "../article";
-import { RequestResponse } from "./data";
+import type { RequestOption } from "./options.js";
+import type { FetchResource } from "./data.js";
+import { Board } from "../board/board.js";
+import { Article } from "../article/index.js";
+import { RequestResponse } from "./data.js";
 declare class RequestSession {
     _cookieJar: Map<string, string>;
     _anonymous: boolean;

@@ -1,6 +1,6 @@
-import { Comment } from "../comment/comment";
-import { ArgumentError, SessionError } from "../errors";
-import { ParceledArticleData } from "./data";
+import { ParceledArticleData } from "./data.js";
+import { Comment } from "../comment/index.js";
+import { ArgumentError, SessionError } from "../errors/index.js";
 class Article {
     _session;
     _board;

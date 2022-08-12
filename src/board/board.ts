@@ -1,14 +1,15 @@
-import type { RequestSession } from "../request/request-session";
+import type { RequestSession, RequestResponse } from "../request/index.js";
+
+import type { BoardData } from "./data.js";
+import type { BoardQueryOption, BoardReadOption } from "./options.js";
+
+import { HTMLElement } from "node-html-parser";
 import {
   Article,
   ArticleData,
   ArticlePostOption,
   ArticleReadOption,
-} from "../article";
-import { RequestResponse } from "../request";
-
-import type { BoardData } from "./data";
-import type { BoardQueryOption, BoardReadOption } from "./options";
+} from "../article/index.js";
 
 class Board {
   /** @type {number} 새 인스턴스 생성 시 사용할 기본 캐시 사이즈 */
@@ -132,7 +133,7 @@ class Board {
 
     const writePage = await this._session
       ._fetch(`${this.url}/write`)
-      .then((resp) => resp.parse());
+      .then((resp: RequestResponse) => resp.parse());
 
     const tokens = {
       csrf: "",
@@ -221,21 +222,22 @@ class Board {
 
     const boardPage = await this._session
       ._fetch(queryUrl)
-      .then((resp) => resp.parse());
+      .then((resp: RequestResponse) => resp.parse());
 
     const articles = boardPage.querySelectorAll(".article-list a.vrow");
 
     let filteredArticles = articles.filter(
-      (article) => article.classNames.indexOf("notice-unfilter") === -1
+      (article: HTMLElement) =>
+        article.classNames.indexOf("notice-unfilter") === -1
     );
 
     if (!options.withNotices) {
       filteredArticles = articles.filter(
-        (article) => article.classNames.indexOf("notice") === -1
+        (article: HTMLElement) => article.classNames.indexOf("notice") === -1
       );
     }
 
-    return filteredArticles.map((articleElem) => {
+    return filteredArticles.map((articleElem: HTMLElement) => {
       const articleData: ArticleData = {
         isSummary: true,
       };

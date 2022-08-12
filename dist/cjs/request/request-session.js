@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginSession = exports.AnonymouosSession = exports.RequestSession = void 0;
 const node_fetch_1 = require("node-fetch");
-const fetch_queue_1 = __importDefault(require("./fetch-queue"));
-const board_1 = require("../board/board");
-const article_1 = require("../article");
-const errors_1 = require("../errors");
-const data_1 = require("./data");
+const fetch_queue_js_1 = __importDefault(require("./fetch-queue.js"));
+const board_js_1 = require("../board/board.js");
+const index_js_1 = require("../article/index.js");
+const index_js_2 = require("../errors/index.js");
+const data_js_1 = require("./data.js");
 class RequestSession {
     _cookieJar = new Map();
     _anonymous = true;
@@ -114,15 +114,15 @@ class RequestSession {
         }
         init.method = init.method || "GET";
         init.headers = headers;
-        let response = await fetch_queue_1.default.fetch(resource, init);
+        let response = await fetch_queue_js_1.default.fetch(resource, init);
         while (response.status == 526) {
-            response = await fetch_queue_1.default.fetch(resource, init);
+            response = await fetch_queue_js_1.default.fetch(resource, init);
         }
         if (response.status >= 400) {
-            throw new errors_1.RequestError(`HTTP ${response.status}: ${resource}`);
+            throw new index_js_2.RequestError(`HTTP ${response.status}: ${resource}`);
         }
         this._loadCookies(response);
-        return new data_1.RequestResponse(response);
+        return new data_js_1.RequestResponse(response);
     }
     /**
      * 해당 게시판을 얻어온다.
@@ -145,17 +145,17 @@ class RequestSession {
     fromUrl(articleOrBoardUrl) {
         const targetUrl = new URL(articleOrBoardUrl.toString());
         if (targetUrl.origin.indexOf("arca.live") === -1) {
-            throw new errors_1.ArgumentError("This is not an arca.live url.");
+            throw new index_js_2.ArgumentError("This is not an arca.live url.");
         }
         const [boardPath] = targetUrl.pathname.match(/^\/b\/[^/]+/);
-        const board = new board_1.Board(this, {
+        const board = new board_js_1.Board(this, {
             url: new URL(targetUrl.origin + boardPath),
         });
         const articleMatchResult = targetUrl.pathname.match(/^\/b\/[^/]+\/(\d+)/);
         if (articleMatchResult) {
             // this is an article
             const articleId = +articleMatchResult[1];
-            return new article_1.Article(board, { articleId });
+            return new index_js_1.Article(board, { articleId });
         }
         else {
             // this is a board
@@ -171,8 +171,8 @@ class RequestSession {
      */
     boardFromUrl(url) {
         const board = this.fromUrl(url);
-        if (!(board instanceof board_1.Board))
-            throw new errors_1.ArgumentError("This is not a board URL.");
+        if (!(board instanceof board_js_1.Board))
+            throw new index_js_2.ArgumentError("This is not a board URL.");
         return board;
     }
     /**
@@ -184,15 +184,15 @@ class RequestSession {
      */
     articleFromUrl(url) {
         const article = this.fromUrl(url);
-        if (!(article instanceof article_1.Article))
-            throw new errors_1.ArgumentError("This is not an article URL.");
+        if (!(article instanceof index_js_1.Article))
+            throw new index_js_2.ArgumentError("This is not an article URL.");
         return article;
     }
     /**
      * 세션을 닫는다.
      */
     closeSession() {
-        fetch_queue_1.default.stop();
+        fetch_queue_js_1.default.stop();
     }
 }
 exports.RequestSession = RequestSession;

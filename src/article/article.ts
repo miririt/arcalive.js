@@ -1,11 +1,12 @@
-import { Comment } from "../comment/comment";
-import { ArgumentError, SessionError } from "../errors";
+import type { Board } from "../board/index.js";
+import type { RequestSession } from "../request/index.js";
+import type { RequestResponse } from "../request/index.js";
+import type { ArticleReadOption, ArticlePostOption } from "./options.js";
 
-import type { Board } from "../board";
-import type { RequestSession } from "../request";
-import type { RequestResponse } from "../request";
-import { ArticleData, ParceledArticleData } from "./data";
-import type { ArticleReadOption, ArticlePostOption } from "./options";
+import { ArticleData, ParceledArticleData } from "./data.js";
+import { Comment } from "../comment/index.js";
+import { ArgumentError, SessionError } from "../errors/index.js";
+import { HTMLElement } from "node-html-parser";
 
 class Article {
   _session: RequestSession;
@@ -67,7 +68,7 @@ class Article {
     if (options.noCache || !this._loaded || !this._articleData) {
       const article = await this._session
         ._fetch(`${this._board.url}/${this.articleId}`)
-        .then((resp) => resp.parse())!;
+        .then((resp: RequestResponse) => resp.parse())!;
 
       const articleTitle = article.querySelector(".article-wrapper .title")!;
       const memberInfo = article.querySelector(".member-info")!;
@@ -119,11 +120,11 @@ class Article {
         for (let i = lastCommentPage; i >= 1; i--) {
           const commentPage = await this._session
             ._fetch(`${this._board.url}/${this.articleId}?cp=${i}`)
-            .then((resp) => resp.parse());
+            .then((resp: RequestResponse) => resp.parse());
           const comments = commentPage.querySelectorAll(".comment-wrapper");
 
           newArticleData.comments.push(
-            ...comments.map((comment) => {
+            ...comments.map((comment: HTMLElement) => {
               const userInfo = comment.querySelector("span.user-info")!;
 
               const userLink = (userInfo.querySelector("a") ||
@@ -142,7 +143,9 @@ class Article {
                     // Not using childNodes because of Node <-> HTMLElement type casting problem.
                     emoticonWrapper
                       .querySelectorAll("*")
-                      .find((e) => e.rawAttrs)?.attributes["src"]) ??
+                      .find((e: HTMLElement) => e.rawAttrs)?.attributes[
+                      "src"
+                    ]) ??
                   "";
               } else {
                 textContent =
@@ -154,7 +157,7 @@ class Article {
                   ? comment.id.match(/(\d+)$/)
                   : comment
                       .querySelectorAll("*")
-                      ?.find((e) => e.id)
+                      ?.find((e: HTMLElement) => e.id)
                       ?.id.match(/(\d+)$/)
               )![1];
 
@@ -226,7 +229,7 @@ class Article {
 
     const editPage = await this._session
       ._fetch(`${this.url}/edit`)
-      .then((resp) => resp.parse());
+      .then((resp: RequestResponse) => resp.parse());
 
     const tokens = {
       csrf: "",

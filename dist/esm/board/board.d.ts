@@ -1,9 +1,8 @@
-/// <reference types="node" />
-import type { RequestSession } from "../request/request-session";
-import { Article, ArticleData, ArticlePostOption, ArticleReadOption } from "../article";
-import { RequestResponse } from "../request";
-import type { BoardData } from "./data";
-import type { BoardQueryOption, BoardReadOption } from "./options";
+/// <reference types="node" resolution-mode="require"/>
+import type { RequestSession, RequestResponse } from "../request/index.js";
+import type { BoardData } from "./data.js";
+import type { BoardQueryOption, BoardReadOption } from "./options.js";
+import { Article, ArticleData, ArticlePostOption, ArticleReadOption } from "../article/index.js";
 declare class Board {
     /** @type {number} 새 인스턴스 생성 시 사용할 기본 캐시 사이즈 */
     static _cacheSize: number;

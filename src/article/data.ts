@@ -1,5 +1,5 @@
-import ParceledData from "../classes/parcel";
-import type { Comment } from "../comment/comment";
+import ParceledData from "../classes/parcel.js";
+import type { Comment } from "../comment/index.js";
 
 interface ArticleData {
   /** @property {boolean} `true`일 경우 해당 정보는 read()를 통해 얻어온 정보, `false`일 경우 readPage()를 통해 얻어온 요약 정보 */

@@ -1,4 +1,4 @@
-/// <reference types="node" />
+/// <reference types="node" resolution-mode="require"/>
 import type { RequestInit } from "node-fetch";
 import { Response } from "node-fetch";
 import { HTMLElement } from "node-html-parser";

@@ -1,11 +1,11 @@
-import type { Article } from "../article/article";
-import type { RequestSession } from "../request/request-session";
+import type { Article } from "../article/index.js";
+import type { RequestSession } from "../request/index.js";
 
-import { ArgumentError } from "../errors";
-import { RequestResponse } from "../request";
+import { ArgumentError } from "../errors/index.js";
+import { RequestResponse } from "../request/index.js";
 
-import type { CommentData } from "./data";
-import { ParceledCommentData } from "./data";
+import type { CommentData } from "./data.js";
+import { ParceledCommentData } from "./data.js";
 
 class Comment {
   commentId: number;

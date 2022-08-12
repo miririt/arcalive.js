@@ -1,10 +1,10 @@
-/// <reference types="node" />
-import { Comment } from "../comment/comment";
-import type { Board } from "../board";
-import type { RequestSession } from "../request";
-import type { RequestResponse } from "../request";
-import { ArticleData, ParceledArticleData } from "./data";
-import type { ArticleReadOption, ArticlePostOption } from "./options";
+/// <reference types="node" resolution-mode="require"/>
+import type { Board } from "../board/index.js";
+import type { RequestSession } from "../request/index.js";
+import type { RequestResponse } from "../request/index.js";
+import type { ArticleReadOption, ArticlePostOption } from "./options.js";
+import { ArticleData, ParceledArticleData } from "./data.js";
+import { Comment } from "../comment/index.js";
 declare class Article {
     _session: RequestSession;
     _board: Board;

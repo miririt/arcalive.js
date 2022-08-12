@@ -1,9 +1,9 @@
-/// <reference types="node" />
-import type { Article } from "../article/article";
-import type { RequestSession } from "../request/request-session";
-import { RequestResponse } from "../request";
-import type { CommentData } from "./data";
-import { ParceledCommentData } from "./data";
+/// <reference types="node" resolution-mode="require"/>
+import type { Article } from "../article/index.js";
+import type { RequestSession } from "../request/index.js";
+import { RequestResponse } from "../request/index.js";
+import type { CommentData } from "./data.js";
+import { ParceledCommentData } from "./data.js";
 declare class Comment {
     commentId: number;
     apiUrl: URL;

@@ -1,3 +1,3 @@
-export * from "./article";
-export * from "./data";
-export * from "./options";
+export * from "./article.js";
+export * from "./data.js";
+export * from "./options.js";

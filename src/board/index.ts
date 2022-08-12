@@ -1,4 +1,4 @@
-export * from "./board";
+export * from "./board.js";
 
-export * from "./data";
-export * from "./options";
+export * from "./data.js";
+export * from "./options.js";

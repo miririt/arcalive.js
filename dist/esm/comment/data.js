@@ -1,4 +1,4 @@
-import ParceledData from "../classes/parcel";
+import ParceledData from "../classes/parcel.js";
 class ParceledCommentData extends ParceledData {
 }
 export { ParceledCommentData };

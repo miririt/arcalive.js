@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Board = void 0;
-const article_1 = require("../article");
+const index_js_1 = require("../article/index.js");
 class Board {
     /** @type {number} 새 인스턴스 생성 시 사용할 기본 캐시 사이즈 */
     static _cacheSize = 64;
@@ -79,7 +79,7 @@ class Board {
         }
         this._cachedOrder.push(articleId);
         if (!this._cachedArticles.has(articleId)) {
-            this._cachedArticles.set(articleId, new article_1.Article(this, { articleId }));
+            this._cachedArticles.set(articleId, new index_js_1.Article(this, { articleId }));
         }
         return this._cachedArticles.get(articleId);
     }
@@ -135,7 +135,7 @@ class Board {
             headers: { referer: `${this.url}/write` },
             body: articleInfo,
         });
-        return new article_1.Article(this, {
+        return new index_js_1.Article(this, {
             url: new URL(response.url),
         });
     }
@@ -205,7 +205,7 @@ class Board {
                 ? +commentElement.innerText.match(/\d+/)[0]
                 : 0;
             articleData.rateDiff = +articleElem.querySelector(".col-rate").innerText;
-            return new article_1.Article(this, articleData);
+            return new index_js_1.Article(this, articleData);
         });
     }
     /**

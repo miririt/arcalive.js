@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import { default as fetch } from "node-fetch";
 /**
  * Rate Limit을 준수하는 fetch queue
  */

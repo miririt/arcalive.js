@@ -1,4 +1,4 @@
-import ParceledData from "../classes/parcel";
+import ParceledData from "../classes/parcel.js";
 
 interface CommentData {
   /** @property {number} 댓글 번호 */

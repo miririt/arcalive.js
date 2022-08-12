@@ -1,3 +1,3 @@
-export * from "./comment";
-export * from "./data";
-export * from "./options";
+export * from "./comment.js";
+export * from "./data.js";
+export * from "./options.js";

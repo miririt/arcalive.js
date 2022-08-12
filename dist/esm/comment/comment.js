@@ -1,5 +1,5 @@
-import { ArgumentError } from "../errors";
-import { ParceledCommentData } from "./data";
+import { ArgumentError } from "../errors/index.js";
+import { ParceledCommentData } from "./data.js";
 class Comment {
     commentId;
     apiUrl;

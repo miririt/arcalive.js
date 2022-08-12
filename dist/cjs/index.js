@@ -15,10 +15,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Session = void 0;
-__exportStar(require("./article"), exports);
-__exportStar(require("./board"), exports);
-__exportStar(require("./comment"), exports);
-__exportStar(require("./request"), exports);
-var request_1 = require("./request");
-Object.defineProperty(exports, "Session", { enumerable: true, get: function () { return request_1.RequestSession; } });
+__exportStar(require("./article/index.js"), exports);
+__exportStar(require("./board/index.js"), exports);
+__exportStar(require("./comment/index.js"), exports);
+__exportStar(require("./request/index.js"), exports);
+var index_js_1 = require("./request/index.js");
+Object.defineProperty(exports, "Session", { enumerable: true, get: function () { return index_js_1.RequestSession; } });
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,5 @@
 import { RequestInit, Response } from "node-fetch";
-import { FetchResource, FetchTask } from "./data";
+import { FetchResource, FetchTask } from "./data.js";
 /**
  * Rate Limit을 준수하는 fetch queue
  */

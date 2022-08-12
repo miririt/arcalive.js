@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Comment = void 0;
-const errors_1 = require("../errors");
-const data_1 = require("./data");
+const index_js_1 = require("../errors/index.js");
+const data_js_1 = require("./data.js");
 class Comment {
     commentId;
     apiUrl;
@@ -39,13 +39,13 @@ class Comment {
             this.url = commentData.url;
         }
         else {
-            throw new errors_1.ArgumentError("at least one of { commentId, apiUrl, url } must have specified");
+            throw new index_js_1.ArgumentError("at least one of { commentId, apiUrl, url } must have specified");
         }
-        if (commentData instanceof data_1.ParceledCommentData) {
+        if (commentData instanceof data_js_1.ParceledCommentData) {
             this._commentData = commentData;
         }
         else {
-            this._commentData = new data_1.ParceledCommentData();
+            this._commentData = new data_js_1.ParceledCommentData();
             Object.assign(this._commentData._data, commentData);
         }
     }

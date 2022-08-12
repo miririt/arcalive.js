@@ -1,4 +1,4 @@
-export * from "./board";
-export * from "./data";
-export * from "./options";
+export * from "./board.js";
+export * from "./data.js";
+export * from "./options.js";
 //# sourceMappingURL=index.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Article = void 0;
-const comment_1 = require("../comment/comment");
-const errors_1 = require("../errors");
-const data_1 = require("./data");
+const data_js_1 = require("./data.js");
+const index_js_1 = require("../comment/index.js");
+const index_js_2 = require("../errors/index.js");
 class Article {
     _session;
     _board;
@@ -32,14 +32,14 @@ class Article {
             this.url = articleData.url;
         }
         else {
-            throw new errors_1.ArgumentError("at least one of { articleId, url } must have specified");
+            throw new index_js_2.ArgumentError("at least one of { articleId, url } must have specified");
         }
         this._loaded = false;
-        if (articleData instanceof data_1.ParceledArticleData) {
+        if (articleData instanceof data_js_1.ParceledArticleData) {
             this._articleData = articleData;
         }
         else {
-            this._articleData = new data_1.ParceledArticleData();
+            this._articleData = new data_js_1.ParceledArticleData();
             Object.assign(this._articleData._data, articleData);
         }
     }
@@ -116,7 +116,7 @@ class Article {
                                 .querySelectorAll("*")
                                 ?.find((e) => e.id)
                                 ?.id.match(/(\d+)$/))[1];
-                        return new comment_1.Comment(this, {
+                        return new index_js_1.Comment(this, {
                             commentId: +commentIdString,
                             author: userLink.attributes["data-filter"],
                             content,
@@ -128,7 +128,7 @@ class Article {
                 }
             }
             this._loaded = true;
-            this._articleData = new data_1.ParceledArticleData(newArticleData);
+            this._articleData = new data_js_1.ParceledArticleData(newArticleData);
         }
         return this._articleData.data;
     }
@@ -246,7 +246,7 @@ class Article {
      */
     async writeComment(comment) {
         if (this._session._anonymous) {
-            throw new errors_1.SessionError("This is an anonymous session(anonymous session requires reCAPTCHA auth).");
+            throw new index_js_2.SessionError("This is an anonymous session(anonymous session requires reCAPTCHA auth).");
         }
         const body = new URLSearchParams();
         body.append("contentType", "text");
@@ -257,7 +257,7 @@ class Article {
             body: body,
             csrfRequired: true,
         });
-        return new comment_1.Comment(this, {
+        return new index_js_1.Comment(this, {
             url: new URL(response.url),
         });
     }
@@ -270,7 +270,7 @@ class Article {
      */
     deleteComment(commentId) {
         const commentObject = this._articleData.data.comments[commentId] ??
-            new comment_1.Comment(this, {
+            new index_js_1.Comment(this, {
                 commentId: commentId,
             });
         return commentObject.delete();
@@ -285,7 +285,7 @@ class Article {
      */
     editComment(commentId, comment) {
         const commentObject = this._articleData.data.comments[commentId] ??
-            new comment_1.Comment(this, {
+            new index_js_1.Comment(this, {
                 commentId: commentId,
             });
         return commentObject.edit(comment);

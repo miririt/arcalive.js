@@ -1,5 +1,5 @@
-/// <reference types="node" />
-import ParceledData from "../classes/parcel";
+/// <reference types="node" resolution-mode="require"/>
+import ParceledData from "../classes/parcel.js";
 interface CommentData {
     /** @property {number} 댓글 번호 */
     commentId?: number;
