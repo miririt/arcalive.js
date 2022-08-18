@@ -14,7 +14,7 @@ const Arca = require("arcalive");
 
 Use:
 
-````javascript
+```javascript
 import * as Arca from "arcalive";
 ```
 
@@ -28,7 +28,7 @@ Rather than:
 FetchQueue.setRateLimit(1000);
 Board.setGlobalArticleCache(64);
 boardInstance.setArticleCache(128);
-````
+```
 
 Use:
 
@@ -52,7 +52,7 @@ const loginSession = await Arca.Session.loginSession(username, password);
 ## 1. 세션 만들기
 
 ```javascript
-const Arca = require("arcalive");
+import * as Arca from "arcalive";
 
 const session = await Arca.Session.loginSession(username, password); // username과 password로 아이디와 비밀번호 전달
 ```
