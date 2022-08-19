@@ -76,7 +76,7 @@ class Board {
         }
         this._cachedOrder.push(articleId);
         if (!this._cachedArticles.has(articleId)) {
-            this._cachedArticles.set(articleId, new Article(this, { url: new URL(`${this.url}/${articleId}`) }));
+            this._cachedArticles.set(articleId, new Article(this._session, { url: new URL(`${this.url}/${articleId}`) }));
         }
         return this._cachedArticles.get(articleId);
     }
@@ -132,7 +132,7 @@ class Board {
             headers: { referer: `${this.url}/write` },
             body: articleInfo,
         });
-        return new Article(this, {
+        return new Article(this._session, {
             url: new URL(response.url),
         });
     }
@@ -204,7 +204,7 @@ class Board {
                 ? +commentElement.innerText.match(/\d+/)[0]
                 : 0;
             articleData.rateDiff = +articleElem.querySelector(".col-rate").innerText;
-            return new Article(this, articleData);
+            return new Article(this._session, articleData);
         });
     }
     /**

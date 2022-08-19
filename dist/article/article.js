@@ -3,7 +3,6 @@ import { Comment } from "../comment/index.js";
 import { SessionError } from "../errors/index.js";
 class Article {
     _session;
-    _board;
     _parceledData;
     /** @property {boolean} 이 Article이 실제로 로드되었는지를 나타냄. 이 Article에 대한 수정 fetch가 보내진 경우 dirty flag의 역할도 겸함. 해당 사항은 수정예정. */
     _loaded = false;
@@ -23,15 +22,14 @@ class Article {
      * 새 게시글 객체 Article을 만든다.
      * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
      *
-     * @param {Board} board 해당 게시글이 속해 있는 게시판 객체
+     * @param {RequestSession} session 세션
      * @param {ArticleData} data 게시글 정보
      */
-    constructor(board, data) {
-        this._session = board._session;
-        this._board = board;
+    constructor(session, data) {
+        this._session = session;
         const parcel = { ...data };
         if (!parcel.articleId) {
-            const articleIdString = data.url.pathname.match(/^\/b\/[^/]+\/(\d+)/)[1];
+            const articleIdString = parcel.url.pathname.match(/^\/b\/[^/]+\/(\d+)/)[1];
             parcel.articleId = +articleIdString;
         }
         this._parceledData = new ParceledArticleData(parcel);
@@ -47,7 +45,7 @@ class Article {
     async read(options = { noCache: false, withComments: true }) {
         if (options.noCache || !this._loaded || !this.data) {
             const article = await this._session
-                ._fetch(`${this._board.url}/${this.articleId}`)
+                ._fetch(this.url)
                 .then((resp) => resp.parse());
             const articleTitle = article.querySelector(".article-wrapper .title");
             const memberInfo = article.querySelector(".member-info");
@@ -83,7 +81,7 @@ class Article {
                 const lastCommentPage = commentLink ? +commentLink.innerText : 1;
                 for (let i = lastCommentPage; i >= 1; i--) {
                     const commentPage = await this._session
-                        ._fetch(`${this._board.url}/${this.articleId}?cp=${i}`)
+                        ._fetch(`${this.url}?cp=${i}`)
                         .then((resp) => resp.parse());
                     const comments = commentPage.querySelectorAll(".comment-wrapper");
                     newArticleData.comments.push(...comments.map((comment) => {
@@ -113,8 +111,10 @@ class Article {
                                 .querySelectorAll("*")
                                 ?.find((e) => e.id)
                                 ?.id.match(/(\d+)$/))[1];
-                        return new Comment(this, {
+                        return new Comment(this._session, {
                             commentId: +commentIdString,
+                            url: new URL(`${this.url}#c_${commentIdString}`),
+                            apiUrl: new URL(`${this.url}#/${commentIdString}`),
                             author: userLink.attributes["data-filter"],
                             content,
                             textContent,
@@ -139,7 +139,7 @@ class Article {
         if (this._session._anonymous) {
             body.append("password", this._session._password);
         }
-        return await this._session._fetch(`${this._board.url}/${this.articleId}/delete`, {
+        return await this._session._fetch(`${this.url}/delete`, {
             method: "POST",
             body: body,
             csrfRequired: true,
@@ -209,7 +209,8 @@ class Article {
     async blockUser(duration) {
         const body = new URLSearchParams();
         body.append("until", duration.toString());
-        return await this._session._fetch(`${this._board.url}/block/article/${this.articleId}`, {
+        const [boardUrl] = this.url.toString().match(/^.*([/]b[/][^/]+)/);
+        return await this._session._fetch(`${boardUrl}/block/article/${this.articleId}`, {
             method: "POST",
             headers: { Referer: this.url.toString() },
             body: body,
@@ -254,8 +255,9 @@ class Article {
             body: body,
             csrfRequired: true,
         });
-        return new Comment(this, {
+        return new Comment(this._session, {
             url: new URL(response.url),
+            apiUrl: new URL(response.url.replace("#c_", "/")),
         });
     }
     /**
@@ -267,8 +269,10 @@ class Article {
      */
     deleteComment(commentId) {
         const commentObject = this.data.comments[commentId] ??
-            new Comment(this, {
+            new Comment(this._session, {
                 commentId: commentId,
+                url: new URL(`${this.url}#c_${commentId}`),
+                apiUrl: new URL(`${this.url}/${commentId}`),
             });
         return commentObject.delete();
     }
@@ -282,8 +286,10 @@ class Article {
      */
     editComment(commentId, comment) {
         const commentObject = this.data.comments[commentId] ??
-            new Comment(this, {
+            new Comment(this._session, {
                 commentId: commentId,
+                url: new URL(`${this.url}#c_${commentId}`),
+                apiUrl: new URL(`${this.url}/${commentId}`),
             });
         return commentObject.edit(comment);
     }

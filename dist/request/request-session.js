@@ -149,7 +149,7 @@ class RequestSession {
         if (articleMatchResult) {
             // this is an article
             const articleId = +articleMatchResult[1];
-            return new Article(board, {
+            return new Article(this, {
                 articleId,
                 url: new URL(`${board.url}/${articleId}`),
             });

@@ -1,13 +1,7 @@
-import { ArgumentError } from "../errors/index.js";
 import { ParceledCommentData } from "./data.js";
 class Comment {
-    commentId;
-    apiUrl;
-    url;
     /** @type {RequestSession} */
     _session;
-    /** @type {Article} */
-    _article;
     /** @type {ParceledCommentData} */
     _parceledData;
     get data() {
@@ -16,35 +10,29 @@ class Comment {
     set data(newData) {
         this._parceledData.parcel(newData);
     }
+    get commentId() {
+        return this.data.commentId;
+    }
+    get url() {
+        return this.data.url;
+    }
+    get apiUrl() {
+        return this.data.apiUrl;
+    }
     /**
      * 새 댓글 객체 Comment를 만든다.
      * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
      *
-     * @param {Article} article 해당 댓글이 속해있는 게시글 객체
+     * @param {RequestSession} session 세션
      * @param {CommentData} commentData 댓글 정보
      */
-    constructor(article, commentData) {
-        this._session = article._session;
-        this._article = article;
-        this._parceledData = new ParceledCommentData(commentData);
-        if (commentData.commentId) {
-            this.commentId = commentData.commentId;
-            this.apiUrl = new URL(`${this._article.url}/${this.commentId}`);
-            this.url = new URL(`${this._article.url}#c_${this.commentId}`);
+    constructor(session, data) {
+        this._session = session;
+        const parcel = { ...data };
+        if (!parcel.commentId) {
+            parcel.commentId = +parcel.url.hash.match(/^#c_(\d+)/)[1];
         }
-        else if (commentData.apiUrl) {
-            this.commentId = +commentData.apiUrl.pathname.match(/^\/b\/[^/]+\/\d+\/(\d+)/)[1];
-            this.apiUrl = commentData.apiUrl;
-            this.url = new URL(`${this._article.url}#c_${this.commentId}`);
-        }
-        else if (commentData.url) {
-            this.commentId = +commentData.url.hash.match(/^#c_(\d+)/)[1];
-            this.apiUrl = new URL(`${this._article.url}/${this.commentId}`);
-            this.url = commentData.url;
-        }
-        else {
-            throw new ArgumentError("at least one of { commentId, apiUrl, url } must have specified");
-        }
+        this._parceledData = new ParceledCommentData(parcel);
     }
     /**
      * 해당 댓글을 읽는다.

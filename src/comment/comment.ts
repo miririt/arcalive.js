@@ -1,20 +1,13 @@
-import type { Article } from "../article/index.js";
 import type { RequestSession } from "../request/index.js";
 
-import { ArgumentError } from "../errors/index.js";
 import { RequestResponse } from "../request/index.js";
 
 import type { CommentData } from "./data.js";
 import { ParceledCommentData } from "./data.js";
 
 class Comment {
-  commentId: number;
-  apiUrl: URL;
-  url: URL;
   /** @type {RequestSession} */
   _session: RequestSession;
-  /** @type {Article} */
-  _article: Article;
   /** @type {ParceledCommentData} */
   _parceledData: ParceledCommentData;
 
@@ -26,37 +19,35 @@ class Comment {
     this._parceledData.parcel(newData);
   }
 
+  get commentId(): number {
+    return this.data.commentId!;
+  }
+
+  get url(): URL {
+    return this.data.url!;
+  }
+
+  get apiUrl(): URL {
+    return this.data.apiUrl!;
+  }
+
   /**
    * 새 댓글 객체 Comment를 만든다.
    * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
    *
-   * @param {Article} article 해당 댓글이 속해있는 게시글 객체
+   * @param {RequestSession} session 세션
    * @param {CommentData} commentData 댓글 정보
    */
-  constructor(article: Article, commentData: CommentData) {
-    this._session = article._session;
-    this._article = article;
-    this._parceledData = new ParceledCommentData(commentData);
+  constructor(session: RequestSession, data: CommentData) {
+    this._session = session;
 
-    if (commentData.commentId) {
-      this.commentId = commentData.commentId;
-      this.apiUrl = new URL(`${this._article.url}/${this.commentId}`);
-      this.url = new URL(`${this._article.url}#c_${this.commentId}`);
-    } else if (commentData.apiUrl) {
-      this.commentId = +commentData.apiUrl.pathname.match(
-        /^\/b\/[^/]+\/\d+\/(\d+)/
-      )![1];
-      this.apiUrl = commentData.apiUrl;
-      this.url = new URL(`${this._article.url}#c_${this.commentId}`);
-    } else if (commentData.url) {
-      this.commentId = +commentData.url.hash.match(/^#c_(\d+)/)![1];
-      this.apiUrl = new URL(`${this._article.url}/${this.commentId}`);
-      this.url = commentData.url;
-    } else {
-      throw new ArgumentError(
-        "at least one of { commentId, apiUrl, url } must have specified"
-      );
+    const parcel: CommentData = { ...data };
+
+    if (!parcel.commentId) {
+      parcel.commentId = +parcel.url.hash.match(/^#c_(\d+)/)![1];
     }
+
+    this._parceledData = new ParceledCommentData(parcel);
   }
 
   /**

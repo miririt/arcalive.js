@@ -97,7 +97,7 @@ class Board {
     if (!this._cachedArticles.has(articleId)) {
       this._cachedArticles.set(
         articleId,
-        new Article(this, { url: new URL(`${this.url}/${articleId}`) })
+        new Article(this._session, { url: new URL(`${this.url}/${articleId}`) })
       );
     }
 
@@ -170,7 +170,7 @@ class Board {
       body: articleInfo,
     });
 
-    return new Article(this, {
+    return new Article(this._session, {
       url: new URL(response.url),
     });
   }
@@ -271,7 +271,7 @@ class Board {
         : 0;
       articleData.rateDiff = +articleElem.querySelector(".col-rate")!.innerText;
 
-      return new Article(this, articleData);
+      return new Article(this._session, articleData);
     });
   }
 

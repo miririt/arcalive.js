@@ -12,9 +12,9 @@ interface CommentData {
     /** @property {Date} 댓글 작성 시각 */
     time?: Date;
     /** @property {URL} 댓글 URL */
-    url?: URL;
+    url: URL;
     /** @property {URL} 이 댓글에 대한 API 접근을 위한 URL */
-    apiUrl?: URL;
+    apiUrl: URL;
     /** @property {boolean} 이미 삭제된 댓글인지 여부 */
     deleted?: boolean;
 }
