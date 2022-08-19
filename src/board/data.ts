@@ -1,5 +1,5 @@
-class BoardData {
-  url?: URL;
-}
+declare type BoardData = {
+  url: URL;
+};
 
-export { BoardData };
+export type { BoardData };

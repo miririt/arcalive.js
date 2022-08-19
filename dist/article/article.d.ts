@@ -2,13 +2,13 @@
 import type { RequestSession } from "../request/index.js";
 import type { RequestResponse } from "../request/index.js";
 import type { ArticleReadOption, ArticlePostOption } from "./options.js";
-import { ArticleData, ParceledArticleData } from "./data.js";
+import { ArticleData } from "./data.js";
 import { Comment } from "../comment/index.js";
 declare class Article {
-    _session: RequestSession;
-    _parceledData: ParceledArticleData;
+    private session;
+    private parceledData;
     /** @property {boolean} 이 Article이 실제로 로드되었는지를 나타냄. 이 Article에 대한 수정 fetch가 보내진 경우 dirty flag의 역할도 겸함. 해당 사항은 수정예정. */
-    _loaded: boolean;
+    private isLoaded;
     get data(): ArticleData;
     set data(newData: ArticleData);
     get articleId(): number;

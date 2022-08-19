@@ -5,11 +5,10 @@ import { Article } from "../article/index.js";
 import { ArgumentError, RequestError } from "../errors/index.js";
 import { RequestResponse } from "./data.js";
 class RequestSession {
-    _cookieJar = new Map();
-    _anonymous = true;
-    _username = "";
-    _password = "";
-    constructor() { }
+    cookies = new Map();
+    isAnonymous = true;
+    username = "";
+    password = "";
     /**
      * 로그인 된 세션을 얻는다.
      *
@@ -25,7 +24,7 @@ class RequestSession {
     /**
      * 익명의 요청 세션을 얻는다.
      *
-     * @returns {RequestSession} 익명 세션
+     * @returns {AnonymouosSession} 익명 세션
      */
     static anonymousSession() {
         return new AnonymouosSession();
@@ -47,7 +46,7 @@ class RequestSession {
             // set cookie
             .map((_) => {
             const [key, val] = _.split("=");
-            this._cookieJar.set(key, val);
+            this.cookies.set(key, val);
         });
         return res;
     }
@@ -57,8 +56,8 @@ class RequestSession {
      * @returns {string} Request 헤더에 사용할 수 있는 쿠키 문자열
      */
     _makeCookieString() {
-        return [...this._cookieJar.keys()]
-            .map((key) => `${key}=${this._cookieJar.get(key)}`)
+        return [...this.cookies.keys()]
+            .map((key) => `${key}=${this.cookies.get(key)}`)
             .join(";");
     }
     /**
@@ -143,7 +142,7 @@ class RequestSession {
         }
         const [boardPath] = targetUrl.pathname.match(/^\/b\/[^/]+/);
         const board = new Board(this, {
-            url: new URL(targetUrl.origin + boardPath),
+            url: new URL(`${targetUrl.origin}${boardPath}`),
         });
         const articleMatchResult = targetUrl.pathname.match(/^\/b\/[^/]+\/(\d+)/);
         if (articleMatchResult) {
@@ -193,8 +192,8 @@ class RequestSession {
     }
 }
 class LoginSession extends RequestSession {
-    _lastSessionChecked = 0;
-    _anonymous = false;
+    lastSessionChecked = 0;
+    isAnonymous = false;
     /**
      * 로그인된 세션 LoginSession을 만든다.
      *
@@ -203,8 +202,8 @@ class LoginSession extends RequestSession {
      */
     constructor(username, password) {
         super();
-        this._username = username;
-        this._password = password;
+        this.username = username;
+        this.password = password;
     }
     /**
      * 해당 세션의 로그인 정보로 로그인을 시도한다.
@@ -215,8 +214,8 @@ class LoginSession extends RequestSession {
         // fetch login page and load cookies
         const accountInfo = new URLSearchParams();
         accountInfo.append("goto", "/");
-        accountInfo.append("username", this._username);
-        accountInfo.append("password", this._password);
+        accountInfo.append("username", this.username);
+        accountInfo.append("password", this.password);
         return this._fetch("https://arca.live/u/login", {
             method: "POST",
             headers: { referer: "https://arca.live/u/login?goto=/" },
@@ -229,10 +228,10 @@ class LoginSession extends RequestSession {
      * 로그아웃되었을 경우 다시 로그인한다.
      */
     async _validateSession() {
-        this._lastSessionChecked = this._lastSessionChecked || 0;
+        this.lastSessionChecked = this.lastSessionChecked || 0;
         // 10분에 1회 세션 체크
-        if (this._lastSessionChecked + 1000 * 60 * 10 < Date.now()) {
-            this._lastSessionChecked = Date.now();
+        if (this.lastSessionChecked + 1000 * 60 * 10 < Date.now()) {
+            this.lastSessionChecked = Date.now();
             const shouldLogin = await this._fetch("https://arca.live")
                 .then((res) => res.text())
                 .then((text) => text.indexOf("/u/logout") == -1);
@@ -244,9 +243,6 @@ class LoginSession extends RequestSession {
 }
 class AnonymouosSession extends RequestSession {
     _anonymous = true;
-    constructor() {
-        super();
-    }
     /**
      * 익명 세션은 확인 및 갱신할 필요가 없음
      */
@@ -259,8 +255,8 @@ class AnonymouosSession extends RequestSession {
      * @param {string} password
      */
     setAnonymous(nickname, password) {
-        this._username = nickname;
-        this._password = password;
+        this.username = nickname;
+        this.password = password;
     }
 }
 export { RequestSession, AnonymouosSession, LoginSession };

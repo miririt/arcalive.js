@@ -1,14 +1,14 @@
 import { ParceledCommentData } from "./data.js";
 class Comment {
     /** @type {RequestSession} */
-    _session;
+    session;
     /** @type {ParceledCommentData} */
-    _parceledData;
+    parceledData;
     get data() {
-        return this._parceledData.unparcel();
+        return this.parceledData.unparcel();
     }
     set data(newData) {
-        this._parceledData.parcel(newData);
+        this.parceledData.parcel(newData);
     }
     get commentId() {
         return this.data.commentId;
@@ -27,12 +27,12 @@ class Comment {
      * @param {CommentData} commentData 댓글 정보
      */
     constructor(session, data) {
-        this._session = session;
+        this.session = session;
         const parcel = { ...data };
         if (!parcel.commentId) {
             parcel.commentId = +parcel.url.hash.match(/^#c_(\d+)/)[1];
         }
-        this._parceledData = new ParceledCommentData(parcel);
+        this.parceledData = new ParceledCommentData(parcel);
     }
     /**
      * 해당 댓글을 읽는다.
@@ -52,10 +52,10 @@ class Comment {
             throw new Error("This comment is already deleted");
         }
         const body = new URLSearchParams();
-        if (this._session._anonymous) {
-            body.append("password", this._session._password);
+        if (this.session.isAnonymous) {
+            body.append("password", this.session.password);
         }
-        return await this._session._fetch(`${this.apiUrl}/delete`, {
+        return await this.session._fetch(`${this.apiUrl}/delete`, {
             method: "POST",
             body: body,
             csrfRequired: true,
@@ -72,12 +72,12 @@ class Comment {
         if (this.data.deleted) {
             throw new Error("This comment is already deleted");
         }
-        if (this._session._anonymous) {
-            body.append("password", this._session._password);
+        if (this.session.isAnonymous) {
+            body.append("password", this.session.password);
         }
         body.append("contentType", "text");
         body.append("content", content);
-        return await this._session._fetch(`${this.apiUrl}/edit`, {
+        return await this.session._fetch(`${this.apiUrl}/edit`, {
             method: "POST",
             headers: { Referer: this.url.toString() },
             body: body,

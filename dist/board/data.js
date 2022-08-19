@@ -1,5 +1,2 @@
-class BoardData {
-    url;
-}
-export { BoardData };
+export {};
 //# sourceMappingURL=data.js.map

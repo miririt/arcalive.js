@@ -8,18 +8,18 @@ import { SessionError } from "../errors/index.js";
 import { HTMLElement } from "node-html-parser";
 
 class Article {
-  _session: RequestSession;
-  _parceledData: ParceledArticleData;
+  private session: RequestSession;
+  private parceledData: ParceledArticleData;
 
   /** @property {boolean} 이 Article이 실제로 로드되었는지를 나타냄. 이 Article에 대한 수정 fetch가 보내진 경우 dirty flag의 역할도 겸함. 해당 사항은 수정예정. */
-  _loaded: boolean = false;
+  private isLoaded: boolean;
 
   get data(): ArticleData {
-    return this._parceledData.unparcel();
+    return this.parceledData.unparcel();
   }
 
   set data(newData: ArticleData) {
-    this._parceledData.parcel(newData);
+    this.parceledData.parcel(newData);
   }
 
   get articleId(): number {
@@ -38,7 +38,7 @@ class Article {
    * @param {ArticleData} data 게시글 정보
    */
   constructor(session: RequestSession, data: ArticleData) {
-    this._session = session;
+    this.session = session;
 
     const parcel: ArticleData = { ...data };
 
@@ -48,8 +48,8 @@ class Article {
       parcel.articleId = +articleIdString;
     }
 
-    this._parceledData = new ParceledArticleData(parcel);
-    this._loaded = false;
+    this.parceledData = new ParceledArticleData(parcel);
+    this.isLoaded = false;
   }
 
   /**
@@ -62,125 +62,121 @@ class Article {
   async read(
     options: ArticleReadOption = { noCache: false, withComments: true }
   ): Promise<ArticleData> {
-    if (options.noCache || !this._loaded || !this.data) {
-      const article = await this._session
-        ._fetch(this.url)
-        .then((resp: RequestResponse) => resp.parse())!;
-
-      const articleTitle = article.querySelector(".article-wrapper .title")!;
-      const memberInfo = article.querySelector(".member-info")!;
-      const articleInfo = article.querySelector(".article-info")!;
-      const badge = articleTitle.querySelector("span.badge");
-
-      const [rateUp, rateDown, commentCount, views, time] =
-        articleInfo.querySelectorAll(".body");
-
-      const newArticleData: ArticleData = {
-        articleId: this.articleId,
-        url: this.url,
-      };
-
-      if (badge !== null) {
-        newArticleData.category = badge.innerText;
-        newArticleData.title = articleTitle.innerText.replace(
-          newArticleData.category,
-          ""
-        );
-      } else {
-        newArticleData.category = undefined;
-        newArticleData.title = articleTitle.innerText;
-      }
-
-      newArticleData.title = newArticleData.title.replace(/\n/g, "");
-
-      // Not using firstChild because of Node <-> HTMLElement type casting problem.
-      newArticleData.author = memberInfo
-        .querySelector(".user-info")
-        ?.querySelector("*")!.attributes["data-filter"];
-
-      newArticleData.time = new Date(
-        time.querySelector("time")!.attributes["datetime"]
-      );
-      newArticleData.views = +views.innerText;
-      newArticleData.commentCount = +commentCount.innerText;
-      newArticleData.rate = [+rateUp.innerText, +rateDown.innerText];
-      newArticleData.rateDiff = newArticleData.rate[0] - newArticleData.rate[1];
-
-      newArticleData.content = article.querySelector(
-        ".article-wrapper .article-body .article-content"
-      )!.innerHTML;
-
-      if (options.withComments) {
-        newArticleData.comments = [];
-
-        const commentLink = article.querySelector(
-          ".article-comment .page-item.active a"
-        );
-        const lastCommentPage = commentLink ? +commentLink.innerText : 1;
-        for (let i = lastCommentPage; i >= 1; i--) {
-          const commentPage = await this._session
-            ._fetch(`${this.url}?cp=${i}`)
-            .then((resp: RequestResponse) => resp.parse());
-          const comments = commentPage.querySelectorAll(".comment-wrapper");
-
-          newArticleData.comments.push(
-            ...comments.map((comment: HTMLElement) => {
-              const userInfo = comment.querySelector("span.user-info")!;
-
-              const userLink = (userInfo.querySelector("a") ||
-                userInfo.querySelector("span"))!;
-
-              const message = comment.querySelector(".message")!;
-
-              const content = comment.querySelector("div")!.innerHTML;
-              let textContent: string;
-
-              const emoticonWrapper =
-                message.querySelector(".emoticon-wrapper");
-              if (emoticonWrapper) {
-                textContent =
-                  (emoticonWrapper.attributes["src"] ||
-                    // Not using childNodes because of Node <-> HTMLElement type casting problem.
-                    emoticonWrapper
-                      .querySelectorAll("*")
-                      .find((e: HTMLElement) => e.rawAttrs)?.attributes[
-                      "src"
-                    ]) ??
-                  "";
-              } else {
-                textContent =
-                  message.querySelector(".text pre")?.textContent ?? "";
-              }
-
-              const commentIdString = (
-                comment.id
-                  ? comment.id.match(/(\d+)$/)
-                  : comment
-                      .querySelectorAll("*")
-                      ?.find((e: HTMLElement) => e.id)
-                      ?.id.match(/(\d+)$/)
-              )![1];
-
-              return new Comment(this._session, {
-                commentId: +commentIdString,
-                url: new URL(`${this.url}#c_${commentIdString}`),
-                apiUrl: new URL(`${this.url}#/${commentIdString}`),
-                author: userLink.attributes["data-filter"],
-                content,
-                textContent,
-                time: new Date(
-                  comment.querySelector("time")!.attributes["datetime"]
-                ),
-                deleted: comment.querySelector(".deleted") ? true : false,
-              });
-            })
-          );
-        }
-      }
-
-      this._loaded = true;
-      this.data = newArticleData;
+    if (!options.noCache && this.isLoaded) {
+      return this.data;
     }
+
+    const newArticleData: ArticleData = {
+      articleId: this.articleId,
+      url: this.url,
+    };
+    const article = await this.session
+      ._fetch(this.url)
+      .then((resp: RequestResponse) => resp.parse())!;
+
+    const articleTitle = article.querySelector(".article-wrapper .title")!;
+    const memberInfo = article.querySelector(".member-info")!;
+    const articleInfo = article.querySelector(".article-info")!;
+    const badge = articleTitle.querySelector("span.badge");
+
+    const [rateUp, rateDown, commentCount, views, time] =
+      articleInfo.querySelectorAll(".body");
+
+    if (badge !== null) {
+      newArticleData.category = badge.innerText;
+      newArticleData.title = articleTitle.innerText.replace(
+        newArticleData.category,
+        ""
+      );
+    } else {
+      newArticleData.category = undefined;
+      newArticleData.title = articleTitle.innerText;
+    }
+
+    newArticleData.title = newArticleData.title.replace(/\n/g, "");
+
+    // Not using firstChild because of Node <-> HTMLElement type casting problem.
+    newArticleData.author = memberInfo
+      .querySelector(".user-info")!
+      .querySelector("*")!.attributes["data-filter"];
+
+    newArticleData.time = new Date(
+      time.querySelector("time")!.attributes["datetime"]
+    );
+    newArticleData.views = +views.innerText;
+    newArticleData.commentCount = +commentCount.innerText;
+    newArticleData.rate = [+rateUp.innerText, +rateDown.innerText];
+    newArticleData.rateDiff = newArticleData.rate[0] - newArticleData.rate[1];
+
+    newArticleData.content = article.querySelector(
+      ".article-wrapper .article-body .article-content"
+    )!.innerHTML;
+
+    if (options.withComments) {
+      newArticleData.comments = [];
+
+      const commentLink = article.querySelector(
+        ".article-comment .page-item.active a"
+      );
+      const lastCommentPage = +(commentLink?.innerText ?? 1);
+      for (let i = lastCommentPage; i >= 1; i--) {
+        const commentPage = await this.session
+          ._fetch(`${this.url}?cp=${i}`)
+          .then((resp: RequestResponse) => resp.parse());
+        const comments = commentPage.querySelectorAll(".comment-wrapper");
+
+        newArticleData.comments.push(
+          ...comments.map((comment: HTMLElement) => {
+            const userInfo = comment.querySelector("span.user-info")!;
+
+            const userLink = (userInfo.querySelector("a") ||
+              userInfo.querySelector("span"))!;
+
+            const message = comment.querySelector(".message")!;
+
+            const content = comment.querySelector("div")!.innerHTML;
+            let textContent: string;
+
+            const emoticonWrapper = message.querySelector(".emoticon-wrapper");
+            if (emoticonWrapper) {
+              textContent =
+                (emoticonWrapper.attributes["src"] ||
+                  (emoticonWrapper.childNodes as HTMLElement[]).find(
+                    (e: HTMLElement) => e.rawAttrs
+                  )?.attributes["src"]) ??
+                "";
+            } else {
+              textContent =
+                message.querySelector(".text pre")?.textContent ?? "";
+            }
+
+            const commentIdString = (
+              comment.id
+                ? comment.id.match(/(\d+)$/)
+                : (comment.childNodes as HTMLElement[])
+                    .find((e: HTMLElement) => e.id)!
+                    .id.match(/(\d+)$/)
+            )![1];
+
+            return new Comment(this.session, {
+              commentId: +commentIdString,
+              url: new URL(`${this.url}#c_${commentIdString}`),
+              apiUrl: new URL(`${this.url}#/${commentIdString}`),
+              author: userLink.attributes["data-filter"],
+              content,
+              textContent,
+              time: new Date(
+                comment.querySelector("time")!.attributes["datetime"]
+              ),
+              deleted: comment.querySelector(".deleted") ? true : false,
+            });
+          })
+        );
+      }
+    }
+
+    this.isLoaded = true;
+    this.data = newArticleData;
 
     return this.data;
   }
@@ -193,11 +189,11 @@ class Article {
   async delete(): Promise<RequestResponse> {
     const body = new URLSearchParams();
 
-    if (this._session._anonymous) {
-      body.append("password", this._session._password);
+    if (this.session.isAnonymous) {
+      body.append("password", this.session.password);
     }
 
-    return await this._session._fetch(`${this.url}/delete`, {
+    return await this.session._fetch(`${this.url}/delete`, {
       method: "POST",
       body: body,
       csrfRequired: true,
@@ -216,17 +212,17 @@ class Article {
       content: "",
     }
   ): Promise<RequestResponse> {
-    if (this._session._anonymous) {
+    if (this.session.isAnonymous) {
       article.anonymous = true;
-      article.nickname = article.nickname ?? this._session._username;
-      article.password = article.password ?? this._session._password;
+      article.nickname = article.nickname ?? this.session.username;
+      article.password = article.password ?? this.session.password;
     }
 
     article.category = article.category ?? this.data.category;
     article.title = article.title ?? this.data.title;
     article.content = article.content ?? this.data.content ?? "";
 
-    const editPage = await this._session
+    const editPage = await this.session
       ._fetch(`${this.url}/edit`)
       .then((resp: RequestResponse) => resp.parse());
 
@@ -262,9 +258,9 @@ class Article {
     }
 
     // Mark as dirty.
-    this._loaded = false;
+    this.isLoaded = false;
 
-    return await this._session._fetch(`${this.url}/edit`, {
+    return await this.session._fetch(`${this.url}/edit`, {
       method: "POST",
       headers: { referer: `${this.url}/write` },
       body: articleInfo,
@@ -283,7 +279,7 @@ class Article {
 
     const [boardUrl] = this.url.toString().match(/^.*([/]b[/][^/]+)/)!;
 
-    return await this._session._fetch(
+    return await this.session._fetch(
       `${boardUrl}/block/article/${this.articleId}`,
       {
         method: "POST",
@@ -306,7 +302,7 @@ class Article {
       body.append("restricted_countries[]", country);
     });
 
-    return await this._session._fetch(`${this.url}/config`, {
+    return await this.session._fetch(`${this.url}/config`, {
       method: "POST",
       headers: { Referer: this.url.toString() },
       body: body,
@@ -322,7 +318,7 @@ class Article {
    * @returns {Promise<Comment>} 댓글 작성 fetch에 대한 Response
    */
   async writeComment(comment: string): Promise<Comment> {
-    if (this._session._anonymous) {
+    if (this.session.isAnonymous) {
       throw new SessionError(
         "This is an anonymous session(anonymous session requires reCAPTCHA auth)."
       );
@@ -332,14 +328,16 @@ class Article {
     body.append("contentType", "text");
     body.append("content", comment);
 
-    const response = await this._session._fetch(`${this.url}/comment`, {
+    const response = await this.session._fetch(`${this.url}/comment`, {
       method: "POST",
       headers: { Referer: this.url.toString() },
       body: body,
       csrfRequired: true,
     });
 
-    return new Comment(this._session, {
+    this.isLoaded = false;
+
+    return new Comment(this.session, {
       url: new URL(response.url),
       apiUrl: new URL(response.url.replace("#c_", "/")),
     });
@@ -355,11 +353,13 @@ class Article {
   deleteComment(commentId: number): Promise<RequestResponse> {
     const commentObject =
       this.data.comments![commentId] ??
-      new Comment(this._session, {
+      new Comment(this.session, {
         commentId: commentId,
         url: new URL(`${this.url}#c_${commentId}`),
         apiUrl: new URL(`${this.url}/${commentId}`),
       });
+
+    this.isLoaded = false;
 
     return commentObject.delete();
   }
@@ -375,11 +375,13 @@ class Article {
   editComment(commentId: number, comment: string): Promise<RequestResponse> {
     const commentObject =
       this.data.comments![commentId] ??
-      new Comment(this._session, {
+      new Comment(this.session, {
         commentId: commentId,
         url: new URL(`${this.url}#c_${commentId}`),
         apiUrl: new URL(`${this.url}/${commentId}`),
       });
+
+    this.isLoaded = false;
 
     return commentObject.edit(comment);
   }

@@ -5,11 +5,10 @@ import { Board } from "../board/board.js";
 import { Article } from "../article/index.js";
 import { RequestResponse } from "./data.js";
 declare class RequestSession {
-    _cookieJar: Map<string, string>;
-    _anonymous: boolean;
-    _username: string;
-    _password: string;
-    constructor();
+    cookies: Map<string, string>;
+    isAnonymous: boolean;
+    username: string;
+    password: string;
     /**
      * 로그인 된 세션을 얻는다.
      *
@@ -21,9 +20,9 @@ declare class RequestSession {
     /**
      * 익명의 요청 세션을 얻는다.
      *
-     * @returns {RequestSession} 익명 세션
+     * @returns {AnonymouosSession} 익명 세션
      */
-    static anonymousSession(): RequestSession;
+    static anonymousSession(): AnonymouosSession;
     /**
      * 요청의 헤더에서 현재 세션의 쿠키 값을 설정한다.
      *
@@ -94,8 +93,8 @@ declare class RequestSession {
     closeSession(): void;
 }
 declare class LoginSession extends RequestSession {
-    _lastSessionChecked: number;
-    _anonymous: boolean;
+    private lastSessionChecked;
+    isAnonymous: boolean;
     /**
      * 로그인된 세션 LoginSession을 만든다.
      *
@@ -117,7 +116,6 @@ declare class LoginSession extends RequestSession {
 }
 declare class AnonymouosSession extends RequestSession {
     _anonymous: boolean;
-    constructor();
     /**
      * 익명 세션은 확인 및 갱신할 필요가 없음
      */

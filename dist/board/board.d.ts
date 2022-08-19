@@ -5,17 +5,17 @@ import type { BoardQueryOption, BoardReadOption } from "./options.js";
 import { Article, ArticleData, ArticlePostOption, ArticleReadOption } from "../article/index.js";
 declare class Board {
     /** @type {number} 새 인스턴스 생성 시 사용할 기본 캐시 사이즈 */
-    static _cacheSize: number;
+    static defaultCacheSize: number;
     /** @property {RequestSession} 요청 시 사용하는 세션 */
-    _session: RequestSession;
+    private session;
     /** @property {URL} 게시판 URL */
     url: URL;
     /** @property {number} 게시판 내 캐시할 게시글 개수 */
-    _cacheSize: number;
+    private cacheSize;
     /** @property {object<number,Article>} 캐시된 게시글들 */
-    _cachedArticles: Map<number, Article>;
+    private cachedArticles;
     /** @property {number[]} 캐시된 게시글의 우선순위(LRU) */
-    _cachedOrder: number[];
+    private cachedOrder;
     /**
      * 새 게시판 객체 Board를 만든다.
      * 생성시에는 게시판의 존재 여부를 확인하지 않는다(Rate Limit때문).
@@ -27,18 +27,18 @@ declare class Board {
     /**
      * Board의 기본 캐시 사이즈
      */
-    static get defaultCacheSize(): number;
-    /**
-     * Board 객체의 캐시 사이즈
-     */
-    get articleCacheSize(): number;
+    static get defaultArticleCacheSize(): number;
     /**
      * Board의 기본 캐시 사이즈를 설정한다.
      * 이미 생성된 객체에는 효과가 없다.
      *
      * @param {number} newSize 새 캐시 사이즈
      */
-    static set defaultCacheSize(newSize: number);
+    static set defaultArticleCacheSize(newSize: number);
+    /**
+     * Board 객체의 캐시 사이즈
+     */
+    get articleCacheSize(): number;
     /**
      * Board 객체의 캐시 사이즈를 설정한다.
      *

@@ -4,23 +4,11 @@ import { FetchResource, FetchTask } from "./data.js";
  * Rate Limit을 준수하는 fetch queue
  */
 declare class FetchQueue {
-    _queue: FetchTask[];
-    _head: number;
-    _clean: number;
-    _rateLimit: number;
-    _stopped: boolean;
-    constructor();
-    /**
-     * 다음 Fetch 작업을 얻어온다.
-     * 큐에 완료된 작업이 쌓여있을 경우 정리한다.
-     *
-     * @returns {FetchTask} task 다음에 실행해야 하는 fetch 작업 정보
-     */
-    _next(): FetchTask | null;
-    /**
-     * 다음 Fetch 작업을 수행한다.
-     */
-    _fetchStep(): void;
+    queue: FetchTask[];
+    head: number;
+    clean: number;
+    stopped: boolean;
+    private _rateLimit;
     get rateLimit(): number;
     /**
      * Rate Limit을 재설정한다.
@@ -29,14 +17,18 @@ declare class FetchQueue {
      * @param {number} newLimit 새 제한(단위:ms)
      */
     set rateLimit(newLimit: number);
+    constructor();
     /**
-     * Rate Limit을 재설정한다.
-     * 각 fetch는 여기에서 지정한 제한값만큼의 시간을 대기하고 보내진다.
+     * 다음 Fetch 작업을 얻어온다.
+     * 큐에 완료된 작업이 쌓여있을 경우 정리한다.
      *
-     * @deprecated use "rateLimit" property instead.
-     * @param {number} newLimit 새 제한(단위:ms)
+     * @returns {FetchTask} task 다음에 실행해야 하는 fetch 작업 정보
      */
-    setRateLimit(newLimit: number): void;
+    private next;
+    /**
+     * 다음 Fetch 작업을 수행한다.
+     */
+    private fetchStep;
     /**
      * Fetch를 일시정지한다.
      */

@@ -13,18 +13,18 @@ import {
 
 class Board {
   /** @type {number} 새 인스턴스 생성 시 사용할 기본 캐시 사이즈 */
-  static _cacheSize: number = 64;
+  static defaultCacheSize: number = 64;
 
   /** @property {RequestSession} 요청 시 사용하는 세션 */
-  _session: RequestSession;
+  private session: RequestSession;
   /** @property {URL} 게시판 URL */
   url: URL;
   /** @property {number} 게시판 내 캐시할 게시글 개수 */
-  _cacheSize: number = 64;
+  private cacheSize: number;
   /** @property {object<number,Article>} 캐시된 게시글들 */
-  _cachedArticles: Map<number, Article> = new Map<number, Article>();
+  private cachedArticles: Map<number, Article> = new Map<number, Article>();
   /** @property {number[]} 캐시된 게시글의 우선순위(LRU) */
-  _cachedOrder: number[] = [];
+  private cachedOrder: number[] = [];
 
   /**
    * 새 게시판 객체 Board를 만든다.
@@ -34,24 +34,17 @@ class Board {
    * @param {BoardData} boardData 게시판 정보
    */
   constructor(session: RequestSession, boardData: BoardData) {
-    this._session = session;
-    this.url = boardData.url!;
+    this.session = session;
+    this.url = boardData.url;
 
-    this._cacheSize = Board._cacheSize || 64;
+    this.cacheSize = Board.defaultArticleCacheSize || 64;
   }
 
   /**
    * Board의 기본 캐시 사이즈
    */
-  static get defaultCacheSize() {
-    return this._cacheSize;
-  }
-
-  /**
-   * Board 객체의 캐시 사이즈
-   */
-  get articleCacheSize() {
-    return this._cacheSize;
+  static get defaultArticleCacheSize() {
+    return this.defaultCacheSize;
   }
 
   /**
@@ -60,9 +53,16 @@ class Board {
    *
    * @param {number} newSize 새 캐시 사이즈
    */
-  static set defaultCacheSize(newSize: number) {
+  static set defaultArticleCacheSize(newSize: number) {
     if (newSize < 0) return;
-    this._cacheSize = newSize;
+    this.defaultCacheSize = newSize;
+  }
+
+  /**
+   * Board 객체의 캐시 사이즈
+   */
+  get articleCacheSize() {
+    return this.cacheSize;
   }
 
   /**
@@ -72,7 +72,7 @@ class Board {
    */
   set articleCacheSize(newSize: number) {
     if (newSize < 0) return;
-    this._cacheSize = newSize;
+    this.cacheSize = newSize;
   }
 
   /**
@@ -83,25 +83,25 @@ class Board {
    * @returns {Article} 해당 번호의 게시글을 나타내는 Article 객체
    */
   getArticle(articleId: number): Article {
-    if (Object.keys(this._cachedArticles).length > this._cacheSize) {
-      const lastUsed = this._cachedOrder.shift();
-      if (lastUsed) this._cachedArticles.delete(lastUsed);
+    if (Object.keys(this.cachedArticles).length > this.articleCacheSize) {
+      const lastUsed = this.cachedOrder.shift();
+      if (lastUsed) this.cachedArticles.delete(lastUsed);
     }
 
-    const cachedIndex = this._cachedOrder.indexOf(articleId);
+    const cachedIndex = this.cachedOrder.indexOf(articleId);
     if (cachedIndex !== -1) {
-      this._cachedOrder.splice(cachedIndex, 1);
+      this.cachedOrder.splice(cachedIndex, 1);
     }
-    this._cachedOrder.push(articleId);
+    this.cachedOrder.push(articleId);
 
-    if (!this._cachedArticles.has(articleId)) {
-      this._cachedArticles.set(
+    if (!this.cachedArticles.has(articleId)) {
+      this.cachedArticles.set(
         articleId,
-        new Article(this._session, { url: new URL(`${this.url}/${articleId}`) })
+        new Article(this.session, { url: new URL(`${this.url}/${articleId}`) })
       );
     }
 
-    return this._cachedArticles.get(articleId)!;
+    return this.cachedArticles.get(articleId)!;
   }
 
   /**
@@ -128,13 +128,13 @@ class Board {
    * @returns {Promise<Article>} 작성된 게시글 객체에 대한 Promise
    */
   async writeArticle(article: ArticlePostOption): Promise<Article> {
-    if (this._session._anonymous) {
+    if (this.session.isAnonymous) {
       throw new TypeError(
         "This is an anonymous session(anonymous session requires reCAPTCHA auth)."
       );
     }
 
-    const writePage = await this._session
+    const writePage = await this.session
       ._fetch(`${this.url}/write`)
       .then((resp: RequestResponse) => resp.parse());
 
@@ -164,13 +164,13 @@ class Board {
     articleInfo.append("title", article.title!);
     articleInfo.append("content", article.content ?? "");
 
-    const response = await this._session._fetch(`${this.url}/write`, {
+    const response = await this.session._fetch(`${this.url}/write`, {
       method: "POST",
       headers: { referer: `${this.url}/write` },
       body: articleInfo,
     });
 
-    return new Article(this._session, {
+    return new Article(this.session, {
       url: new URL(response.url),
     });
   }
@@ -223,7 +223,7 @@ class Board {
       queryUrl += `&category=${options.category}`;
     }
 
-    const boardPage = await this._session
+    const boardPage = await this.session
       ._fetch(queryUrl)
       .then((resp: RequestResponse) => resp.parse());
 
@@ -271,7 +271,7 @@ class Board {
         : 0;
       articleData.rateDiff = +articleElem.querySelector(".col-rate")!.innerText;
 
-      return new Article(this._session, articleData);
+      return new Article(this.session, articleData);
     });
   }
 

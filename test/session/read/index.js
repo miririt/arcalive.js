@@ -52,7 +52,7 @@ export default function ReadTest(sessionPromise) {
           withComments: false,
         });
         for (let i = 0; i < 1000; i++) {
-          await article.read();
+          await article.read({ withComments: false });
         }
       })(),
     ]);

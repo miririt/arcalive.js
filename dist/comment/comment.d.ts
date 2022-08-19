@@ -2,12 +2,11 @@
 import type { RequestSession } from "../request/index.js";
 import { RequestResponse } from "../request/index.js";
 import type { CommentData } from "./data.js";
-import { ParceledCommentData } from "./data.js";
 declare class Comment {
     /** @type {RequestSession} */
-    _session: RequestSession;
+    private session;
     /** @type {ParceledCommentData} */
-    _parceledData: ParceledCommentData;
+    private parceledData;
     get data(): CommentData;
     set data(newData: CommentData);
     get commentId(): number;
