@@ -95,7 +95,10 @@ class Board {
     this._cachedOrder.push(articleId);
 
     if (!this._cachedArticles.has(articleId)) {
-      this._cachedArticles.set(articleId, new Article(this, { articleId }));
+      this._cachedArticles.set(
+        articleId,
+        new Article(this, { url: new URL(`${this.url}/${articleId}`) })
+      );
     }
 
     return this._cachedArticles.get(articleId)!;
@@ -238,14 +241,18 @@ class Board {
     }
 
     return filteredArticles.map((articleElem: HTMLElement) => {
+      const articleId =
+        +articleElem.attributes["href"].match(/(\d+)[?]p=(\d+)$/)![1];
+
       const articleData: ArticleData = {
         isSummary: true,
+        articleId,
+        url: new URL(`${this.url}/${articleId}`),
       };
 
       const commentElement = articleElem.querySelector(".comment-count");
 
-      articleData.articleId =
-        +articleElem.attributes["href"].match(/(\d+)[?]p=(\d+)$/)![1];
+      articleData.articleId = articleId;
       articleData.author = articleElem
         .querySelector(".user-info")!
         .querySelector("*")!.attributes["data-filter"];

@@ -5,7 +5,7 @@ import type { ArticleReadOption, ArticlePostOption } from "./options.js";
 
 import { ArticleData, ParceledArticleData } from "./data.js";
 import { Comment } from "../comment/index.js";
-import { ArgumentError, SessionError } from "../errors/index.js";
+import { SessionError } from "../errors/index.js";
 import { HTMLElement } from "node-html-parser";
 
 class Article {
@@ -16,9 +16,6 @@ class Article {
   /** @property {boolean} 이 Article이 실제로 로드되었는지를 나타냄. 이 Article에 대한 수정 fetch가 보내진 경우 dirty flag의 역할도 겸함. 해당 사항은 수정예정. */
   _loaded: boolean = false;
 
-  articleId: number;
-  url: URL;
-
   get data(): ArticleData {
     return this._parceledData.unparcel();
   }
@@ -27,35 +24,34 @@ class Article {
     this._parceledData.parcel(newData);
   }
 
+  get articleId(): number {
+    return this.data.articleId!;
+  }
+
+  get url(): URL {
+    return this.data.url;
+  }
+
   /**
    * 새 게시글 객체 Article을 만든다.
    * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
    *
    * @param {Board} board 해당 게시글이 속해 있는 게시판 객체
-   * @param {ArticleData} articleData 게시글 정보
+   * @param {ArticleData} data 게시글 정보
    */
-  constructor(board: Board, articleData: ArticleData) {
+  constructor(board: Board, data: ArticleData) {
     this._session = board._session;
     this._board = board;
 
-    if (articleData.articleId) {
-      this.articleId = articleData.articleId;
-      this.url = new URL(`${board.url}/${articleData.articleId}`);
-    } else if (articleData.url) {
-      const articleIdString =
-        articleData.url.pathname.match(/^\/b\/[^/]+\/(\d+)/);
-      this.articleId = +articleIdString!;
+    const parcel: ArticleData = { ...data };
 
-      this.url = articleData.url;
-    } else {
-      throw new ArgumentError(
-        "at least one of { articleId, url } must have specified"
-      );
+    if (!parcel.articleId) {
+      const articleIdString = data.url.pathname.match(/^\/b\/[^/]+\/(\d+)/)![1];
+      parcel.articleId = +articleIdString;
     }
 
+    this._parceledData = new ParceledArticleData(parcel);
     this._loaded = false;
-
-    this._parceledData = new ParceledArticleData(articleData);
   }
 
   /**
@@ -81,7 +77,10 @@ class Article {
       const [rateUp, rateDown, commentCount, views, time] =
         articleInfo.querySelectorAll(".body");
 
-      const newArticleData: ArticleData = {};
+      const newArticleData: ArticleData = {
+        articleId: this.articleId,
+        url: this.url,
+      };
 
       if (badge !== null) {
         newArticleData.category = badge.innerText;

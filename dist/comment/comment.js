@@ -26,6 +26,7 @@ class Comment {
     constructor(article, commentData) {
         this._session = article._session;
         this._article = article;
+        this._parceledData = new ParceledCommentData(commentData);
         if (commentData.commentId) {
             this.commentId = commentData.commentId;
             this.apiUrl = new URL(`${this._article.url}/${this.commentId}`);
@@ -44,7 +45,6 @@ class Comment {
         else {
             throw new ArgumentError("at least one of { commentId, apiUrl, url } must have specified");
         }
-        this._parceledData = new ParceledCommentData(commentData);
     }
     /**
      * 해당 댓글을 읽는다.

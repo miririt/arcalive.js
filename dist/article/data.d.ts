@@ -29,7 +29,7 @@ interface ArticleData {
     /** @property {number} 게시글 추천 수 - 비추천 수 */
     rateDiff?: number;
     /** @property {URL} 게시글 URL */
-    url?: URL;
+    url: URL;
 }
 declare class ParceledArticleData extends ParceledData<ArticleData> {
 }

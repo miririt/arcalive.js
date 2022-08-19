@@ -36,6 +36,7 @@ class Comment {
   constructor(article: Article, commentData: CommentData) {
     this._session = article._session;
     this._article = article;
+    this._parceledData = new ParceledCommentData(commentData);
 
     if (commentData.commentId) {
       this.commentId = commentData.commentId;
@@ -56,8 +57,6 @@ class Comment {
         "at least one of { commentId, apiUrl, url } must have specified"
       );
     }
-
-    this._parceledData = new ParceledCommentData(commentData);
   }
 
   /**

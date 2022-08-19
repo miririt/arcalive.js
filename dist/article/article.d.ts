@@ -11,18 +11,18 @@ declare class Article {
     _parceledData: ParceledArticleData;
     /** @property {boolean} 이 Article이 실제로 로드되었는지를 나타냄. 이 Article에 대한 수정 fetch가 보내진 경우 dirty flag의 역할도 겸함. 해당 사항은 수정예정. */
     _loaded: boolean;
-    articleId: number;
-    url: URL;
     get data(): ArticleData;
     set data(newData: ArticleData);
+    get articleId(): number;
+    get url(): URL;
     /**
      * 새 게시글 객체 Article을 만든다.
      * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
      *
      * @param {Board} board 해당 게시글이 속해 있는 게시판 객체
-     * @param {ArticleData} articleData 게시글 정보
+     * @param {ArticleData} data 게시글 정보
      */
-    constructor(board: Board, articleData: ArticleData);
+    constructor(board: Board, data: ArticleData);
     /**
      * 해당 게시글을 fetch한다.
      * 만일 이미 읽어온 게시글일 경우, fetch 없이 정보를 그대로 반환한다.
