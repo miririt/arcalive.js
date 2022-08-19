@@ -13,7 +13,9 @@ declare class Comment {
     /** @type {Article} */
     _article: Article;
     /** @type {ParceledCommentData} */
-    _commentData: ParceledCommentData;
+    _parceledData: ParceledCommentData;
+    get data(): CommentData;
+    set data(newData: CommentData);
     /**
      * 새 댓글 객체 Comment를 만든다.
      * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).

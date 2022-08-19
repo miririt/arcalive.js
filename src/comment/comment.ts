@@ -16,7 +16,15 @@ class Comment {
   /** @type {Article} */
   _article: Article;
   /** @type {ParceledCommentData} */
-  _commentData: ParceledCommentData;
+  _parceledData: ParceledCommentData;
+
+  get data(): CommentData {
+    return this._parceledData.unparcel();
+  }
+
+  set data(newData: CommentData) {
+    this._parceledData.parcel(newData);
+  }
 
   /**
    * 새 댓글 객체 Comment를 만든다.
@@ -49,12 +57,7 @@ class Comment {
       );
     }
 
-    if (commentData instanceof ParceledCommentData) {
-      this._commentData = commentData;
-    } else {
-      this._commentData = new ParceledCommentData();
-      Object.assign(this._commentData._data, commentData);
-    }
+    this._parceledData = new ParceledCommentData(commentData);
   }
 
   /**
@@ -63,7 +66,7 @@ class Comment {
    * @returns {CommentData} 댓글 정보
    */
   read(): CommentData {
-    return this._commentData.data;
+    return this.data;
   }
 
   /**
@@ -72,7 +75,7 @@ class Comment {
    * @returns {Promise<RequestResponse>} 댓글 삭제 fetch에 대한 Response
    */
   async delete(): Promise<RequestResponse> {
-    if (this._commentData.data.deleted) {
+    if (this.data.deleted) {
       throw new Error("This comment is already deleted");
     }
 
@@ -98,7 +101,7 @@ class Comment {
   async edit(content: string): Promise<RequestResponse> {
     const body = new URLSearchParams();
 
-    if (this._commentData.data.deleted) {
+    if (this.data.deleted) {
       throw new Error("This comment is already deleted");
     }
 

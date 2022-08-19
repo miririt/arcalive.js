@@ -2,11 +2,14 @@ class ParceledData<T> {
   _data: T;
 
   constructor(data: T = {} as T) {
-    this._data = data;
+    this._data = Object.assign({}, data);
   }
 
-  get data(): T {
-    return { ...this._data };
+  parcel(data: T): void {
+    this._data = Object.assign({}, data);
+  }
+  unparcel(): T {
+    return Object.assign({}, this._data);
   }
 }
 

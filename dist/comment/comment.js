@@ -9,7 +9,13 @@ class Comment {
     /** @type {Article} */
     _article;
     /** @type {ParceledCommentData} */
-    _commentData;
+    _parceledData;
+    get data() {
+        return this._parceledData.unparcel();
+    }
+    set data(newData) {
+        this._parceledData.parcel(newData);
+    }
     /**
      * 새 댓글 객체 Comment를 만든다.
      * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
@@ -38,13 +44,7 @@ class Comment {
         else {
             throw new ArgumentError("at least one of { commentId, apiUrl, url } must have specified");
         }
-        if (commentData instanceof ParceledCommentData) {
-            this._commentData = commentData;
-        }
-        else {
-            this._commentData = new ParceledCommentData();
-            Object.assign(this._commentData._data, commentData);
-        }
+        this._parceledData = new ParceledCommentData(commentData);
     }
     /**
      * 해당 댓글을 읽는다.
@@ -52,7 +52,7 @@ class Comment {
      * @returns {CommentData} 댓글 정보
      */
     read() {
-        return this._commentData.data;
+        return this.data;
     }
     /**
      * 해당 댓글을 삭제한다.
@@ -60,7 +60,7 @@ class Comment {
      * @returns {Promise<RequestResponse>} 댓글 삭제 fetch에 대한 Response
      */
     async delete() {
-        if (this._commentData.data.deleted) {
+        if (this.data.deleted) {
             throw new Error("This comment is already deleted");
         }
         const body = new URLSearchParams();
@@ -81,7 +81,7 @@ class Comment {
      */
     async edit(content) {
         const body = new URLSearchParams();
-        if (this._commentData.data.deleted) {
+        if (this.data.deleted) {
             throw new Error("This comment is already deleted");
         }
         if (this._session._anonymous) {

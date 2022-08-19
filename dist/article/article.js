@@ -4,11 +4,17 @@ import { ArgumentError, SessionError } from "../errors/index.js";
 class Article {
     _session;
     _board;
-    _articleData;
+    _parceledData;
     /** @property {boolean} 이 Article이 실제로 로드되었는지를 나타냄. 이 Article에 대한 수정 fetch가 보내진 경우 dirty flag의 역할도 겸함. 해당 사항은 수정예정. */
     _loaded = false;
     articleId;
     url;
+    get data() {
+        return this._parceledData.unparcel();
+    }
+    set data(newData) {
+        this._parceledData.parcel(newData);
+    }
     /**
      * 새 게시글 객체 Article을 만든다.
      * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).
@@ -32,13 +38,7 @@ class Article {
             throw new ArgumentError("at least one of { articleId, url } must have specified");
         }
         this._loaded = false;
-        if (articleData instanceof ParceledArticleData) {
-            this._articleData = articleData;
-        }
-        else {
-            this._articleData = new ParceledArticleData();
-            Object.assign(this._articleData._data, articleData);
-        }
+        this._parceledData = new ParceledArticleData(articleData);
     }
     /**
      * 해당 게시글을 fetch한다.
@@ -48,7 +48,7 @@ class Article {
      * @returns {Promise<ArticleData>} 해당 게시글의 articleData 사본
      */
     async read(options = { noCache: false, withComments: true }) {
-        if (options.noCache || !this._loaded || !this._articleData) {
+        if (options.noCache || !this._loaded || !this.data) {
             const article = await this._session
                 ._fetch(`${this._board.url}/${this.articleId}`)
                 .then((resp) => resp.parse());
@@ -125,9 +125,9 @@ class Article {
                 }
             }
             this._loaded = true;
-            this._articleData = new ParceledArticleData(newArticleData);
+            this.data = newArticleData;
         }
-        return this._articleData.data;
+        return this.data;
     }
     /**
      * 해당 게시글을 삭제한다.
@@ -160,9 +160,9 @@ class Article {
             article.nickname = article.nickname ?? this._session._username;
             article.password = article.password ?? this._session._password;
         }
-        article.category = article.category ?? this._articleData.data.category;
-        article.title = article.title ?? this._articleData.data.title;
-        article.content = article.content ?? this._articleData.data.content ?? "";
+        article.category = article.category ?? this.data.category;
+        article.title = article.title ?? this.data.title;
+        article.content = article.content ?? this.data.content ?? "";
         const editPage = await this._session
             ._fetch(`${this.url}/edit`)
             .then((resp) => resp.parse());
@@ -266,7 +266,7 @@ class Article {
      * @returns {Promise<Response>} 댓글 작성 fetch에 대한 Response
      */
     deleteComment(commentId) {
-        const commentObject = this._articleData.data.comments[commentId] ??
+        const commentObject = this.data.comments[commentId] ??
             new Comment(this, {
                 commentId: commentId,
             });
@@ -281,7 +281,7 @@ class Article {
      * @returns {Promise<Response>} 댓글 수정 fetch에 대한 Response
      */
     editComment(commentId, comment) {
-        const commentObject = this._articleData.data.comments[commentId] ??
+        const commentObject = this.data.comments[commentId] ??
             new Comment(this, {
                 commentId: commentId,
             });

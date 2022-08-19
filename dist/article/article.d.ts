@@ -8,11 +8,13 @@ import { Comment } from "../comment/index.js";
 declare class Article {
     _session: RequestSession;
     _board: Board;
-    _articleData: ParceledArticleData;
+    _parceledData: ParceledArticleData;
     /** @property {boolean} 이 Article이 실제로 로드되었는지를 나타냄. 이 Article에 대한 수정 fetch가 보내진 경우 dirty flag의 역할도 겸함. 해당 사항은 수정예정. */
     _loaded: boolean;
     articleId: number;
     url: URL;
+    get data(): ArticleData;
+    set data(newData: ArticleData);
     /**
      * 새 게시글 객체 Article을 만든다.
      * 생성시에는 존재 여부를 확인하지 않는다(Rate Limit때문).

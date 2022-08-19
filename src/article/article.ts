@@ -11,13 +11,21 @@ import { HTMLElement } from "node-html-parser";
 class Article {
   _session: RequestSession;
   _board: Board;
-  _articleData: ParceledArticleData;
+  _parceledData: ParceledArticleData;
 
   /** @property {boolean} 이 Article이 실제로 로드되었는지를 나타냄. 이 Article에 대한 수정 fetch가 보내진 경우 dirty flag의 역할도 겸함. 해당 사항은 수정예정. */
   _loaded: boolean = false;
 
   articleId: number;
   url: URL;
+
+  get data(): ArticleData {
+    return this._parceledData.unparcel();
+  }
+
+  set data(newData: ArticleData) {
+    this._parceledData.parcel(newData);
+  }
 
   /**
    * 새 게시글 객체 Article을 만든다.
@@ -47,12 +55,7 @@ class Article {
 
     this._loaded = false;
 
-    if (articleData instanceof ParceledArticleData) {
-      this._articleData = articleData;
-    } else {
-      this._articleData = new ParceledArticleData();
-      Object.assign(this._articleData._data, articleData);
-    }
+    this._parceledData = new ParceledArticleData(articleData);
   }
 
   /**
@@ -65,7 +68,7 @@ class Article {
   async read(
     options: ArticleReadOption = { noCache: false, withComments: true }
   ): Promise<ArticleData> {
-    if (options.noCache || !this._loaded || !this._articleData) {
+    if (options.noCache || !this._loaded || !this.data) {
       const article = await this._session
         ._fetch(`${this._board.url}/${this.articleId}`)
         .then((resp: RequestResponse) => resp.parse())!;
@@ -177,10 +180,10 @@ class Article {
       }
 
       this._loaded = true;
-      this._articleData = new ParceledArticleData(newArticleData);
+      this.data = newArticleData;
     }
 
-    return this._articleData.data;
+    return this.data;
   }
 
   /**
@@ -223,9 +226,9 @@ class Article {
       article.password = article.password ?? this._session._password;
     }
 
-    article.category = article.category ?? this._articleData.data.category;
-    article.title = article.title ?? this._articleData.data.title;
-    article.content = article.content ?? this._articleData.data.content ?? "";
+    article.category = article.category ?? this.data.category;
+    article.title = article.title ?? this.data.title;
+    article.content = article.content ?? this.data.content ?? "";
 
     const editPage = await this._session
       ._fetch(`${this.url}/edit`)
@@ -352,7 +355,7 @@ class Article {
    */
   deleteComment(commentId: number): Promise<RequestResponse> {
     const commentObject =
-      this._articleData.data.comments![commentId] ??
+      this.data.comments![commentId] ??
       new Comment(this, {
         commentId: commentId,
       });
@@ -370,7 +373,7 @@ class Article {
    */
   editComment(commentId: number, comment: string): Promise<RequestResponse> {
     const commentObject =
-      this._articleData.data.comments![commentId] ??
+      this.data.comments![commentId] ??
       new Comment(this, {
         commentId: commentId,
       });
