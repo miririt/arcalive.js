@@ -1,7 +1,7 @@
 /// <reference types="node" resolution-mode="require"/>
 import ParceledData from "../classes/parcel.js";
 import type { Comment } from "../comment/index.js";
-interface ArticleData {
+declare type ArticleData = {
     /** @property {boolean} `true`일 경우 해당 정보는 read()를 통해 얻어온 정보, `false`일 경우 readPage()를 통해 얻어온 요약 정보 */
     isSummary?: boolean;
     /** @property {boolean} 공지글 여부 */
@@ -30,7 +30,7 @@ interface ArticleData {
     rateDiff?: number;
     /** @property {URL} 게시글 URL */
     url: URL;
-}
+};
 declare class ParceledArticleData extends ParceledData<ArticleData> {
 }
 export type { ArticleData };
