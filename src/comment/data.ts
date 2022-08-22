@@ -1,6 +1,6 @@
 import ParceledData from "../classes/parcel.js";
 
-interface CommentData {
+type CommentData = {
   /** @property {number} 댓글 번호 */
   commentId?: number;
   /** @property {string} 댓글 작성자 */
@@ -17,7 +17,7 @@ interface CommentData {
   apiUrl: URL;
   /** @property {boolean} 이미 삭제된 댓글인지 여부 */
   deleted?: boolean;
-}
+};
 
 class ParceledCommentData extends ParceledData<CommentData> {}
 
