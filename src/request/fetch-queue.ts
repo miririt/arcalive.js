@@ -11,7 +11,7 @@ class FetchQueue {
   clean = 64;
   stopped = false;
 
-  private _rateLimit = 400;
+  private _rateLimit = 0;
 
   get rateLimit() {
     return this._rateLimit;
@@ -24,8 +24,8 @@ class FetchQueue {
    * @param {number} newLimit 새 제한(단위:ms)
    */
   set rateLimit(newLimit: number) {
-    // 너무 터무니없는 값은 일단 거름
-    if (newLimit < 100) return;
+    // 불가능한 값을 제외하면 유저 자율에 맡김
+    if (newLimit < 0) return;
     this._rateLimit = newLimit;
   }
 
