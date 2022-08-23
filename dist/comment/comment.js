@@ -1,4 +1,5 @@
 import { ParceledCommentData } from "./data.js";
+import ArgumentError from "../errors/argument.js";
 class Comment {
     /** @type {RequestSession} */
     session;
@@ -11,7 +12,7 @@ class Comment {
         this.parceledData.parcel(newData);
     }
     get commentId() {
-        return this.data.commentId;
+        return this.data.commentId ?? 0;
     }
     get url() {
         return this.data.url;
@@ -30,7 +31,11 @@ class Comment {
         this.session = session;
         const parcel = { ...data };
         if (!parcel.commentId) {
-            parcel.commentId = +parcel.url.hash.match(/^#c_(\d+)/)[1];
+            const matchResult = parcel.url.hash.match(/^#c_(\d+)/);
+            if (!matchResult) {
+                throw new ArgumentError(`Invalid URL and commentId.`);
+            }
+            parcel.commentId = +matchResult[1];
         }
         this.parceledData = new ParceledCommentData(parcel);
     }
@@ -49,7 +54,7 @@ class Comment {
      */
     async delete() {
         if (this.data.deleted) {
-            throw new Error("This comment is already deleted");
+            throw new Error("This comment is already deleted.");
         }
         const body = new URLSearchParams();
         if (this.session.isAnonymous) {
@@ -70,7 +75,7 @@ class Comment {
     async edit(content) {
         const body = new URLSearchParams();
         if (this.data.deleted) {
-            throw new Error("This comment is already deleted");
+            throw new Error("This comment is already deleted.");
         }
         if (this.session.isAnonymous) {
             body.append("password", this.session.password);

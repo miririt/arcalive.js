@@ -1,5 +1,5 @@
 class SessionError extends Error {
-  name: string = "SessionError";
+  name = "SessionError";
 }
 
 export default SessionError;

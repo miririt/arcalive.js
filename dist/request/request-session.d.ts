@@ -4,7 +4,7 @@ import type { FetchResource } from "./data.js";
 import { Board } from "../board/board.js";
 import { Article } from "../article/index.js";
 import { RequestResponse } from "./data.js";
-declare class RequestSession {
+declare abstract class RequestSession {
     cookies: Map<string, string>;
     isAnonymous: boolean;
     username: string;
@@ -48,7 +48,7 @@ declare class RequestSession {
      * 해당 세션이 유효한지 확인하고 갱신함
      * @abstract
      */
-    _validateSession(): void;
+    abstract _validateSession(): void;
     /**
      * 해당 세션에서 fetch 요청을 보낸다.
      *

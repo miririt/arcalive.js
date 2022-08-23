@@ -64,7 +64,7 @@ class FetchQueue {
         .then((res: Response) => {
           task.resolver(res);
         })
-        .catch((err: any) => {
+        .catch((err: Error) => {
           task.rejecter(err);
         });
     } else {

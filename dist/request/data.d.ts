@@ -5,7 +5,7 @@ import type { HTMLElement } from "node-html-parser";
 declare type FetchTask = {
     args: [string | URL, RequestInit];
     resolver: (value: Response) => void;
-    rejecter: (reason?: any) => void;
+    rejecter: (reason?: Error) => void;
 };
 declare type FetchResource = string | URL;
 export type { FetchTask, FetchResource };

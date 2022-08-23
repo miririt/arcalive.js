@@ -10,10 +10,11 @@ import {
   ArticlePostOption,
   ArticleReadOption,
 } from "../article/index.js";
+import ArgumentError from "../errors/argument.js";
 
 class Board {
   /** @type {number} 새 인스턴스 생성 시 사용할 기본 캐시 사이즈 */
-  static defaultCacheSize: number = 64;
+  static defaultCacheSize = 64;
 
   /** @property {RequestSession} 요청 시 사용하는 세션 */
   private session: RequestSession;
@@ -82,7 +83,7 @@ class Board {
    * @param {number} articleId 게시글 번호
    * @returns {Article} 해당 번호의 게시글을 나타내는 Article 객체
    */
-  getArticle(articleId: number): Article {
+  getArticle(articleId: number): Article | null {
     if (Object.keys(this.cachedArticles).length > this.articleCacheSize) {
       const lastUsed = this.cachedOrder.shift();
       if (lastUsed) this.cachedArticles.delete(lastUsed);
@@ -101,7 +102,7 @@ class Board {
       );
     }
 
-    return this.cachedArticles.get(articleId)!;
+    return this.cachedArticles.get(articleId) ?? null;
   }
 
   /**
@@ -117,6 +118,10 @@ class Board {
     options: ArticleReadOption = { noCache: false, withComments: true }
   ): Promise<ArticleData> {
     const articleObject = this.getArticle(articleId);
+
+    if (!articleObject) {
+      throw new ArgumentError("Failed to get article from given articleId.");
+    }
 
     return articleObject.read(options);
   }
@@ -161,7 +166,7 @@ class Board {
     articleInfo.append("contentType", "html");
     if (article.category) articleInfo.append("category", article.category);
     articleInfo.append("agreePreventDelete", "on");
-    articleInfo.append("title", article.title!);
+    articleInfo.append("title", article.title ?? "[No title]");
     articleInfo.append("content", article.content ?? "");
 
     const response = await this.session._fetch(`${this.url}/write`, {
@@ -184,6 +189,10 @@ class Board {
   deleteArticle(articleId: number): Promise<RequestResponse> {
     const articleObject = this.getArticle(articleId);
 
+    if (!articleObject) {
+      throw new ArgumentError("Failed to get article from given articleId.");
+    }
+
     return articleObject.delete();
   }
 
@@ -200,6 +209,10 @@ class Board {
   ): Promise<RequestResponse> {
     const articleObject = this.getArticle(articleId);
 
+    if (!articleObject) {
+      throw new ArgumentError("Failed to get article from given articleId.");
+    }
+
     return articleObject.edit(article);
   }
 
@@ -211,7 +224,7 @@ class Board {
    * @returns {Promise<Article[]>} 해당 페이지에 있는 게시글 검색 결과를 나타내는 Article[]
    */
   async queryPage(
-    page: number = 1,
+    page = 1,
     options: BoardQueryOption = {}
   ): Promise<Article[]> {
     let queryUrl = `${this.url}`;
@@ -240,9 +253,20 @@ class Board {
       );
     }
 
-    return filteredArticles.map((articleElem: HTMLElement) => {
-      const articleId =
-        +articleElem.attributes["href"].match(/(\d+)[?]p=(\d+)$/)![1];
+    return filteredArticles.flatMap((articleElem: HTMLElement) => {
+      function guard(x: string | undefined): number | undefined {
+        if (typeof x === "undefined") return undefined;
+        return +x;
+      }
+
+      const articleIdString =
+        articleElem.attributes["href"].match(/(\d+)[?]p=(\d+)$/)?.[1];
+
+      if (!articleIdString) {
+        return [];
+      }
+
+      const articleId = +articleIdString;
 
       const articleData: ArticleData = {
         isSummary: true,
@@ -254,22 +278,29 @@ class Board {
 
       articleData.articleId = articleId;
       articleData.author = articleElem
-        .querySelector(".user-info")!
-        .querySelector("*")!.attributes["data-filter"];
+        .querySelector(".user-info")
+        ?.querySelector("*")?.attributes["data-filter"];
       articleData.isNotice = articleElem.classNames.indexOf("notice") !== -1;
-      articleData.category = articleElem.querySelector(".badge")!.innerText;
+      articleData.category = articleElem.querySelector(".badge")?.innerText;
       articleData.title = articleElem
-        .querySelector(".title")!
-        .innerText.replace(/\n/g, "");
+        .querySelector(".title")
+        ?.innerText.replace(/\n/g, "");
 
-      articleData.time = new Date(
-        articleElem.querySelector(".col-time time")!.attributes["datetime"]
+      const timestamp =
+        articleElem.querySelector(".col-time time")?.attributes?.["datetime"];
+      if (timestamp) articleData.time = new Date(timestamp);
+
+      articleData.views = guard(
+        articleElem.querySelector(".col-view")?.innerText
       );
-      articleData.views = +articleElem.querySelector(".col-view")!.innerText;
-      articleData.commentCount = commentElement
-        ? +commentElement.innerText.match(/\d+/)![0]
-        : 0;
-      articleData.rateDiff = +articleElem.querySelector(".col-rate")!.innerText;
+
+      articleData.commentCount = guard(
+        commentElement?.innerText?.match(/\d+/)?.[0]
+      );
+
+      articleData.rateDiff = guard(
+        articleElem.querySelector(".col-rate")?.innerText
+      );
 
       return new Article(this.session, articleData);
     });

@@ -52,7 +52,7 @@ declare class Board {
      * @param {number} articleId 게시글 번호
      * @returns {Article} 해당 번호의 게시글을 나타내는 Article 객체
      */
-    getArticle(articleId: number): Article;
+    getArticle(articleId: number): Article | null;
     /**
      * 해당 게시판에 있는 게시글의 객체 Article을 읽는다.
      * 존재하지 않을 경우 실패한다.

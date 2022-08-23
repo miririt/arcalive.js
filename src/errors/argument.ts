@@ -1,5 +1,5 @@
 class ArgumentError extends Error {
-  name: string = "ArgumentError";
+  name = "ArgumentError";
 }
 
 export default ArgumentError;

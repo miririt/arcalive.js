@@ -7,7 +7,7 @@ import { parse } from "node-html-parser";
 type FetchTask = {
   args: [string | URL, RequestInit];
   resolver: (value: Response) => void;
-  rejecter: (reason?: any) => void;
+  rejecter: (reason?: Error) => void;
 };
 
 type FetchResource = string | URL;

@@ -4,6 +4,7 @@ import { RequestResponse } from "../request/index.js";
 
 import type { CommentData } from "./data.js";
 import { ParceledCommentData } from "./data.js";
+import ArgumentError from "../errors/argument.js";
 
 class Comment {
   /** @type {RequestSession} */
@@ -20,15 +21,15 @@ class Comment {
   }
 
   get commentId(): number {
-    return this.data.commentId!;
+    return this.data.commentId ?? 0;
   }
 
   get url(): URL {
-    return this.data.url!;
+    return this.data.url;
   }
 
   get apiUrl(): URL {
-    return this.data.apiUrl!;
+    return this.data.apiUrl;
   }
 
   /**
@@ -44,7 +45,11 @@ class Comment {
     const parcel: CommentData = { ...data };
 
     if (!parcel.commentId) {
-      parcel.commentId = +parcel.url.hash.match(/^#c_(\d+)/)![1];
+      const matchResult = parcel.url.hash.match(/^#c_(\d+)/);
+      if (!matchResult) {
+        throw new ArgumentError(`Invalid URL and commentId.`);
+      }
+      parcel.commentId = +matchResult[1];
     }
 
     this.parceledData = new ParceledCommentData(parcel);
@@ -66,7 +71,7 @@ class Comment {
    */
   async delete(): Promise<RequestResponse> {
     if (this.data.deleted) {
-      throw new Error("This comment is already deleted");
+      throw new Error("This comment is already deleted.");
     }
 
     const body = new URLSearchParams();
@@ -92,7 +97,7 @@ class Comment {
     const body = new URLSearchParams();
 
     if (this.data.deleted) {
-      throw new Error("This comment is already deleted");
+      throw new Error("This comment is already deleted.");
     }
 
     if (this.session.isAnonymous) {

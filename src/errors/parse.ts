@@ -1,5 +1,5 @@
 class ParseError extends Error {
-  name: string = "ParseError";
+  name = "ParseError";
 }
 
 export default ParseError;

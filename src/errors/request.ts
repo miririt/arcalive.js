@@ -1,5 +1,5 @@
 class RequestError extends Error {
-  name: string = "RequestError";
+  name = "RequestError";
 }
 
 export default RequestError;

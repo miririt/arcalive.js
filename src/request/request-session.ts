@@ -8,7 +8,7 @@ import { Article } from "../article/index.js";
 import { ArgumentError, RequestError } from "../errors/index.js";
 import { RequestResponse } from "./data.js";
 
-class RequestSession {
+abstract class RequestSession {
   cookies: Map<string, string> = new Map();
   isAnonymous = true;
 
@@ -84,7 +84,7 @@ class RequestSession {
    */
   async _getCSRFToken(
     url: FetchResource,
-    tokenName: string = "_csrf"
+    tokenName = "_csrf"
   ): Promise<string> {
     const page = await this._fetch(url).then((resp) => resp.parse());
 
@@ -102,7 +102,7 @@ class RequestSession {
    * 해당 세션이 유효한지 확인하고 갱신함
    * @abstract
    */
-  _validateSession() {}
+  abstract _validateSession(): void;
 
   /**
    * 해당 세션에서 fetch 요청을 보낸다.
@@ -177,12 +177,17 @@ class RequestSession {
    */
   fromUrl(articleOrBoardUrl: FetchResource): Board | Article {
     const targetUrl = new URL(articleOrBoardUrl.toString());
+    const matchResult = targetUrl.pathname.match(/^\/b\/[^/]+/);
 
     if (targetUrl.origin.indexOf("arca.live") === -1) {
       throw new ArgumentError("This is not an arca.live url.");
     }
 
-    const [boardPath] = targetUrl.pathname.match(/^\/b\/[^/]+/)!;
+    if (!matchResult) {
+      throw new ArgumentError("This it not a valid article or board url.");
+    }
+
+    const [boardPath] = matchResult;
 
     const board = new Board(this, {
       url: new URL(`${targetUrl.origin}${boardPath}`),

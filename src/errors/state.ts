@@ -1,5 +1,5 @@
 class StateError extends Error {
-  name: string = "StateError";
+  name = "StateError";
 }
 
 export default StateError;

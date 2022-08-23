@@ -4,7 +4,12 @@ import type { ArticleReadOption, ArticlePostOption } from "./options.js";
 
 import { ArticleData, ParceledArticleData } from "./data.js";
 import { Comment } from "../comment/index.js";
-import { SessionError } from "../errors/index.js";
+import {
+  ArgumentError,
+  ParseError,
+  SessionError,
+  StateError,
+} from "../errors/index.js";
 import { HTMLElement } from "node-html-parser";
 
 class Article {
@@ -23,7 +28,7 @@ class Article {
   }
 
   get articleId(): number {
-    return this.data.articleId!;
+    return this.data.articleId ?? 0;
   }
 
   get url(): URL {
@@ -43,8 +48,11 @@ class Article {
     const parcel: ArticleData = { ...data };
 
     if (!parcel.articleId) {
-      const articleIdString =
-        parcel.url.pathname.match(/^\/b\/[^/]+\/(\d+)/)![1];
+      const matchResult = parcel.url.pathname.match(/^\/b\/[^/]+\/(\d+)/);
+      if (!matchResult) {
+        throw new ArgumentError(`Invalid URL.`);
+      }
+      const articleIdString = matchResult[1];
       parcel.articleId = +articleIdString;
     }
 
@@ -72,12 +80,16 @@ class Article {
     };
     const article = await this.session
       ._fetch(this.url)
-      .then((resp: RequestResponse) => resp.parse())!;
+      .then((resp: RequestResponse) => resp.parse());
 
-    const articleTitle = article.querySelector(".article-wrapper .title")!;
-    const memberInfo = article.querySelector(".member-info")!;
-    const articleInfo = article.querySelector(".article-info")!;
-    const badge = articleTitle.querySelector("span.badge");
+    const articleTitle = article.querySelector(".article-wrapper .title");
+    const memberInfo = article.querySelector(".member-info");
+    const articleInfo = article.querySelector(".article-info");
+    const badge = articleTitle?.querySelector("span.badge");
+
+    if (!articleTitle || !memberInfo || !articleInfo || !badge) {
+      throw new ParseError(`Failed to parse article.`);
+    }
 
     const [rateUp, rateDown, commentCount, views, time] =
       articleInfo.querySelectorAll(".body");
@@ -97,12 +109,12 @@ class Article {
 
     // Not using firstChild because of Node <-> HTMLElement type casting problem.
     newArticleData.author = memberInfo
-      .querySelector(".user-info")!
-      .querySelector("*")!.attributes["data-filter"];
+      .querySelector(".user-info")
+      ?.querySelector("*")?.attributes["data-filter"];
 
-    newArticleData.time = new Date(
-      time.querySelector("time")!.attributes["datetime"]
-    );
+    const timestamp = time.querySelector("time")?.attributes["datetime"];
+    if (timestamp) newArticleData.time = new Date(timestamp);
+
     newArticleData.views = +views.innerText;
     newArticleData.commentCount = +commentCount.innerText;
     newArticleData.rate = [+rateUp.innerText, +rateDown.innerText];
@@ -110,7 +122,7 @@ class Article {
 
     newArticleData.content = article.querySelector(
       ".article-wrapper .article-body .article-content"
-    )!.innerHTML;
+    )?.innerHTML;
 
     if (options.withComments) {
       newArticleData.comments = [];
@@ -126,18 +138,18 @@ class Article {
         const comments = commentPage.querySelectorAll(".comment-wrapper");
 
         newArticleData.comments.push(
-          ...comments.map((comment: HTMLElement) => {
-            const userInfo = comment.querySelector("span.user-info")!;
+          ...comments.flatMap((comment: HTMLElement) => {
+            const userInfo = comment.querySelector("span.user-info");
 
-            const userLink = (userInfo.querySelector("a") ||
-              userInfo.querySelector("span"))!;
+            const userLink =
+              userInfo?.querySelector("a") || userInfo?.querySelector("span");
 
-            const message = comment.querySelector(".message")!;
+            const message = comment.querySelector(".message");
 
-            const content = comment.querySelector("div")!.innerHTML;
+            const content = comment.querySelector("div")?.innerHTML;
             let textContent: string;
 
-            const emoticonWrapper = message.querySelector(".emoticon-wrapper");
+            const emoticonWrapper = message?.querySelector(".emoticon-wrapper");
             if (emoticonWrapper) {
               textContent =
                 (emoticonWrapper.attributes["src"] ||
@@ -147,27 +159,30 @@ class Article {
                 "";
             } else {
               textContent =
-                message.querySelector(".text pre")?.textContent ?? "";
+                message?.querySelector(".text pre")?.textContent ?? "";
             }
 
             const commentIdString = (
               comment.id
                 ? comment.id.match(/(\d+)$/)
                 : (comment.childNodes as HTMLElement[])
-                    .find((e: HTMLElement) => e.id)!
-                    .id.match(/(\d+)$/)
-            )![1];
+                    .find((e: HTMLElement) => e.id)
+                    ?.id.match(/(\d+)$/)
+            )?.[1];
+
+            if (!commentIdString) return [];
+
+            const timestamp =
+              comment.querySelector("time")?.attributes["datetime"];
 
             return new Comment(this.session, {
               commentId: +commentIdString,
               url: new URL(`${this.url}#c_${commentIdString}`),
               apiUrl: new URL(`${this.url}#/${commentIdString}`),
-              author: userLink.attributes["data-filter"],
+              author: userLink?.attributes["data-filter"],
               content,
               textContent,
-              time: new Date(
-                comment.querySelector("time")!.attributes["datetime"]
-              ),
+              time: timestamp ? new Date(timestamp) : undefined,
               deleted: comment.querySelector(".deleted") ? true : false,
             });
           })
@@ -249,7 +264,7 @@ class Article {
     articleInfo.append("contentType", "html");
     if (article.category) articleInfo.append("category", article.category);
     articleInfo.append("agreePreventDelete", "on");
-    articleInfo.append("title", article.title!);
+    articleInfo.append("title", article.title ?? "[No title]");
     articleInfo.append("content", article.content);
 
     if (article.anonymous) {
@@ -277,7 +292,12 @@ class Article {
     const body = new URLSearchParams();
     body.append("until", duration.toString());
 
-    const [boardUrl] = this.url.toString().match(/^.*([/]b[/][^/]+)/)!;
+    const matchResult = this.url.toString().match(/^.*([/]b[/][^/]+)/);
+
+    if (!matchResult) {
+      throw new StateError("This article has invalid url");
+    }
+    const [boardUrl] = matchResult;
 
     return await this.session._fetch(
       `${boardUrl}/block/article/${this.articleId}`,
@@ -352,7 +372,7 @@ class Article {
    */
   deleteComment(commentId: number): Promise<RequestResponse> {
     const commentObject =
-      this.data.comments![commentId] ??
+      this.data.comments?.[commentId] ??
       new Comment(this.session, {
         commentId: commentId,
         url: new URL(`${this.url}#c_${commentId}`),
@@ -374,7 +394,7 @@ class Article {
    */
   editComment(commentId: number, comment: string): Promise<RequestResponse> {
     const commentObject =
-      this.data.comments![commentId] ??
+      this.data.comments?.[commentId] ??
       new Comment(this.session, {
         commentId: commentId,
         url: new URL(`${this.url}#c_${commentId}`),
