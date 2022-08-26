@@ -6,10 +6,10 @@ import { FetchResource, FetchTask } from "./data.js";
  * Rate Limit을 준수하는 fetch queue
  */
 class FetchQueue {
-  queue: FetchTask[] = [];
-  head = 0;
-  clean = 64;
-  stopped = false;
+  private queue: FetchTask[] = [];
+  private head = 0;
+  private clean = 64;
+  private stopped = false;
 
   private static _rateLimit = 0;
   private static _instance: FetchQueue;
