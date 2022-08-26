@@ -11,9 +11,10 @@ class FetchQueue {
   clean = 64;
   stopped = false;
 
-  private _rateLimit = 0;
+  private static _rateLimit = 0;
+  private static _instance: FetchQueue;
 
-  get rateLimit() {
+  static get rateLimit() {
     return this._rateLimit;
   }
 
@@ -23,13 +24,21 @@ class FetchQueue {
    *
    * @param {number} newLimit 새 제한(단위:ms)
    */
-  set rateLimit(newLimit: number) {
+  static set rateLimit(newLimit: number) {
     // 불가능한 값을 제외하면 유저 자율에 맡김
     if (newLimit < 0) return;
     this._rateLimit = newLimit;
   }
 
-  constructor() {
+  static get instance() {
+    if (!this._instance) {
+      this._instance = new FetchQueue();
+    }
+
+    return this._instance;
+  }
+
+  private constructor() {
     this.fetchStep();
   }
 
@@ -72,7 +81,7 @@ class FetchQueue {
     }
 
     if (!this.stopped) {
-      setTimeout(() => this.fetchStep(), this.rateLimit);
+      setTimeout(() => this.fetchStep(), FetchQueue.rateLimit);
     }
   }
 
@@ -129,6 +138,4 @@ class FetchQueue {
   }
 }
 
-const fetchQueueInstance = new FetchQueue();
-
-export default fetchQueueInstance;
+export { FetchQueue };

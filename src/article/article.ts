@@ -1,5 +1,5 @@
-import type { RequestSession } from "../request/index.js";
-import type { RequestResponse } from "../request/index.js";
+import type { RequestSession } from "../session/index.js";
+import type { RequestResponse } from "../session/index.js";
 import type { ArticleReadOption, ArticlePostOption } from "./options.js";
 
 import { ArticleData, ParceledArticleData } from "./data.js";

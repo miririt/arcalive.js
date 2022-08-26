@@ -2,7 +2,7 @@ import { Response, Headers } from "node-fetch";
 import type { RequestOption } from "./options.js";
 import type { FetchResource } from "./data.js";
 
-import fq from "./fetch-queue.js";
+import { FetchQueue } from "./fetch-queue.js";
 import { Board } from "../board/board.js";
 import { Article } from "../article/index.js";
 import { ArgumentError, RequestError } from "../errors/index.js";
@@ -14,6 +14,8 @@ abstract class RequestSession {
 
   username = "";
   password = "";
+
+  fq = FetchQueue.instance;
 
   /**
    * 로그인 된 세션을 얻는다.
@@ -139,10 +141,10 @@ abstract class RequestSession {
     init.method = init.method || "GET";
     init.headers = headers;
 
-    let response = await fq.fetch(resource, init);
+    let response = await this.fq.fetch(resource, init);
 
     while (response.status == 526) {
-      response = await fq.fetch(resource, init);
+      response = await this.fq.fetch(resource, init);
     }
 
     if (response.status >= 400) {
@@ -240,7 +242,7 @@ abstract class RequestSession {
    * 세션을 닫는다.
    */
   closeSession() {
-    fq.stop();
+    this.fq.stop();
   }
 }
 

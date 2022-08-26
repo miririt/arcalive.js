@@ -1,6 +1,6 @@
-import type { RequestSession } from "../request/index.js";
+import type { RequestSession } from "../session/index.js";
 
-import { RequestResponse } from "../request/index.js";
+import { RequestResponse } from "../session/index.js";
 
 import type { CommentData } from "./data.js";
 import { ParceledCommentData } from "./data.js";

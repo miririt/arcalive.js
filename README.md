@@ -2,55 +2,6 @@
 
 [Documentation](https://miririt.github.io/arcalive.js/)
 
-# Changes between v0.2.0 -> 0.3
-
-## 1. Typescript로 전환
-
-Typescript 적용 완료
-
-## 2. ESM
-
-Rather than:
-
-```javascript
-const Arca = require("arcalive");
-```
-
-Use:
-
-```javascript
-import * as Arca from "arcalive";
-```
-
-# Changes between v0.1.3 -> 0.2.0
-
-## 1. set~ 계열의 method들 대신 property getter / setter를 사용합니다
-
-Rather than:
-
-```javascript
-FetchQueue.setRateLimit(1000);
-Board.setGlobalArticleCache(64);
-boardInstance.setArticleCache(128);
-```
-
-Use:
-
-```javascript
-FetchQueue.rateLimit = 1000;
-Board.defaultCacheSize = 64;
-boardInstance.articleCacheSize = 128;
-```
-
-## 2. loginSession은 이제 Promise로 반환됩니다.
-
-단 anonymousSession은 그대로 즉시 반환됩니다.
-
-```javascript
-const anonymousSession = Arca.Session.anonymousSession();
-const loginSession = await Arca.Session.loginSession(username, password);
-```
-
 # Usage
 
 ## 1. 세션 만들기
@@ -107,6 +58,14 @@ article.edit({
 
 article.writeComment(comment); // 해당 게시글에 댓글을 작성함
 article.deleteComment(commentId); // 해당 게시글
+```
+
+## 4. Rate Limit 조절
+
+```javascript
+import { FetchQueue } from "arcalive";
+
+FetchQueue.rateLimit = 100; // 모든 요청을 최소 100ms의 간격을 두고 실행
 ```
 
 모든 조작은 Promise로 반환됩니다.

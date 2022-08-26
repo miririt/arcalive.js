@@ -1,5 +1,5 @@
 /// <reference types="node" resolution-mode="require"/>
-import type { RequestSession, RequestResponse } from "../request/index.js";
+import type { RequestSession, RequestResponse } from "../session/index.js";
 import type { BoardData } from "./data.js";
 import type { BoardQueryOption, BoardReadOption } from "./options.js";
 import { Article, ArticleData, ArticlePostOption, ArticleReadOption } from "../article/index.js";

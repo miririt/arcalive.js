@@ -1,6 +1,6 @@
 /// <reference types="node" resolution-mode="require"/>
-import type { RequestSession } from "../request/index.js";
-import type { RequestResponse } from "../request/index.js";
+import type { RequestSession } from "../session/index.js";
+import type { RequestResponse } from "../session/index.js";
 import type { ArticleReadOption, ArticlePostOption } from "./options.js";
 import { ArticleData } from "./data.js";
 import { Comment } from "../comment/index.js";

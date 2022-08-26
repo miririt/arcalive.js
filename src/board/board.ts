@@ -1,4 +1,4 @@
-import type { RequestSession, RequestResponse } from "../request/index.js";
+import type { RequestSession, RequestResponse } from "../session/index.js";
 
 import type { BoardData } from "./data.js";
 import type { BoardQueryOption, BoardReadOption } from "./options.js";

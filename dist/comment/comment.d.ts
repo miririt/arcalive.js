@@ -1,6 +1,6 @@
 /// <reference types="node" resolution-mode="require"/>
-import type { RequestSession } from "../request/index.js";
-import { RequestResponse } from "../request/index.js";
+import type { RequestSession } from "../session/index.js";
+import { RequestResponse } from "../session/index.js";
 import type { CommentData } from "./data.js";
 declare class Comment {
     /** @type {RequestSession} */
