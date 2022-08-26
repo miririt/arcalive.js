@@ -1,13 +1,13 @@
 import { RequestInit, Response } from "node-fetch";
-import { FetchResource, FetchTask } from "./data.js";
+import { FetchResource } from "./data.js";
 /**
  * Rate Limit을 준수하는 fetch queue
  */
 declare class FetchQueue {
-    queue: FetchTask[];
-    head: number;
-    clean: number;
-    stopped: boolean;
+    private queue;
+    private head;
+    private clean;
+    private stopped;
     private static _rateLimit;
     private static _instance;
     static get rateLimit(): number;

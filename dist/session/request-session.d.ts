@@ -60,6 +60,14 @@ declare abstract class RequestSession {
      */
     _fetch(resource: FetchResource, init?: RequestOption): Promise<RequestResponse>;
     /**
+     * 해당 게시글을 얻어온다.
+     * Article Id는 Board와 독립이기 때문에 세션에서 직접 얻어올 수도 있음.
+     *
+     * @param {number} articleId 게시글 번호
+     * @return {Promise<Article>} 해당 번호를 가진 게시글
+     */
+    getArticle(articleId: number): Promise<Article>;
+    /**
      * 해당 게시판을 얻어온다.
      *
      * @param {string} boardName 게시판의 이름
