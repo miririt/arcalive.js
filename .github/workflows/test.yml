@@ -3,6 +3,9 @@
 name: Build and test
 
 on:
+  push:
+    branches: ["master"]
+
   pull_request:
     branches: ["master"]
 
@@ -22,5 +25,14 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Environment variables settings
+        run: |
+          echo "TEST_USERNAME=$TEST_USERNAME" >> .env
+          echo "TEST_PASSWORD=$TEST_PASSWORD" >> .env
+        env:
+          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+
       - name: Test
         run: npm test
